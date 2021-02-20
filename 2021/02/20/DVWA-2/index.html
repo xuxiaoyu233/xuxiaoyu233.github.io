@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DVWA-2 | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Command Injection漏洞分析：该关漏洞为“命令注入类漏洞”，是指通过提交恶意构造的参数破坏命令语句结构，从而达到执行恶意命令的目的。 为什么会有此类漏洞：因为基于shell_exec（）函数，此函数可以在PHP钟去执行操作系统命令，如果不对用户输入的命令进行过滤，那么理论上可以执行任意系统命令，相当于直接获得了系统级别的shell。 关键的知识基于windows下的符号关系：（允许同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DVWA-2">
+<meta property="og:url" content="http://example.com/2021/02/20/DVWA-2/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="Command Injection漏洞分析：该关漏洞为“命令注入类漏洞”，是指通过提交恶意构造的参数破坏命令语句结构，从而达到执行恶意命令的目的。 为什么会有此类漏洞：因为基于shell_exec（）函数，此函数可以在PHP钟去执行操作系统命令，如果不对用户输入的命令进行过滤，那么理论上可以执行任意系统命令，相当于直接获得了系统级别的shell。 关键的知识基于windows下的符号关系：（允许同">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-02-20T02:20:36.000Z">
+<meta property="article:modified_time" content="2021-02-20T03:17:02.966Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/02/20/DVWA-2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-02-20 11:17:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">14</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Command-Injection"><span class="toc-number">1.</span> <span class="toc-text">Command Injection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">漏洞分析：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%9A%84%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">关键的知识</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E2%80%9C-%E2%80%9D%E6%98%AF%E7%AE%A1%E9%81%93%E7%AC%A6%EF%BC%8C%E8%A1%A8%E7%A4%BA%E5%B0%86Command-1%E7%9A%84%E8%BE%93%E5%87%BA%E4%BD%9C%E4%B8%BACommand-2%E7%9A%84%E8%BE%93%E5%85%A5%EF%BC%8C%E5%B9%B6%E4%B8%94%E5%8F%AA%E6%89%93%E5%8D%B0Command-2%E6%89%A7%E8%A1%8C%E7%9A%84%E7%BB%93%E6%9E%9C%E3%80%82"><span class="toc-number">2.0.0.0.0.1.</span> <span class="toc-text">“|”是管道符，表示将Command 1的输出作为Command 2的输入，并且只打印Command 2执行的结果。</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LOW"><span class="toc-number">3.</span> <span class="toc-text">LOW</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">1.代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">2.实际操作：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-%E4%BD%BF%E7%94%A8%E7%AC%A6%E5%8F%B7%E5%85%B3%E7%B3%BB%EF%BC%9A"><span class="toc-number">3.2.1.</span> <span class="toc-text">A.使用符号关系：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MEDIUM"><span class="toc-number">4.</span> <span class="toc-text">MEDIUM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-1"><span class="toc-number">4.1.</span> <span class="toc-text">1.代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-1"><span class="toc-number">4.2.</span> <span class="toc-text">2.实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HIGH"><span class="toc-number">5.</span> <span class="toc-text">HIGH</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-2"><span class="toc-number">5.1.</span> <span class="toc-text">1.代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C-%EF%BC%9A"><span class="toc-number">5.2.</span> <span class="toc-text">2.实际操作 ：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IMPOSSBILE"><span class="toc-number">6.</span> <span class="toc-text">IMPOSSBILE</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-3"><span class="toc-number">6.1.</span> <span class="toc-text">1.代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-2"><span class="toc-number">6.2.</span> <span class="toc-text">2.实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%AF%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5%EF%BC%9A"><span class="toc-number">7.</span> <span class="toc-text">可参考链接：</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">DVWA-2</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-02-20T02:20:36.000Z" title="Created 2021-02-20 10:20:36">2021-02-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-02-20T03:17:02.966Z" title="Updated 2021-02-20 11:17:02">2021-02-20</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="Command-Injection"><a href="#Command-Injection" class="headerlink" title="Command Injection"></a>Command Injection</h1><h2 id="漏洞分析："><a href="#漏洞分析：" class="headerlink" title="漏洞分析："></a>漏洞分析：</h2><p>该关漏洞为“命令注入类漏洞”，是指通过提交恶意构造的参数破坏命令语句结构，从而达到执行恶意命令的目的。</p>
+<p>为什么会有此类漏洞：因为基于shell_exec（）函数，此函数可以在PHP钟去执行操作系统命令，如果不对用户输入的命令进行过滤，那么理论上可以执行任意系统命令，相当于直接获得了系统级别的shell。</p>
+<h1 id="关键的知识"><a href="#关键的知识" class="headerlink" title="关键的知识"></a>关键的知识</h1><p>基于windows下的符号关系：（允许同时执行多条命令的符号）</p>
+<p>&amp;&amp; 前一个命令执行成功才会执行后一个命令(如果前一个命令正确，后一个错误，则只执行前一个)</p>
+<p>（类似于C语言中的“偷懒”。）</p>
+<p>&amp;  两条命令没有直接关系，互不影响（执行分先后顺序）</p>
+<p>|| 只要其中一条命令正确即可执行，如果都正确，只执行前一条命令（在Windows命令行下是这样）</p>
+<h6 id="“-”是管道符，表示将Command-1的输出作为Command-2的输入，并且只打印Command-2执行的结果。"><a href="#“-”是管道符，表示将Command-1的输出作为Command-2的输入，并且只打印Command-2执行的结果。" class="headerlink" title="“|”是管道符，表示将Command 1的输出作为Command 2的输入，并且只打印Command 2执行的结果。"></a>“|”是管道符，表示将Command 1的输出作为Command 2的输入，并且只打印Command 2执行的结果。</h6><p>(&gt;)（只有大于号）：在服务器钟生成文件。    eg:127.0.0.1 &amp; echo test &gt; c:\1.txt</p>
+<p>（&lt;）：从事先准备好的文件中读入命令。</p>
+<h1 id="LOW"><a href="#LOW" class="headerlink" title="LOW"></a>LOW</h1><h2 id="1-代码分析："><a href="#1-代码分析：" class="headerlink" title="1.代码分析："></a>1.代码分析：</h2><p>一：<strong>shell_exec</strong>        该函数的出现是能使用命令注入的关键。</p>
+<p>二：<strong>stristr(string,search,before_search)</strong></p>
+<p>stristr函数搜索字符串在另一字符串中的第一次出现，返回字符串的<strong>剩余</strong>部分（从匹配点），如果未找到所搜索的字符串，则返回 FALSE。参数string规定被搜索的字符串，参数search规定要搜索的字符串（如果该参数是数字，则搜索匹配该<strong>数字对应的 ASCII 值的字符</strong>），可选参数before_true为布尔型，<strong>默认为”false” **，如果设置为 “true”，函数将返回 search 参数第一次出现</strong>之前**的字符串部分。</p>
+<p>三：<strong>php_uname(mode)</strong></p>
+<p>这个函数会返回运行php的操作系统的相关描述，参数mode可取值”a” （此为默认，包含序列”s n r v m”里的所有模式），”s ”（返回操作系统名称），”n”（返回主机名），” r”（返回版本名称），”v”（返回版本信息）， ”m”（返回机器类型）。</p>
+<p>可以看到，服务器通过判断操作系统执行不同ping命令，但是对ip参数并未做任何的过滤，导致了严重的命令注入漏洞。</p>
+<h2 id="2-实际操作："><a href="#2-实际操作：" class="headerlink" title="2.实际操作："></a>2.实际操作：</h2><h3 id="A-使用符号关系："><a href="#A-使用符号关系：" class="headerlink" title="A.使用符号关系："></a>A.使用符号关系：</h3><p>使用 | ：因为该符号，不会确认你是否输入正确，先输入虽然会执行但不影响|后的注入命令语句的执行和输出。     eg： 127.0.0.1 | whoami   和  1 | whoami  的结果相同。</p>
+<h1 id="MEDIUM"><a href="#MEDIUM" class="headerlink" title="MEDIUM"></a>MEDIUM</h1><h2 id="1-代码分析：-1"><a href="#1-代码分析：-1" class="headerlink" title="1.代码分析："></a>1.代码分析：</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$substitutions = <span class="keyword">array</span>(     <span class="string">&#x27;&amp;&amp;&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;;&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,   );</span><br></pre></td></tr></table></figure>
+
+<p>此代码过滤了符号&amp;&amp;和；(此符号在linux系统中为分号，可以隔开语句达到执行多条语句的效果)。</p>
+<h2 id="2-实际操作：-1"><a href="#2-实际操作：-1" class="headerlink" title="2.实际操作："></a>2.实际操作：</h2><p>它知识过滤了&amp;&amp;那和我“|”有什么关系。</p>
+<p>但如果你想杠它的话可以思考一下如果代码中： str_replace把“&amp;&amp;”和“；”在执行使转译为空格。</p>
+<p>那么我们输入的是：<strong>127.0.0.1&amp;;&amp;ipconfig</strong>的话结果会如何，在转译之后的结果就将是：<strong>127.0.0.1&amp;&amp;ipconfig</strong>。</p>
+<h1 id="HIGH"><a href="#HIGH" class="headerlink" title="HIGH"></a>HIGH</h1><h2 id="1-代码分析：-2"><a href="#1-代码分析：-2" class="headerlink" title="1.代码分析："></a>1.代码分析：</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$substitutions = <span class="keyword">array</span>(     <span class="string">&#x27;&amp;&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;;&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;| &#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;-&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;$&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;(&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;)&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;`&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,     <span class="string">&#x27;||&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,   ); </span><br></pre></td></tr></table></figure>
+
+<p>这次，几乎所有的符号都被过滤了那么我们可以使用一下medium中的思考方法来避免过滤。</p>
+<p>但，黑名单看似过滤了所有的非法字符，但仔细观察到是把”| ”（注意这里|后有一个空格）替换为空字符，于是 ”|”成了“漏网之鱼”。</p>
+<h2 id="2-实际操作-："><a href="#2-实际操作-：" class="headerlink" title="2.实际操作 ："></a>2.实际操作 ：</h2><p>1.<strong>127.0.0.1 |ping</strong>，这波操作可以完美逃过转译。</p>
+<p>2.<strong>127.0.0.1 || whoami</strong>    你过滤“||“和我” || “有什么关系。</p>
+<h1 id="IMPOSSBILE"><a href="#IMPOSSBILE" class="headerlink" title="IMPOSSBILE"></a>IMPOSSBILE</h1><h2 id="1-代码分析：-3"><a href="#1-代码分析：-3" class="headerlink" title="1.代码分析："></a>1.代码分析：</h2><p>stripslashes函数会删除字符串string中的反斜杠，返回已剥离反斜杠的字符串。</p>
+<p><em>explode(separator,string,limit)</em></p>
+<p>把字符串打散为数组，返回字符串的数组。参数separator规定在哪里分割字符串，参数string是要分割的字符串，可选参数limit规定所返回的数组元素的数目。</p>
+<p><em>is_numeric(string)</em></p>
+<p>检测string是否为数字或数字字符串，如果是返回TRUE，否则返回FALSE。</p>
+<p>可以看到，Impossible级别的代码加入了Anti-CSRF token，同时对参数ip进行了严格的限制，只有诸如“数字.数字.数字.数字”的输入才会被接收执行，因此不存在命令注入漏洞。</p>
+<h2 id="2-实际操作：-2"><a href="#2-实际操作：-2" class="headerlink" title="2.实际操作："></a>2.实际操作：</h2><p>？？？？？</p>
+<h1 id="可参考链接："><a href="#可参考链接：" class="headerlink" title="可参考链接："></a>可参考链接：</h1><p>1.<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/116714.html">https://www.freebuf.com/articles/web/116714.html</a></p>
+<p>2.<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39850969/article/details/85014662?ops_request_misc=%25257B%252522request%25255Fid%252522%25253A%252522161270426316780299051342%252522%25252C%252522scm%252522%25253A%25252220140713.130102334.pc%25255Fall.%252522%25257D&amp;request_id=161270426316780299051342&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~rank_v29-1-85014662.pc_search_result_no_baidu_js&amp;utm_term=DVWA%25E7%259A%2584%25E4%25BB%25A3%25E7%25A0%2581%25E5%25AE%25A1%25E8%25AE%25A1">https://blog.csdn.net/qq_39850969/article/details/85014662?ops_request_misc=%25257B%252522request%25255Fid%252522%25253A%252522161270426316780299051342%252522%25252C%252522scm%252522%25253A%25252220140713.130102334.pc%25255Fall.%252522%25257D&amp;request_id=161270426316780299051342&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~rank_v29-1-85014662.pc_search_result_no_baidu_js&amp;utm_term=DVWA%25E7%259A%2584%25E4%25BB%25A3%25E7%25A0%2581%25E5%25AE%25A1%25E8%25AE%25A1</a></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/02/20/DVWA-2/">http://example.com/2021/02/20/DVWA-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/01/24/sqllab-26/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">sqllab-26</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
