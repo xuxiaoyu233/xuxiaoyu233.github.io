@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DVWA-XSS | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="放射性和存储性xss的应用XSS，全称Cross Site Scripting，即跨站脚本攻击，某种意义上也是一种注入攻击，是指攻击者在页面中注入恶意的脚本代码，当受害者访问该页面时，恶意代码会在其浏览器上执行，需要强调的是，XSS不仅仅限于JavaScript，还包括flash等其它脚本语言。根据恶意代码是否存储在服务器中，XSS可以分为存储型的XSS与反射型的XSS。 放射型XSSlow代码分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DVWA-XSS">
+<meta property="og:url" content="http://example.com/2021/02/21/DVWA-XSS/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="放射性和存储性xss的应用XSS，全称Cross Site Scripting，即跨站脚本攻击，某种意义上也是一种注入攻击，是指攻击者在页面中注入恶意的脚本代码，当受害者访问该页面时，恶意代码会在其浏览器上执行，需要强调的是，XSS不仅仅限于JavaScript，还包括flash等其它脚本语言。根据恶意代码是否存储在服务器中，XSS可以分为存储型的XSS与反射型的XSS。 放射型XSSlow代码分">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-02-21T07:40:02.000Z">
+<meta property="article:modified_time" content="2021-02-21T08:58:36.258Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/02/21/DVWA-XSS/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-02-21 16:58:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">16</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%BE%E5%B0%84%E6%80%A7%E5%92%8C%E5%AD%98%E5%82%A8%E6%80%A7xss%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">放射性和存储性xss的应用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%BE%E5%B0%84%E5%9E%8BXSS"><span class="toc-number">2.</span> <span class="toc-text">放射型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#low"><span class="toc-number">2.1.</span> <span class="toc-text">low</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">2.1.1.</span> <span class="toc-text">代码分析：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MEDIUM"><span class="toc-number">2.2.</span> <span class="toc-text">MEDIUM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">代码分析：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%95%E4%BA%8C%EF%BC%9A"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">法二：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HIGH"><span class="toc-number">3.</span> <span class="toc-text">HIGH</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-2"><span class="toc-number">3.1.</span> <span class="toc-text">代码分析：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%9E%8BXSS%EF%BC%88%E5%BE%88%E5%BC%BA%E5%A4%A7%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">存储型XSS（很强大）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#LOW"><span class="toc-number">4.1.</span> <span class="toc-text">LOW</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-4"><span class="toc-number">4.1.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="toc-number">4.1.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Medium"><span class="toc-number">4.2.</span> <span class="toc-text">Medium</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-5"><span class="toc-number">4.2.1.</span> <span class="toc-text">代码分析：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HIGH-1"><span class="toc-number">4.3.</span> <span class="toc-text">HIGH</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-6"><span class="toc-number">4.3.1.</span> <span class="toc-text">代码分析：</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">DVWA-XSS</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-02-21T07:40:02.000Z" title="Created 2021-02-21 15:40:02">2021-02-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-02-21T08:58:36.258Z" title="Updated 2021-02-21 16:58:36">2021-02-21</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="放射性和存储性xss的应用"><a href="#放射性和存储性xss的应用" class="headerlink" title="放射性和存储性xss的应用"></a>放射性和存储性xss的应用</h1><p>XSS，全称Cross Site Scripting，即跨站脚本攻击，某种意义上也是一种<strong>注入攻击</strong>，是指攻击者在页面中注入恶意的脚本代码，当受害者访问该页面时，恶意代码会在其浏览器上执行，需要强调的是，XSS不仅仅限于JavaScript，还包括flash等其它脚本语言。根据恶意代码是否存储在服务器中，XSS可以分为存储型的XSS与反射型的XSS。</p>
+<h1 id="放射型XSS"><a href="#放射型XSS" class="headerlink" title="放射型XSS"></a>放射型XSS</h1><h2 id="low"><a href="#low" class="headerlink" title="low"></a>low</h2><h3 id="代码分析："><a href="#代码分析：" class="headerlink" title="代码分析："></a>代码分析：</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>( array_key_exists( <span class="string">&quot;name&quot;</span>, $_GET ) &amp;&amp; $_GET[ <span class="string">&#x27;name&#x27;</span> ] != <span class="literal">NULL</span> ) &#123;   <span class="comment">// Feedback for end user   echo &#x27;&lt;pre&gt;Hello &#x27; . $_GET[ &#x27;name&#x27; ] . &#x27;&lt;/pre&gt;&#x27;; </span></span><br></pre></td></tr></table></figure>
+
+<p>没有任何的防护，给什么就和hello拼接起来然后一起输入。</p>
+<p>因此可能存在XSS漏洞，使用语句</p>
+<script>alert(/xss/)</script>
+
+<p>来测试，发现弹窗，则存在XSS漏洞。</p>
+<p>至于这里为什么不能使用Sql注入呢？</p>
+<p>我们先看一下sql中的一条语句</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$query = <span class="string">&quot;SELECT first_name, last_name FROM users WHERE user_id = &#x27;<span class="subst">$id</span>&#x27;;&quot;</span>; </span><br></pre></td></tr></table></figure>
+
+<p>这里可以看到这里有一段查询语句可以再user表中查询，所以可以利用注入语句，来查询我们所想要的数据库。但这一关的语句中没有相应语句。</p>
+<h2 id="MEDIUM"><a href="#MEDIUM" class="headerlink" title="MEDIUM"></a>MEDIUM</h2><h3 id="代码分析：-1"><a href="#代码分析：-1" class="headerlink" title="代码分析："></a>代码分析：</h3><p>对比low级别发现medium只多了一行语句，</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = str_replace( <span class="string">&#x27;&lt;script&gt;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, $_GET[ <span class="string">&#x27;name&#x27;</span> ] ); </span><br></pre></td></tr></table></figure>
+
+<p>这一行的意思大概就是将输入语句中的**<script>**replace为空格。</p>
+<p>因此当我们重复输入Low中的</p>
+<script>alert(/xss/)</script>
+
+<p>语句时回显为，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello alert(&#x2F;xss&#x2F;)</span><br></pre></td></tr></table></figure>
+
+<p>因此只要我们可以规避这个转译即可，那么就类似于我们Command Injection中的操作一样（&amp;；&amp;=&gt;&amp;&amp;），我们只需要将<script>写为<scri<script>pt>这样的类型在系统自动转译后就会显示为<script>.</p>
+<h4 id="法一："><a href="#法一：" class="headerlink" title="法一："></a>法一：</h4><p>因此利用语句</p>
+<p>&lt;scri<script>pt>alert(/xss/)</script></p>
+<p>来测试是否弹窗。</p>
+<h4 id="法二："><a href="#法二：" class="headerlink" title="法二："></a>法二：</h4><p>大小写混淆绕过</p>
+<p>输入<ScRipt>alert(/xss/)</script></p>
+<h1 id="HIGH"><a href="#HIGH" class="headerlink" title="HIGH"></a>HIGH</h1><h2 id="代码分析：-2"><a href="#代码分析：-2" class="headerlink" title="代码分析："></a>代码分析：</h2><p>限制语句变为了：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = preg_replace( <span class="string">&#x27;/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i&#x27;</span>, <span class="string">&#x27;&#x27;</span>, $_GET[ <span class="string">&#x27;name&#x27;</span> ] ); </span><br></pre></td></tr></table></figure>
+
+<p>preg_replace() 函数用于正则表达式的搜索和替换，这使得双写绕过、大小写混淆绕过（正则表达式中i表示不区分大小写）不再有效。</p>
+<p>虽然无法使用<script>标签注入XSS代码，但是可以通过img、body等标签的事件或者iframe等标签的src注入恶意的js代码。</p>
+<p>输入</p>
+<img src=1 onerror=alert(/xss/)>
+
+<h2 id="IMPOSSIBLE"><a href="#IMPOSSIBLE" class="headerlink" title="IMPOSSIBLE"></a>IMPOSSIBLE</h2><h3 id="代码分析：-3"><a href="#代码分析：-3" class="headerlink" title="代码分析："></a>代码分析：</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checkToken( $_REQUEST[ <span class="string">&#x27;user_token&#x27;</span> ], $_SESSION[ <span class="string">&#x27;session_token&#x27;</span> ], <span class="string">&#x27;index.php&#x27;</span> ); </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = htmlspecialchars( $_GET[ <span class="string">&#x27;name&#x27;</span> ] ); </span><br></pre></td></tr></table></figure>
+
+<p>htmlspecialchars() 函数把预定义的字符转换为 HTML 实体。</p>
+<p>预定义的字符是：</p>
+<ul>
+<li>&amp; （和号）成为 &amp;</li>
+<li>“ （双引号）成为 “</li>
+<li>‘ （单引号）成为 ‘</li>
+<li>&lt; （小于）成为 &lt;</li>
+<li>&gt; （大于）成为 &gt;</li>
+<li>如需把特殊的 HTML 实体转换回字符，请使用 <a target="_blank" rel="noopener" href="http://www.w3school.com.cn/php/func_string_htmlspecialchars_decode.asp">htmlspecialchars_decode()</a> 函数。</li>
+</ul>
+<p>那这里都已经把&lt;和&gt;转译了我还没见过不用&lt;和&gt;的XSS语句呢。</p>
+<p>而且这里还加入了Token值。</p>
+<h2 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h2><p>如果说过滤了alert这一个函数该怎么办（因为大部分的xss漏洞都是由它是否能弹窗发现的）</p>
+<p>那么我们可以使用confirm函数来构造：</p>
+<script>confirm('hi')</script>.
+
+<p>并且还有语句：<br>&lt;img scr=1 onerror=confirm(‘1’)&gt;            看别人的我的没弹窗。。。。</p>
+<h1 id="存储型XSS（很强大）"><a href="#存储型XSS（很强大）" class="headerlink" title="存储型XSS（很强大）"></a>存储型XSS（很强大）</h1><h2 id="LOW"><a href="#LOW" class="headerlink" title="LOW"></a>LOW</h2><h3 id="代码分析：-4"><a href="#代码分析：-4" class="headerlink" title="代码分析："></a>代码分析：</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$message = trim( $_POST[ <span class="string">&#x27;mtxMessage&#x27;</span> ] ); </span><br></pre></td></tr></table></figure>
+
+<p>trim()方法的作用是去掉字符串两端的多余的空格。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$message = stripslashes( $message );   $message = mysql_real_escape_string( $message ); </span><br></pre></td></tr></table></figure>
+
+<p>mysql_real_escape_string(string,connection)</p>
+<p>函数会对字符串中的特殊符号（\x00，\n，\r，\，’，”，\x1a）进行转义。</p>
+<p>stripslashes(string)</p>
+<p>函数删除字符串中的反斜杠。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$query = <span class="string">&quot;INSERT INTO guestbook ( comment, name ) VALUES ( &#x27;<span class="subst">$message</span>&#x27;, &#x27;<span class="subst">$name</span>&#x27; );&quot;</span>; </span><br></pre></td></tr></table></figure>
+
+<p>然后就热情的加入了留言板（小型数据库）.</p>
+<h3 id="实际操作："><a href="#实际操作：" class="headerlink" title="实际操作："></a>实际操作：</h3><p>虽然对Name和Message都没有进行防XSS的措施，但当你想通过Name进行测试的时候发现长度不够了那该怎么办？</p>
+<p>我们可以进行前端JS修改，步骤是（我使用的是火狐浏览器）鼠标在Name栏中右击后点击审查元素将</p>
+<p><img src="C:\Users\墨水彩笔\AppData\Roaming\Typora\typora-user-images\image-20210221164101888.png" alt="image-20210221164101888"></p>
+<p>的数据增大（一般我加两个零）,注意一下如果修改的是size的数据那么还是无法写入。就可以将测试语句：<script>alert(/xss/)</script>写入了。</p>
+<p>发现弹窗成功，而且当你再次访问这个关卡时，自动弹窗（非常重要，用户无法拒绝自动弹窗！！！）</p>
+<h2 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h2><h3 id="代码分析：-5"><a href="#代码分析：-5" class="headerlink" title="代码分析："></a>代码分析：</h3><p>与low级别相比：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$message = htmlspecialchars( $message ); </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = str_replace( <span class="string">&#x27;&lt;script&gt;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, $name );</span><br></pre></td></tr></table></figure>
+
+<p>直接将message这条路锁死，但对于name来说只是限制了<script>的输出。</p>
+<p>那你封杀message关我name什么事，联想我们放射型XSS中的规避操作。</p>
+<p>构造语句：</p>
+<p>&lt;scri<script>pt>alert(/xss/)</script></p>
+<p>弹窗成功。</p>
+<h2 id="HIGH-1"><a href="#HIGH-1" class="headerlink" title="HIGH"></a>HIGH</h2><h3 id="代码分析：-6"><a href="#代码分析：-6" class="headerlink" title="代码分析："></a>代码分析：</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = preg_replace( <span class="string">&#x27;/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i&#x27;</span>, <span class="string">&#x27;&#x27;</span>, $name ); </span><br></pre></td></tr></table></figure>
+
+<p>还是将Message的路线封杀，但仍留给name一条活路。</p>
+<p>类似于放射性中的xss一样我们可以使用不包含<script>的语句完成弹窗。</p>
+<img src=1 onerror=alert(/xss/)>
+
+<h2 id="IMPOSSIBLE-1"><a href="#IMPOSSIBLE-1" class="headerlink" title="IMPOSSIBLE"></a>IMPOSSIBLE</h2><h3 id="代码分析：-7"><a href="#代码分析：-7" class="headerlink" title="代码分析："></a>代码分析：</h3><p>其实不用看也知道了，直接对name也使用htmlspecialchars函数将其封杀。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = htmlspecialchars( $name ); </span><br></pre></td></tr></table></figure>
+
+<p>真，无路可走。</p>
+<p>而且还加入了新的防注入函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data-&gt;bindParam( <span class="string">&#x27;:message&#x27;</span>, $message, PDO::PARAM_STR );   $data-&gt;bindParam( <span class="string">&#x27;:name&#x27;</span>, $name, PDO::PARAM_STR );   $data-&gt;execute(); </span><br></pre></td></tr></table></figure>
+
+<p><em>bind_param(“sss”, firstname,firstname,lastname, $email);</em></p>
+<p>1:该函数绑定了 SQL 的参数，且告诉数据库参数的值。 “sss” 参数列处理其余参数的数据类型。s 字符告诉数据库该参数为字符串。<br>参数有以下四种类型:<br>i - integer（整型）<br>d - double（双精度浮点型）<br>s - string（字符串）<br>b - BLOB（布尔值）<br>每个参数都需要指定类型。<br>通过告诉数据库参数的数据类型，可以降低 SQL 注入的风险。</p>
+<h2 id="预告片"><a href="#预告片" class="headerlink" title="预告片"></a>预告片</h2><p>注意了，我先写XSS是因为当CSRF可以和XSS的存储型漏洞联合使用，而且被入侵的用户只要点开XSS存储漏洞的连接就会被CSRF攻击且可以不弹窗和显示任何异常数据。因为你看到的仍是留言板。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/02/21/DVWA-XSS/">http://example.com/2021/02/21/DVWA-XSS/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/02/20/DVWA-1/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">DVWA-1</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
