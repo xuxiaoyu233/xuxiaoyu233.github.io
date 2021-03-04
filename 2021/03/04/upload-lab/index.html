@@ -1,0 +1,369 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>upload-lab | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="upload-lab 温馨提示：因为upload关卡中存在少数漏洞所需要php版本较低，因此我使用的使2016的phpstudy，版本为5.2.17（无nts）。 pass-01    js检查代码分析：1var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;  这也是为什么这关叫作js检查了，因为此关代码中限制方式为白名单（只允许某些类型上传），但对于这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="upload-lab">
+<meta property="og:url" content="http://example.com/2021/03/04/upload-lab/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="upload-lab 温馨提示：因为upload关卡中存在少数漏洞所需要php版本较低，因此我使用的使2016的phpstudy，版本为5.2.17（无nts）。 pass-01    js检查代码分析：1var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;  这也是为什么这关叫作js检查了，因为此关代码中限制方式为白名单（只允许某些类型上传），但对于这">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-03-04T02:19:01.000Z">
+<meta property="article:modified_time" content="2021-03-04T15:43:12.394Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/03/04/upload-lab/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-03-04 23:43:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">21</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#upload-lab"><span class="toc-number">1.</span> <span class="toc-text">upload-lab</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%A9%E9%A6%A8%E6%8F%90%E7%A4%BA%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">温馨提示：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pass-01-js%E6%A3%80%E6%9F%A5"><span class="toc-number">3.</span> <span class="toc-text">pass-01    js检查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">实际操作：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E4%B8%80%EF%BC%9A%E6%9B%B4%E6%94%B9%E5%89%8D%E7%AB%AFJS"><span class="toc-number">3.2.1.</span> <span class="toc-text">法一：更改前端JS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8burp-suite%E4%BF%AE%E6%94%B9%E8%BF%94%E5%9B%9E%E5%8C%85%EF%BC%88%E5%9B%A0%E4%B8%BA%E8%BF%99%E5%85%B3%E5%8F%AA%E5%81%9A%E5%89%8D%E7%AB%AFJS%EF%BC%89"><span class="toc-number">3.2.2.</span> <span class="toc-text">法二：使用burp suite修改返回包（因为这关只做前端JS）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pass-02-MIME%E6%A3%80%E6%B5%8B-Content-Type"><span class="toc-number">4.</span> <span class="toc-text">pass-02    MIME检测-Content-Type</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-1"><span class="toc-number">4.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-1"><span class="toc-number">4.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-03-%E9%BB%91%E5%90%8D%E5%8D%95%E9%99%90%E5%88%B6"><span class="toc-number">5.</span> <span class="toc-text">Pass-03    黑名单限制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-2"><span class="toc-number">5.1.</span> <span class="toc-text">代码分析：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-04-htaccess%E7%BB%95%E8%BF%87"><span class="toc-number">6.</span> <span class="toc-text">Pass-04    .htaccess绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-3"><span class="toc-number">6.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-2"><span class="toc-number">6.2.</span> <span class="toc-text">实际操作：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E4%B8%80%EF%BC%9A%EF%BC%88%E5%8F%AA%E8%A6%81%E6%88%91%E5%90%8D%E5%AD%97%E5%A4%9F%E6%80%AA%E4%BD%A0%E5%B0%B1%E9%98%BB%E6%AD%A2%E4%B8%8D%E4%BA%86%E6%88%91%EF%BC%89"><span class="toc-number">6.2.1.</span> <span class="toc-text">法一：（只要我名字够怪你就阻止不了我）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E4%BA%8C%EF%BC%9A-htaccess%E7%BB%95%E8%BF%87"><span class="toc-number">6.2.2.</span> <span class="toc-text">法二：.htaccess绕过</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-05-%E5%A4%A7%E5%B0%8F%E5%86%99%E7%BB%95%E8%BF%87"><span class="toc-number">7.</span> <span class="toc-text">Pass-05    大小写绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-4"><span class="toc-number">7.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-3"><span class="toc-number">7.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-06-%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="toc-number">8.</span> <span class="toc-text">Pass-06    空格绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-%E6%89%BE%E4%B8%8D%E5%90%8C"><span class="toc-number">8.1.</span> <span class="toc-text">代码分析：    找不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-4"><span class="toc-number">8.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-07-%E7%BB%95%E8%BF%87"><span class="toc-number">9.</span> <span class="toc-text">Pass-07    .绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E4%B8%8D%E5%90%8C%EF%BC%9A"><span class="toc-number">9.1.</span> <span class="toc-text">找不同：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%93%8D%EF%BC%9A"><span class="toc-number">9.1.1.</span> <span class="toc-text">基操：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-08-DATA%E7%BB%95%E8%BF%87-Windows%E6%96%87%E4%BB%B6%E6%B5%81%E7%89%B9%E6%80%A7%E7%BB%95%E8%BF%87"><span class="toc-number">10.</span> <span class="toc-text">Pass-08    ::$DATA绕过|Windows文件流特性绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E4%B8%8D%E5%90%8C%EF%BC%9A-1"><span class="toc-number">10.1.</span> <span class="toc-text">找不同：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-5"><span class="toc-number">10.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-09-%E7%82%B9-%E7%A9%BA%E6%A0%BC-%E7%82%B9%E7%BB%95%E8%BF%87-%E5%8F%8C%E5%86%99%E5%90%8E%E7%BC%80%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="toc-number">11.</span> <span class="toc-text">Pass-09    点+空格+点绕过|双写后缀特殊符号绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A%E6%89%BE%E4%B8%8D%E5%87%BA%E4%B8%8D%E5%90%8C"><span class="toc-number">11.1.</span> <span class="toc-text">代码分析：找不出不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%93%8D%EF%BC%9A-1"><span class="toc-number">11.2.</span> <span class="toc-text">基操：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-10-%E5%8F%8C%E5%86%99%E5%90%8E%E7%BC%80%E5%90%8D%E7%BB%95%E8%BF%87"><span class="toc-number">12.</span> <span class="toc-text">Pass-10    双写后缀名绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-5"><span class="toc-number">12.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-6"><span class="toc-number">12.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-11-00%E6%88%AA%E6%96%AD"><span class="toc-number">13.</span> <span class="toc-text">Pass-11    %00截断</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-6"><span class="toc-number">13.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-7"><span class="toc-number">13.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-12-0x00%E6%88%AA%E6%96%AD"><span class="toc-number">14.</span> <span class="toc-text">Pass-12    0x00截断</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-7"><span class="toc-number">14.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-8"><span class="toc-number">14.2.</span> <span class="toc-text">实际操作：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E4%B8%80%EF%BC%9A"><span class="toc-number">14.2.1.</span> <span class="toc-text">法一：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E4%BA%8C%EF%BC%9A"><span class="toc-number">14.2.2.</span> <span class="toc-text">法二：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-13-%E5%9B%BE%E7%89%87%E9%A9%AC%E7%BB%95%E8%BF%87"><span class="toc-number">15.</span> <span class="toc-text">Pass-13    图片马绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-8"><span class="toc-number">15.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-9"><span class="toc-number">15.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-14"><span class="toc-number">16.</span> <span class="toc-text">Pass-14</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9Agetimagesize"><span class="toc-number">16.1.</span> <span class="toc-text">代码分析：getimagesize()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C"><span class="toc-number">16.2.</span> <span class="toc-text">实际操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-15-exif-imagetype"><span class="toc-number">17.</span> <span class="toc-text">Pass-15    exif_imagetype()</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-9"><span class="toc-number">17.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-10"><span class="toc-number">17.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-16-%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93%E7%BB%95%E8%BF%87"><span class="toc-number">18.</span> <span class="toc-text">Pass-16    二次渲染绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90%EF%BC%9A"><span class="toc-number">18.1.</span> <span class="toc-text">代码解析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A%EF%BC%88%E6%88%91%E6%B2%A1%E6%88%90%E5%8A%9F%F0%9F%90%B6%EF%BC%8C%E4%B8%8D%E5%A5%BD%E6%84%8F%E6%80%9D%E8%A7%A3%E6%9E%90%EF%BC%89"><span class="toc-number">18.2.</span> <span class="toc-text">实际操作：（我没成功🐶，不好意思解析）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-17-%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="toc-number">19.</span> <span class="toc-text">Pass-17    条件竞争</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-10"><span class="toc-number">19.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%AB%9E%E4%BA%89%EF%BC%9A"><span class="toc-number">19.2.</span> <span class="toc-text">上竞争：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-18-%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%892"><span class="toc-number">20.</span> <span class="toc-text">Pass-18    条件竞争2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-11"><span class="toc-number">20.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-11"><span class="toc-number">20.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-19-%E7%BB%95%E8%BF%87-00%E6%88%AA%E6%96%AD"><span class="toc-number">21.</span> <span class="toc-text">Pass-19    &#x2F;.绕过|00截断</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A-12"><span class="toc-number">21.1.</span> <span class="toc-text">代码分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A-12"><span class="toc-number">21.2.</span> <span class="toc-text">实际操作：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pass-20-%E6%95%B0%E7%BB%84-%E7%BB%95%E8%BF%87"><span class="toc-number">22.</span> <span class="toc-text">Pass-20    数组+&#x2F;.绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="toc-number">22.1.</span> <span class="toc-text">代码分析+实际操作：</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">upload-lab</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-04T02:19:01.000Z" title="Created 2021-03-04 10:19:01">2021-03-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-03-04T15:43:12.394Z" title="Updated 2021-03-04 23:43:12">2021-03-04</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="upload-lab"><a href="#upload-lab" class="headerlink" title="upload-lab"></a>upload-lab</h1><p><img src="https://img-blog.csdnimg.cn/20190619151237843.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDY3NzQwOQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1 id="温馨提示："><a href="#温馨提示：" class="headerlink" title="温馨提示："></a>温馨提示：</h1><p>因为upload关卡中存在少数漏洞所需要php版本较低，因此我使用的使2016的phpstudy，版本为5.2.17（无nts）。</p>
+<h1 id="pass-01-js检查"><a href="#pass-01-js检查" class="headerlink" title="pass-01    js检查"></a>pass-01    js检查</h1><h2 id="代码分析："><a href="#代码分析：" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>这也是为什么这关叫作js检查了，因为此关代码中限制方式为白名单（只允许某些类型上传），但对于这些类型的检查仅仅是使用了前端js效验。</p>
+<h2 id="实际操作："><a href="#实际操作：" class="headerlink" title="实际操作："></a>实际操作：</h2><h3 id="法一：更改前端JS"><a href="#法一：更改前端JS" class="headerlink" title="法一：更改前端JS"></a>法一：更改前端JS</h3><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304103323069.png?raw=true" alt="image-20210304103323069.png"></p>
+<p>注意点：</p>
+<p>1.这里在上传旁边右击查看元素，会比直接按F12更快找到我们所要修改的JS。</p>
+<p>2.这里介绍的只是修改JS中的一种（删除查看元素中的被圈出的代码）。</p>
+<p>最后选择一个带有可以检测的PHP文件上传即可。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/2021-03-04%20(1).png?raw=true" alt="2021-03-04 (1).png"></p>
+<h3 id="法二：使用burp-suite修改返回包（因为这关只做前端JS）"><a href="#法二：使用burp-suite修改返回包（因为这关只做前端JS）" class="headerlink" title="法二：使用burp suite修改返回包（因为这关只做前端JS）"></a>法二：使用burp suite修改返回包（因为这关只做前端JS）</h3><p>1.将我们的php文件后缀改为jpg（或者其他白名单类型）</p>
+<p>2.使用Burp suite抓包修改。</p>
+<p>eg:hack.jpg-&gt;hack.php。</p>
+<p>3.测验。</p>
+<h1 id="pass-02-MIME检测-Content-Type"><a href="#pass-02-MIME检测-Content-Type" class="headerlink" title="pass-02    MIME检测-Content-Type"></a>pass-02    MIME检测-Content-Type</h1><h2 id="代码分析：-1"><a href="#代码分析：-1" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;jpeg&#39;) || ($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;png&#39;) || ($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;gif&#39;)) &#123;</span><br></pre></td></tr></table></figure>
+
+<p>这里说明了，检测出的文件类型如果为上述几种的话，那么接下来就是文件名的拼接了。</p>
+<p>因此可以看出这里不会回头看你上传的是什么类型，只看你提交的时候是什么类型就可以了。</p>
+<h2 id="实际操作：-1"><a href="#实际操作：-1" class="headerlink" title="实际操作："></a>实际操作：</h2><p>使用burp suite修改文件类型即可。（同pass-01法二）</p>
+<h1 id="Pass-03-黑名单限制"><a href="#Pass-03-黑名单限制" class="headerlink" title="Pass-03    黑名单限制"></a>Pass-03    黑名单限制</h1><h2 id="代码分析：-2"><a href="#代码分析：-2" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (file_exists(UPLOAD_PATH)) &#123;</span><br><span class="line">       $deny_ext &#x3D; array(&#39;.asp&#39;,&#39;.aspx&#39;,&#39;.php&#39;,&#39;.jsp&#39;);</span><br><span class="line">       $file_name &#x3D; trim($_FILES[&#39;upload_file&#39;][&#39;name&#39;]);</span><br><span class="line">       $file_name &#x3D; deldot($file_name);&#x2F;&#x2F;删除文件名末尾的点</span><br><span class="line">       $file_ext &#x3D; strrchr($file_name, &#39;.&#39;);</span><br><span class="line">       $file_ext &#x3D; strtolower($file_ext); &#x2F;&#x2F;转换为小写</span><br><span class="line">       $file_ext &#x3D; str_ireplace(&#39;::$DATA&#39;, &#39;&#39;, $file_ext);&#x2F;&#x2F;去除字符串::$DATA</span><br><span class="line">       $file_ext &#x3D; trim($file_ext); &#x2F;&#x2F;收尾去空</span><br></pre></td></tr></table></figure>
+
+<p><code>strrchr()</code>查找字符串在另一个字符串中最后一次出现的位置，并返回从该位置到字符串结尾的所有字符。</p>
+<p>如果上传文件存在，那么就对上传文件名字进行一大串的修改（这些修改很重要，贯穿了接下来的好几关）。不仅如此接下来的代码更是对保存的上传文件进行重命名，只保留上传时的后缀当保存的后缀。（也正因为如此不能使用burp直接将Jpg改为php）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!in_array($file_ext, $deny_ext)) &#123;</span><br><span class="line">            $temp_file = $_FILES[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line">            $img_path = UPLOAD_PATH.<span class="string">&#x27;/&#x27;</span>.date(<span class="string">&quot;YmdHis&quot;</span>).rand(<span class="number">1000</span>,<span class="number">9999</span>).$file_ext;(随机的重命名)</span><br></pre></td></tr></table></figure>
+
+<p>那这里就引入了其他后缀但可以被php解析的后缀名：（记得注意修改配置哦，一般都解析不了）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.phtml .phps .php5 .pht</span><br><span class="line">前提是apache的httpd.conf中有如下配置代码</span><br><span class="line">AddType application&#x2F;x-httpd-php .php .phtml .phps .php5 .pht .php3</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304105537851.png?raw=true" alt="image-20210304105537851.png"></p>
+<p>注意文件名称的修改变化。接下来就是测试了</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304105633057.png?raw=true" alt="image-20210304105633057.png"></p>
+<h1 id="Pass-04-htaccess绕过"><a href="#Pass-04-htaccess绕过" class="headerlink" title="Pass-04    .htaccess绕过"></a>Pass-04    .htaccess绕过</h1><h2 id="代码分析：-3"><a href="#代码分析：-3" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (file_exists(UPLOAD_PATH)) &#123;</span><br><span class="line">       $deny_ext &#x3D; array(&quot;.php&quot;,&quot;.php5&quot;,&quot;.php4&quot;,&quot;.php3&quot;,&quot;.php2&quot;,&quot;.php1&quot;,&quot;.html&quot;,&quot;.htm&quot;,&quot;.phtml&quot;,&quot;.pht&quot;,&quot;.pHp&quot;,&quot;.pHp5&quot;,&quot;.pHp4&quot;,&quot;.pHp3&quot;,&quot;.pHp2&quot;,&quot;.pHp1&quot;,&quot;.Html&quot;,&quot;.Htm&quot;,&quot;.pHtml&quot;,&quot;.jsp&quot;,&quot;.jspa&quot;,&quot;.jspx&quot;,&quot;.jsw&quot;,&quot;.jsv&quot;,&quot;.jspf&quot;,&quot;.jtml&quot;,&quot;.jSp&quot;,&quot;.jSpx&quot;,&quot;.jSpa&quot;,&quot;.jSw&quot;,&quot;.jSv&quot;,&quot;.jSpf&quot;,&quot;.jHtml&quot;,&quot;.asp&quot;,&quot;.aspx&quot;,&quot;.asa&quot;,&quot;.asax&quot;,&quot;.ascx&quot;,&quot;.ashx&quot;,&quot;.asmx&quot;,&quot;.cer&quot;,&quot;.aSp&quot;,&quot;.aSpx&quot;,&quot;.aSa&quot;,&quot;.aSax&quot;,&quot;.aScx&quot;,&quot;.aShx&quot;,&quot;.aSmx&quot;,&quot;.cEr&quot;,&quot;.sWf&quot;,&quot;.swf&quot;,&quot;.ini&quot;);</span><br><span class="line">       $file_name &#x3D; trim($_FILES[&#39;upload_file&#39;][&#39;name&#39;]);</span><br><span class="line">       。。。。。。</span><br></pre></td></tr></table></figure>
+
+<p>这一关代码与上一关类似，但黑名单的内容更加多了。</p>
+<h2 id="实际操作：-2"><a href="#实际操作：-2" class="headerlink" title="实际操作："></a>实际操作：</h2><h3 id="法一：（只要我名字够怪你就阻止不了我）"><a href="#法一：（只要我名字够怪你就阻止不了我）" class="headerlink" title="法一：（只要我名字够怪你就阻止不了我）"></a>法一：（只要我名字够怪你就阻止不了我）</h3><p>条件：</p>
+<p>1.<strong>需要上传的文件不会被重命名。</strong></p>
+<p>2.这里和上一关其实是有关联的，我们需要打开一些配置：<br><img src="https://img-blog.csdnimg.cn/20191103203156499.png" alt="在这里插入图片描述"></p>
+<p>如图，加入前面加入**#**就是对配置内容注释或者说关闭。（这里关闭的是我们之前添加的）</p>
+<p>所以才可以使我们这关能解析：</p>
+<p>原理：</p>
+<p>可以试试<code>apache</code>的解析漏洞，<code>test.php.xxxx.yyy</code>这种不认识的后缀名会从右往左依次解析，不认识就往左移一个，像这个就会当作<code>test.php</code>处理</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304164704931.png?raw=true" alt="image-20210304164704931.png"></p>
+<h3 id="法二：-htaccess绕过"><a href="#法二：-htaccess绕过" class="headerlink" title="法二：.htaccess绕过"></a>法二：.htaccess绕过</h3><p>先介绍一下什么是**.htaccess<strong>文件：<br>htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、</strong>改变文件扩展名**、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能。</p>
+<p>使用条件：</p>
+<p>1.htaccess文件可以上传（eg:这一关的黑名单里就没有）</p>
+<p>2.php的版本足够低就如开篇所言，而且必须不含nts。</p>
+<img src="https://www.zhaosimeng.cn/content/uploadfile/202003/62bf1583392577.jpg" alt="11.jpg" style="zoom:50%;">
+
+<p>3.需要配置httpd.conf文件内容：</p>
+<p>推荐链接：<a target="_blank" rel="noopener" href="https://www.zhaosimeng.cn/ldbk/55.html%E3%80%82">https://www.zhaosimeng.cn/ldbk/55.html。</a></p>
+<p>接下来就是简单粗暴的进行了。</p>
+<p>1.创建一个记事本(或者其他可以编辑的)输入一下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SetHandler application&#x2F;x-httpd-php（这段代码比较莽，作用是将同一文件夹下的所有文件当成php文件解析，也可以去网上搜一下针对性的）</span><br></pre></td></tr></table></figure>
+
+<p>2.将刚刚的文件名改为    .htaccess    没错，除了后缀都不要。（如下，刚刚生成的应该是白纸，但我这里已经选择了打开方式，所以变成这样）</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304170057447.png?raw=true" alt="image-20210304170057447.png"></p>
+<p>3.上传该文件，如何上传包含代码的jpg文件。</p>
+<p>4.测验。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304170231765.png?raw=true" alt="image-20210304170231765.png"></p>
+<h1 id="Pass-05-大小写绕过"><a href="#Pass-05-大小写绕过" class="headerlink" title="Pass-05    大小写绕过"></a>Pass-05    大小写绕过</h1><h2 id="代码分析：-4"><a href="#代码分析：-4" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$file_name = deldot($file_name);<span class="comment">//删除文件名末尾的点</span></span><br><span class="line">$file_ext = strrchr($file_name, <span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">$file_ext = str_ireplace(<span class="string">&#x27;::$DATA&#x27;</span>, <span class="string">&#x27;&#x27;</span>, $file_ext);<span class="comment">//去除字符串::$DATA</span></span><br><span class="line">$file_ext = trim($file_ext); <span class="comment">//首尾去空</span></span><br></pre></td></tr></table></figure>
+
+<p>和Pass-03的五个处理相比是不是发现少了一个，但其他的都没变。那么显而易见少的那个处理就是突破口。</p>
+<h2 id="实际操作：-3"><a href="#实际操作：-3" class="headerlink" title="实际操作："></a>实际操作：</h2><p>我么经过代码分析之后发现少了转化为小写的处理，因此尝试大小写绕过：<br>1.上传包含代码的jpg文件。</p>
+<p>2.使用Burp抓包，进行修改：</p>
+<p>eg: hack.jpg-&gt;hack.PHp(这里大小写位置随意，但别全小写🐶)</p>
+<p>3.测验。</p>
+<h1 id="Pass-06-空格绕过"><a href="#Pass-06-空格绕过" class="headerlink" title="Pass-06    空格绕过"></a>Pass-06    空格绕过</h1><h2 id="代码分析：-找不同"><a href="#代码分析：-找不同" class="headerlink" title="代码分析：    找不同"></a>代码分析：    找不同</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$file_ext &#x3D; trim($file_ext); &#x2F;&#x2F;首尾去空</span><br></pre></td></tr></table></figure>
+
+<p>这次不用的是首位去空，那么我有一个大胆的想法。</p>
+<h2 id="实际操作：-4"><a href="#实际操作：-4" class="headerlink" title="实际操作："></a>实际操作：</h2><p>1.上传文件（突然发现既然都要改包了，上传啥都可以，只要含代码）。</p>
+<p>2.改包：</p>
+<p>eg:    hack.jpg-&gt;hack.php (记得最后这里是有空格的)</p>
+<p>3.测验</p>
+<h1 id="Pass-07-绕过"><a href="#Pass-07-绕过" class="headerlink" title="Pass-07    .绕过"></a>Pass-07    <code>.</code>绕过</h1><h2 id="找不同："><a href="#找不同：" class="headerlink" title="找不同："></a>找不同：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$file_name &#x3D; deldot($file_name);&#x2F;&#x2F;删除文件名末尾的点</span><br></pre></td></tr></table></figure>
+
+<h3 id="基操："><a href="#基操：" class="headerlink" title="基操："></a>基操：</h3><p>eg:    hack.jpg-&gt;hack.php.</p>
+<h1 id="Pass-08-DATA绕过-Windows文件流特性绕过"><a href="#Pass-08-DATA绕过-Windows文件流特性绕过" class="headerlink" title="Pass-08    ::$DATA绕过|Windows文件流特性绕过"></a>Pass-08    ::$DATA绕过|Windows文件流特性绕过</h1><h2 id="找不同：-1"><a href="#找不同：-1" class="headerlink" title="找不同："></a>找不同：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$file_ext &#x3D; str_ireplace(&#39;::$DATA&#39;, &#39;&#39;, $file_ext);&#x2F;&#x2F;去除字符串::$DATA</span><br></pre></td></tr></table></figure>
+
+<p>先来点简单的解释：</p>
+<p>在php+windows的情况下：如果文件名+”::$DATA”会把::$DATA之后的数据当成文件流处理,不会检测后缀名.且保持”::$DATA”之前的文件名。利用windows特性，可在后缀名中加” ::$DATA”绕过：</p>
+<p>再来点掉头发的：</p>
+<p>参考链接：<br><a target="_blank" rel="noopener" href="https://baynk.blog.csdn.net/article/details/102888584">https://baynk.blog.csdn.net/article/details/102888584</a></p>
+<h2 id="实际操作：-5"><a href="#实际操作：-5" class="headerlink" title="实际操作："></a>实际操作：</h2><p>差不多相似，注意点</p>
+<p>1.改包时：</p>
+<p>hack.jpg-&gt;hack.php::$data(注意要在英文输入法下)</p>
+<p>2.不会真的有人直接复制地址就访问吧，他一定知道要去掉后面的::$data；</p>
+<p>不然他就是大佬会用    <code>dir /r</code>来查看。(我不懂)</p>
+<h1 id="Pass-09-点-空格-点绕过-双写后缀特殊符号绕过"><a href="#Pass-09-点-空格-点绕过-双写后缀特殊符号绕过" class="headerlink" title="Pass-09    点+空格+点绕过|双写后缀特殊符号绕过"></a>Pass-09    点+空格+点绕过|双写后缀特殊符号绕过</h1><h2 id="代码分析：找不出不同"><a href="#代码分析：找不出不同" class="headerlink" title="代码分析：找不出不同"></a>代码分析：找不出不同</h2><p>直接五个处理上齐了，但既然大家都学过C语言，那么我们知道代码的执行时有顺序的比如这五个处理：</p>
+<p>先删去首尾的点，找到目前最后一个点的位置，将后面的内容赋值给$file_ext,将其内容全部转化为小写，并去除首尾空格。</p>
+<p>那我们为什么不能使用空格点呢？</p>
+<p>eg:hack.php .,首先去除末尾的点-&gt;hack.php ，strrchr（）函数的定义-&gt;$file_ext=php 。</p>
+<p>接下来转化大小写，再去除首位空格-&gt;php，最后根据in_array函数判断出$file_ext中存在黑名单的数，返回失败。</p>
+<p>如果时点空格呢，那根据我们的推演，上传的不是空白（甚至连空白都没有）吗，但根据inarray的定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">in_array(search,array,type)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">search</td>
+<td align="left">必需。规定要在数组搜索的值。</td>
+</tr>
+<tr>
+<td align="left">array</td>
+<td align="left">必需。规定要搜索的数组。</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">可选。如果设置该参数为 true，则检查搜索的数据与数组的值的类型是否相同。</td>
+</tr>
+</tbody></table>
+<p>这个必需的空我们没有填充。</p>
+<h2 id="基操：-1"><a href="#基操：-1" class="headerlink" title="基操："></a>基操：</h2><p>hack.php-&gt;hack.php. .</p>
+<h1 id="Pass-10-双写后缀名绕过"><a href="#Pass-10-双写后缀名绕过" class="headerlink" title="Pass-10    双写后缀名绕过"></a>Pass-10    双写后缀名绕过</h1><h2 id="代码分析：-5"><a href="#代码分析：-5" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (file_exists(UPLOAD_PATH)) &#123;</span><br><span class="line">        $deny_ext &#x3D; array(&quot;php&quot;,&quot;php5&quot;,&quot;php4&quot;,&quot;php3&quot;,&quot;php2&quot;,&quot;html&quot;,&quot;htm&quot;,&quot;phtml&quot;,&quot;pht&quot;,&quot;jsp&quot;,&quot;jspa&quot;,&quot;jspx&quot;,&quot;jsw&quot;,&quot;jsv&quot;,&quot;jspf&quot;,&quot;jtml&quot;,&quot;asp&quot;,&quot;aspx&quot;,&quot;asa&quot;,&quot;asax&quot;,&quot;ascx&quot;,&quot;ashx&quot;,&quot;asmx&quot;,&quot;cer&quot;,&quot;swf&quot;,&quot;htaccess&quot;,&quot;ini&quot;);</span><br><span class="line"></span><br><span class="line">        $file_name &#x3D; trim($_FILES[&#39;upload_file&#39;][&#39;name&#39;]);</span><br><span class="line">        $file_name &#x3D; str_ireplace($deny_ext,&quot;&quot;, $file_name);</span><br><span class="line">        $temp_file &#x3D; $_FILES[&#39;upload_file&#39;][&#39;tmp_name&#39;];</span><br><span class="line">        $img_path &#x3D; UPLOAD_PATH.&#39;&#x2F;&#39;.$file_name;   </span><br></pre></td></tr></table></figure>
+
+<p>str_ireplace（）这个函数熟不熟悉，替换将上传文件后缀中与黑名单相同的字符替换为空（或者说删去）。</p>
+<p>那么我们可以推演一下如果后缀为pphphp那么经过处理后-&gt;是不是就变为了php。</p>
+<h2 id="实际操作：-6"><a href="#实际操作：-6" class="headerlink" title="实际操作："></a>实际操作：</h2><p>eg:    hack.php-&gt;hack.pphphp（因为字符的读取是从左到右的，就如数组的顺序一样）</p>
+<h1 id="Pass-11-00截断"><a href="#Pass-11-00截断" class="headerlink" title="Pass-11    %00截断"></a>Pass-11    %00截断</h1><h2 id="代码分析：-6"><a href="#代码分析：-6" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ext_arr &#x3D; array(&#39;jpg&#39;,&#39;png&#39;,&#39;gif&#39;);	这次的判断是白名单了</span><br><span class="line">$img_path &#x3D; $_GET[&#39;save_path&#39;].&quot;&#x2F;&quot;.rand(10, 99).date(&quot;YmdHis&quot;).&quot;.&quot;.$file_ext;</span><br></pre></td></tr></table></figure>
+
+<p>但$img_path是直接拼接，因此可以利用%00截断绕过。|存的路径出现在了<code>url</code>中，可以直接采用<code>%00</code>截断。</p>
+<p>使用%00截断的条件：<br>1.php版本小于5.3.4。</p>
+<p>2.php的magic_quotes_gpc为OFF状态</p>
+<h2 id="实际操作：-7"><a href="#实际操作：-7" class="headerlink" title="实际操作："></a>实际操作：</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304191539984.png?raw=true" alt="image-20210304191539984.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;upload-labs-master&#x2F;upload&#x2F;hack.php%EF%BF%BD&#x2F;7220210304191341.jpg</span><br></pre></td></tr></table></figure>
+
+<p>这是最后的出来的图片地址，发现后缀很多，但我们发现%EF%BF%BD很奇怪，应该是%00的解码了吧，因此我们删除其及其后面的内容再次访问即可</p>
+<h1 id="Pass-12-0x00截断"><a href="#Pass-12-0x00截断" class="headerlink" title="Pass-12    0x00截断"></a>Pass-12    0x00截断</h1><h2 id="代码分析：-7"><a href="#代码分析：-7" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$img_path &#x3D; $_POST[&#39;save_path&#39;].&quot;&#x2F;&quot;.rand(10, 99).date(&quot;YmdHis&quot;).&quot;.&quot;.$file_ext;</span><br></pre></td></tr></table></figure>
+
+<p>这题和上一题基本一样，只是<code>save_path</code>不在<code>URL</code>中了，而在<code>POST</code>数据里面，由于<code>POST</code>里面的数据不会被<code>url自动解码</code>，所以要稍微改变一下。</p>
+<h2 id="实际操作：-8"><a href="#实际操作：-8" class="headerlink" title="实际操作："></a>实际操作：</h2><h3 id="法一："><a href="#法一：" class="headerlink" title="法一："></a>法一：</h3><p>1.改包：</p>
+<p><img src="https://img-blog.csdnimg.cn/20191104113400834.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9iYXluay5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>首先，先改好路径，然后再路径后面加上一个字符，什么字符都可以，这里我为了方便用<code>+</code>号。</p>
+<p>为什么要这样呢？</p>
+<p>因为等等我们会看16进制的编码我们无法分析我们要在哪里截断（因为POST不会被url自动解析）</p>
+<p>2.然后再点击<code>Hex</code>，找到对应<code>+</code>的十六进制数据<code>2b</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/2019110411345913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9iYXluay5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>3.直接双击<code>2b</code>改为<code>00</code>再切回到<code>RAW</code>，查看报文。</p>
+<p><img src="https://img-blog.csdnimg.cn/201911041136110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9iYXluay5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>4.发送，测试。（记得修改URL）</p>
+<h3 id="法二："><a href="#法二：" class="headerlink" title="法二："></a>法二：</h3><p>这里我们可以主动使用URL编译，不用去改进制，打出%00后选中如下图（或者使用快捷键ctrl+shift+u）</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/2021-03-04%20(11).png?raw=true" alt="2021-03-04 (11).png"></p>
+<h1 id="Pass-13-图片马绕过"><a href="#Pass-13-图片马绕过" class="headerlink" title="Pass-13    图片马绕过"></a>Pass-13    图片马绕过</h1><h2 id="代码分析：-8"><a href="#代码分析：-8" class="headerlink" title="代码分析："></a>代码分析：</h2><p>这关不仅我们需要代码分析，我们还要先审题发现这关还有文件包含漏洞。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$bin &#x3D; fread($file, 2); &#x2F;&#x2F;只读2字节</span><br></pre></td></tr></table></figure>
+
+<p>因此我们可以利用两个漏洞：<br>1.文件的类型是依据内容开头的两个字节判断的，因此我们可以修改内容来绕过。</p>
+<p>所以我们需要了解一些内容：GIF的头GIF98a</p>
+<p>2.我们可以利用上传漏洞来解析上传的图片马。</p>
+<h2 id="实际操作：-9"><a href="#实际操作：-9" class="headerlink" title="实际操作："></a>实际操作：</h2><p>方法一：</p>
+<p>我们创造一个新的记事本，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GIF98a		这一句就是利用只读两个字节，来绕过使得它看起来是gif文件</span><br><span class="line">This is pass13	</span><br><span class="line">&lt;?php phpinfo(); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后直接上传这个文件就可以了</p>
+<p>然后接下来有两个做法：<br>A.我们去httpd-conf配置文件内，如pass-03一样加入一个 .gif解析。</p>
+<p>B.使用文件包含漏洞：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost&#x2F;upload-labs-master&#x2F;include.php?file&#x3D;upload&#x2F;3820210304221838.gif</span><br></pre></td></tr></table></figure>
+
+<p>就可以直接解析了</p>
+<p>法二：</p>
+<p>合成图片码：详细可以看我的DVWA-upload。</p>
+<p>然后使用文件包含漏洞即可。</p>
+<h1 id="Pass-14"><a href="#Pass-14" class="headerlink" title="Pass-14"></a>Pass-14</h1><h2 id="代码分析：getimagesize"><a href="#代码分析：getimagesize" class="headerlink" title="代码分析：getimagesize()"></a>代码分析：getimagesize()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$info &#x3D; getimagesize($filename);</span><br><span class="line">$ext &#x3D; image_type_to_extension($info[2]);</span><br></pre></td></tr></table></figure>
+
+<p>getimagesize()` 函数用于获取图像大小及相关信息，成功返回一个数组，失败则返回 FALSE 并产生一条 E_WARNING 级的错误信息。</p>
+<p>此关判断图片类型的标准是依据<code>getimagesize()</code> 函数，因此实际上变化不大。</p>
+<h2 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h2><p>法一：继续使用伪造的gif图。</p>
+<p>法二：图片码。</p>
+<p>当然上述两种方法都要使用文件包含漏洞（法一不建议直接修改配置文件）</p>
+<h1 id="Pass-15-exif-imagetype"><a href="#Pass-15-exif-imagetype" class="headerlink" title="Pass-15    exif_imagetype()"></a>Pass-15    exif_imagetype()</h1><h2 id="代码分析：-9"><a href="#代码分析：-9" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;需要开启php_exif模块</span><br><span class="line">    $image_type &#x3D; exif_imagetype($filename);</span><br></pre></td></tr></table></figure>
+
+<p><code>exif_imagetype()</code>此函数需要开启<code>php</code>的<code>exif</code>模块，属于<code>php</code>的内置函数，用于读取一个图像的第一个字节并检查其签名。</p>
+<h2 id="实际操作：-10"><a href="#实际操作：-10" class="headerlink" title="实际操作："></a>实际操作：</h2><p>同上面两关一样。</p>
+<h1 id="Pass-16-二次渲染绕过"><a href="#Pass-16-二次渲染绕过" class="headerlink" title="Pass-16    二次渲染绕过"></a>Pass-16    二次渲染绕过</h1><h2 id="代码解析："><a href="#代码解析：" class="headerlink" title="代码解析："></a>代码解析：</h2><p>我直接没看懂，但网上说大概就是判断了后缀名、content-type，以及利用imagecreatefromgif判断是否为gif图片，最后再做了一次二次渲染。（二次渲染就是，我们上传的内容有一部分会被修改，也正因为是一部分被修改，所以我们可以上传后再下载回来观察哪一部分没有被修改，按照这个规律把代码写在没被修改的地方然后在上传达到绕过的效果）。</p>
+<h2 id="实际操作：（我没成功🐶，不好意思解析）"><a href="#实际操作：（我没成功🐶，不好意思解析）" class="headerlink" title="实际操作：（我没成功🐶，不好意思解析）"></a>实际操作：（我没成功🐶，不好意思解析）</h2><p>我直接上参考链接：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2657#toc-13">https://xz.aliyun.com/t/2657#toc-13</a></p>
+<p>人在床上躺，知识心中涨。</p>
+<h1 id="Pass-17-条件竞争"><a href="#Pass-17-条件竞争" class="headerlink" title="Pass-17    条件竞争"></a>Pass-17    条件竞争</h1><h2 id="代码分析：-10"><a href="#代码分析：-10" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if(move_uploaded_file($temp_file, $upload_file))&#123;</span><br><span class="line">        if(in_array($file_ext,$ext_arr))&#123;</span><br><span class="line">             $img_path &#x3D; UPLOAD_PATH . &#39;&#x2F;&#39;. rand(10, 99).date(&quot;YmdHis&quot;).&quot;.&quot;.$file_ext;</span><br><span class="line">             rename($upload_file, $img_path);</span><br><span class="line">             $is_upload &#x3D; true;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            $msg &#x3D; &quot;只允许上传.jpg|.png|.gif类型文件！&quot;;</span><br><span class="line">            unlink($upload_file);</span><br></pre></td></tr></table></figure>
+
+<p>它怎么敢的呀，我们都知道代码是按顺序执行的，我们可以看到这里先执行的是移动指令，也就是先把我们的文件上传（先不管是不是在白名单里），然后才进行名单的判断。</p>
+<p>也正是利用了这点，只要我们不断的上传这样就可以使得我们上传的文件有那么短暂的瞬间被留在了upload的文件夹里，那就可以使用蚁剑连接了。</p>
+<h2 id="上竞争："><a href="#上竞争：" class="headerlink" title="上竞争："></a>上竞争：</h2><p>1.上传有一句话木马文件。</p>
+<p>2.使用burp suite暴力上传（我这么说的）</p>
+<p>3.进入burp界面后使用快捷键ctrl+i进入Intruder界面-&gt;点击payload</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304224631487.png?raw=true" alt="image-20210304224631487.png"></p>
+<p>先选择type后记得要勾选下面的continue indefinitely然后就可以start。</p>
+<p>4.接下来就是检测了，我这里是用网页跳转来判断（我的代码写的是phpinfo，因为我也没连上蚁剑）。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304225043903.png?raw=true" alt="image-20210304225043903.png"></p>
+<p>这里我们也可以直接一直重复刷新网页（操作一样），就会发现左边的跳转有时候是会成功的。</p>
+<p>这里还有一个参考链接：<a target="_blank" rel="noopener" href="https://baynk.blog.csdn.net/article/details/102910267">https://baynk.blog.csdn.net/article/details/102910267</a></p>
+<h1 id="Pass-18-条件竞争2"><a href="#Pass-18-条件竞争2" class="headerlink" title="Pass-18    条件竞争2"></a>Pass-18    条件竞争2</h1><h2 id="代码分析：-11"><a href="#代码分析：-11" class="headerlink" title="代码分析："></a>代码分析：</h2><p>又是一大串，然后我总结了一下网上的说法，这一关先检查了后缀（所以上传图片马，当然不要忘记了我们伪造的gif，这一关为了检测是否成功我迫不得已修改了配置，使得gif可以在网页上解析）。</p>
+<p>然后保存，再改名。</p>
+<h2 id="实际操作：-11"><a href="#实际操作：-11" class="headerlink" title="实际操作："></a>实际操作：</h2><p>法一：和pass-17一样，但上传的是图片马，然后利用文件包含漏洞（这里没有别的地方没有🐎），或者直接修改配置文件加入 .php.jpg这样的。</p>
+<p>法二：修改配置上传gif马</p>
+<h1 id="Pass-19-绕过-00截断"><a href="#Pass-19-绕过-00截断" class="headerlink" title="Pass-19    /.绕过|00截断"></a>Pass-19    /.绕过|00截断</h1><h2 id="代码分析：-12"><a href="#代码分析：-12" class="headerlink" title="代码分析："></a>代码分析：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (move_uploaded_file($temp_file, $img_path)) &#123;</span><br></pre></td></tr></table></figure>
+
+<p>1.发现move_uploaded_file()函数中的img_path是由post参数save_name控制的，因此可以在save_name利用00截断绕过。</p>
+<p>2.<code>move_uploaded_file()</code>还有这么一个特性，会忽略掉文件末尾的<code>/.</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/20191105150244851.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9iYXluay5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>结合上面的两个漏洞。</p>
+<h2 id="实际操作：-12"><a href="#实际操作：-12" class="headerlink" title="实际操作："></a>实际操作：</h2><p>法一：</p>
+<p>1.抓包后修改</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304230654691.png?raw=true" alt="image-20210304230654691.png"></p>
+<p>2.测验，记得修改url。</p>
+<p>法二：</p>
+<p>1.直接修改<br><img src="https://img-blog.csdnimg.cn/20191105151141852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9iYXluay5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>2.测试（直接访问地址即可，访问地址时，后面的<code>/.</code>加不加都可以，服务器后面是没有这个<code>/.</code>的）</p>
+<h1 id="Pass-20-数组-绕过"><a href="#Pass-20-数组-绕过" class="headerlink" title="Pass-20    数组+/.绕过"></a>Pass-20    数组+/.绕过</h1><h2 id="代码分析-实际操作："><a href="#代码分析-实际操作：" class="headerlink" title="代码分析+实际操作："></a>代码分析+实际操作：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">explode(a,b)函数以a为分割，把b转为数组。</span><br><span class="line">reset()函数把数组内部指针移动到数组第一个元素，并返回值。</span><br><span class="line">end() 把数组内部指针移动到数组最后一个元素，并返回值。</span><br><span class="line">count()函数数组元素的数量。</span><br><span class="line">通过$file_name &#x3D; reset($file) . &#39;.&#39; . $file[count($file) - 1];可以知道最终的文件名是由数组的第一个和最后一个元素拼接而成。</span><br></pre></td></tr></table></figure>
+
+<p>实话一顿操作没看懂，但我了解了部分核心内容。</p>
+<p>比如说这里的上传文件是要被重命名的，但这个重命名的方式有点不一样，它不是直接找到最后一位而是利用了数组中的n-1（因为数组是从0开始的）按道理这样其实也没错啊，但别忘了我们是可以抓包修改的，先看看抓到的包里有啥。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304231233059.png?raw=true" alt="image-20210304231233059.png"></p>
+<p>发现没有，结合一下我们的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$file_name &#x3D; reset($file) . &#39;.&#39; . $file[count($file) - 1];</span><br><span class="line">这里的save_name就是那个数组，居然可以被抓包那么我们就可以修改它</span><br></pre></td></tr></table></figure>
+
+<p>那么如果我们明明这里只有一个数组，那当我们还加入了一个数组为save_name[2]，然后空了一个save_name[1]，这样的话save_name[0]和save_name[1]结合会是上面呢-&gt;那肯定就是save_name[0]本身了啊，因为save_name[1]这个实际上都不存在（这也是为什么代码中不直接使用end函数来确定最好一个数组位然后结合，因为这样好像对我来说就找不到漏洞了）。</p>
+<p>因此我们直接修改包的内容如下：</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/image-20210304232625971.png?raw=true" alt="image-20210304232625971.png"></p>
+<p>这里有两个注意点：</p>
+<p>1.我们最初上传的要是白名单类型（因为这里上传后的文件是会被重命名的）</p>
+<p>2.要注意数组的内容是要复制全部的如上面一样复制四行，从content这行开始（虽然有一行为空）</p>
+<p>3.要注意先后顺序。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/03/04/upload-lab/">http://example.com/2021/03/04/upload-lab/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/02/28/DVWA-%E6%B3%A8%E5%85%A5/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">DVWA-注入</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
