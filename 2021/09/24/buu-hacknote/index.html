@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>buu-hacknote | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="pwnable_hacknotechecksec并查看运行流程  32位的程序，没有开启pie且arch为部分开启状态，可修改got表   经典的菜单题目，没有了edit功能 利用IDA查看分析  这是我整理过后的大概程序内容： 我们一个个的函数进行分析 ADD  这里我们先看看最初的定义，这里循环只会进行5次也就是add函数最只能被调用五次 并且我们看看add函数的时候是怎么malloc的： 首">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>buu-hacknote | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="pwnable_hacknotechecksec并查看运行流程 32位的程序，没有开启pie且arch为部分开启状态，可修改got表  经典的菜单题目，没有了edit功能 利用IDA查看分析 这是我整理过后的大概程序内容： 我们一个个的函数进行分析 ADD 这里我们先看看最初的定义，这里循环只会进行5次也就是add函数最只能被调用五次 并且我们看看add函数的时候是怎么malloc的： 首先，我们">
 <meta property="og:type" content="article">
 <meta property="og:title" content="buu-hacknote">
 <meta property="og:url" content="http://example.com/2021/09/24/buu-hacknote/index.html">
 <meta property="og:site_name" content="墨水彩笔">
-<meta property="og:description" content="pwnable_hacknotechecksec并查看运行流程  32位的程序，没有开启pie且arch为部分开启状态，可修改got表   经典的菜单题目，没有了edit功能 利用IDA查看分析  这是我整理过后的大概程序内容： 我们一个个的函数进行分析 ADD  这里我们先看看最初的定义，这里循环只会进行5次也就是add函数最只能被调用五次 并且我们看看add函数的时候是怎么malloc的： 首">
+<meta property="og:description" content="pwnable_hacknotechecksec并查看运行流程 32位的程序，没有开启pie且arch为部分开启状态，可修改got表  经典的菜单题目，没有了edit功能 利用IDA查看分析 这是我整理过后的大概程序内容： 我们一个个的函数进行分析 ADD 这里我们先看看最初的定义，这里循环只会进行5次也就是add函数最只能被调用五次 并且我们看看add函数的时候是怎么malloc的： 首先，我们">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
 <meta property="article:published_time" content="2021-09-24T05:59:14.000Z">
-<meta property="article:modified_time" content="2021-09-25T08:17:31.264Z">
+<meta property="article:modified_time" content="2021-10-17T08:16:33.985Z">
 <meta property="article:author" content="徐小宇">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/09/24/buu-hacknote/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
@@ -79,7 +79,7 @@ var saveToLocal = {
   isHome: false,
   isHighlightShrink: false,
   isSidebar: true,
-  postUpdate: '2021-09-25 16:17:31'
+  postUpdate: '2021-10-17 16:16:33'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -141,42 +141,34 @@ var saveToLocal = {
     if (t === 'dark') activateDarkMode()
     else if (t === 'light') activateLightMode()
   }
-})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">43</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pwnable-hacknote"><span class="toc-number">1.</span> <span class="toc-text">pwnable_hacknote</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec%E5%B9%B6%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">checksec并查看运行流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E6%9F%A5%E7%9C%8B%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">利用IDA查看分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ADD"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">ADD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DELETE"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">DELETE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#show"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">show</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E6%88%91%E4%BB%AC%E7%9A%84%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">实践我们的解读</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">1.4.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E7%A3%A8%E7%BB%86%E8%8A%82"><span class="toc-number">1.5.</span> <span class="toc-text">打磨细节</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">buu-hacknote</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-09-24T05:59:14.000Z" title="Created 2021-09-24 13:59:14">2021-09-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-09-25T08:17:31.264Z" title="Updated 2021-09-25 16:17:31">2021-09-25</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="pwnable-hacknote"><a href="#pwnable-hacknote" class="headerlink" title="pwnable_hacknote"></a>pwnable_hacknote</h1><h2 id="checksec并查看运行流程"><a href="#checksec并查看运行流程" class="headerlink" title="checksec并查看运行流程"></a>checksec并查看运行流程</h2><img src="/2021/09/24/buu-hacknote/09/24/buu-hacknote/image-20210924140037257.png" class title="image-20210924140037257">
-
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">43</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pwnable-hacknote"><span class="toc-number">1.</span> <span class="toc-text">pwnable_hacknote</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec%E5%B9%B6%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">checksec并查看运行流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E6%9F%A5%E7%9C%8B%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">利用IDA查看分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ADD"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">ADD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DELETE"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">DELETE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#show"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">show</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E6%88%91%E4%BB%AC%E7%9A%84%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">实践我们的解读</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">1.4.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E7%A3%A8%E7%BB%86%E8%8A%82"><span class="toc-number">1.5.</span> <span class="toc-text">打磨细节</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">buu-hacknote</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-09-24T05:59:14.000Z" title="Created 2021-09-24 13:59:14">2021-09-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-10-17T08:16:33.985Z" title="Updated 2021-10-17 16:16:33">2021-10-17</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="pwnable-hacknote"><a href="#pwnable-hacknote" class="headerlink" title="pwnable_hacknote"></a>pwnable_hacknote</h1><h2 id="checksec并查看运行流程"><a href="#checksec并查看运行流程" class="headerlink" title="checksec并查看运行流程"></a>checksec并查看运行流程</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210924140037257.png?raw=true" alt="image-20210924140037257.png"></p>
 <p>32位的程序，没有开启pie且arch为部分开启状态，可修改got表</p>
-<img src="/2021/09/24/buu-hacknote/09/24/buu-hacknote/image-20210924140053972.png" class title="image-20210924140053972">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210924140053972.png?raw=true" alt="image-20210924140053972.png"></p>
 <p>经典的菜单题目，没有了edit功能</p>
-<h2 id="利用IDA查看分析"><a href="#利用IDA查看分析" class="headerlink" title="利用IDA查看分析"></a>利用IDA查看分析</h2><img src="/2021/09/24/buu-hacknote/image-20210924140207855.png" alt="image-20210924140207855" style="zoom:50%;">
-
+<h2 id="利用IDA查看分析"><a href="#利用IDA查看分析" class="headerlink" title="利用IDA查看分析"></a>利用IDA查看分析</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210924140207855.png?raw=true" alt="image-20210924140207855.png"></p>
 <p>这是我整理过后的大概程序内容：</p>
 <p>我们一个个的函数进行分析</p>
-<h4 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h4><img src="/2021/09/24/buu-hacknote/image-20210924152119287.png" alt="image-20210924152119287" style="zoom:50%;">
-
+<h4 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h4><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210924152119287.png?raw=true" alt="image-20210924152119287.png"></p>
 <p>这里我们先看看最初的定义，这里循环只会进行5次也就是add函数最只能被调用五次</p>
 <p>并且我们看看add函数的时候是怎么malloc的：</p>
 <p>首先，我们看到这里先malloc了8字节的头，这里面存放的内容是0x804862b—-这里是调用Puts的函数，因为是32位的程序，所以占用了前4个字节的是puts的指针，后4个字节的内容存放的是我们接下来输入的size的内容，也就是我们等等输入内容的地址</p>
 <p>我们进入gdb中看看具体什么样子</p>
-<img src="/2021/09/24/buu-hacknote/09/24/buu-hacknote/image-20210924152859607.png" class title="image-20210924152859607">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210924152859607.png?raw=true" alt="image-20210924152859607.png"></p>
 <p>我们看到这里虽然我们只add一次但却产生了两个堆块，第一个就是我们说的首先产生头文件（自己创的名字），并且这个堆的内容中前四个字节是0x804862b即我们在IDA中看到的Puts指针为了调用puts函数，而后四个字节是0x804b018，对应着我们下一个堆的地址+0x8，这里的0x8是因为每个堆都有一个堆头，而32位的堆头是0x8字节</p>
 <p>那么总结下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add时：首先产生一个0x10的堆，其内容中前0x8字节存放puts指针；后0x8字节存放content内容的地址（方便puts）</span><br><span class="line">	   然后再生成存放content内容的地址</span><br></pre></td></tr></table></figure>
 
-<h4 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h4><img src="/2021/09/24/buu-hacknote/image-20210925153257108.png" alt="image-20210925153257108" style="zoom:50%;">
-
+<h4 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h4><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210925153257108.png?raw=true" alt="image-20210925153257108.png"></p>
 <p>我们看到delete删除函数，中删除后没有将指针清零。这种现象我们称之为指针悬挂</p>
 <p>并且这里删除的顺序是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">首先删除第二个堆块也就是我们存放content的堆块，再删除0x10大小的堆块</span><br></pre></td></tr></table></figure>
 
-<h4 id="show"><a href="#show" class="headerlink" title="show"></a>show</h4><img src="/2021/09/24/buu-hacknote/image-20210925153504352.png" alt="image-20210925153504352" style="zoom:50%;">
-
+<h4 id="show"><a href="#show" class="headerlink" title="show"></a>show</h4><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210925153504352.png?raw=true" alt="image-20210925153504352.png"></p>
 <p>show函数没什么特别的，这里要看的就是puts函数是怎么调用的，就是我们调用我们生成的0x10堆块中的指针来达到show的效果</p>
 <h4 id="实践我们的解读"><a href="#实践我们的解读" class="headerlink" title="实践我们的解读"></a>实践我们的解读</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">add(0x18,&#39;1111&#39;) #0</span><br><span class="line">add(0x28,&#39;2222&#39;) #1</span><br><span class="line"></span><br><span class="line">delete(0)</span><br><span class="line">delete(1)</span><br></pre></td></tr></table></figure>
 
 <p>先新建两个堆块再删除两个堆块，按照我们刚刚静态解读来说add的时候应该会建四个堆块，并且删除之后fastbin中的顺序是堆块0的0x10部分先进去再是堆块1的0x10部分</p>
-<img src="/2021/09/24/buu-hacknote/image-20210925154026780.png" alt="image-20210925154026780" style="zoom:50%;">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210925154026780.png?raw=true" alt="image-20210925154026780.png"></p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>存在的漏洞点：<strong>delete（）函数中的指针悬挂</strong>        –        没有开启pie保护</p>
 <p>且0x10堆头中，存在puts指针，我们可以伪造0x10堆头来修改puts地址的内容   </p>
 <p>突破口：<strong>修改got表</strong></p>
@@ -187,8 +179,7 @@ var saveToLocal = {
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">delete(0)</span><br><span class="line">delete(1)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">payload &#x3D; p32(0x804862b) + p32(puts_got)</span><br><span class="line">add(0x8,payload)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">show(0)						--为什么这里show的仍然是堆块0,而不是新生成的堆块的位置</span><br></pre></td></tr></table></figure>
 
 <p>首先这也是为什么指针悬挂漏洞的危害这么高的原因，因为它没有将堆块清零，让我们看看show的定义</p>
-<img src="/2021/09/24/buu-hacknote/image-20210925155539453.png" alt="image-20210925155539453" style="zoom:50%;">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210925155539453.png?raw=true" alt="image-20210925155539453.png"></p>
 <p>我们看到这里只要堆块不是空的就可以show，那么我们生成的堆块内容又没有清零那么结果是怎么样的呢？就是仍可以被Show导致内容被泄露，并且如果我们继续show(0)会造成什么呢？</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show判断过后发现堆块里面还是又内容的所以依旧执行</span><br><span class="line">首先调用前8字节内的show指针   --这里也是关键点，如果我们改为了puts_plt的值是无法运行成功的</span><br><span class="line">调用这个指针去打印出后8字节的内容，系统还误以为是content的内容 --这里也就是泄露地址的原理</span><br></pre></td></tr></table></figure>
 
@@ -197,12 +188,10 @@ var saveToLocal = {
 
 <p>为什么这里delete的是堆块二</p>
 <p>首先我们要看看这个程序是怎么管理堆块的，它是通过一个表单</p>
-<img src="/2021/09/24/buu-hacknote/09/24/buu-hacknote/image-20210925161053530.png" class title="image-20210925161053530">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210925161053530.png?raw=true" alt="image-20210925161053530.png"></p>
 <p>这里的地址是ptr的地址（IDA中存在），可以看到我们现在是拥有三个堆块的</p>
 <p>那么堆块三的内容是什么呢？就是两个0x10的堆块</p>
-<img src="/2021/09/24/buu-hacknote/09/24/buu-hacknote/image-20210925161218005.png" class title="image-20210925161218005">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/buu-hacknote/image-20210925161218005.png?raw=true" alt="image-20210925161218005.png"></p>
 <p>我们Delete后fatsbin中的情况就是这样，是不是有点熟悉</p>
 <p>现在我们是不是有了地址信息，那么故技重施就可以把show指针修改为system函数，然后我们把原本show的内容改为sh就可以实现</p>
 <p>system(sh)来getshell</p>
