@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>墨水彩笔 | 墨水彩笔</title><meta name="author" content="墨水彩笔"><meta name="copyright" content="墨水彩笔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="123title: JAVA序列化与反序列化date: 2022-11-25 18:40:09tags:  JAVA序列化与反序列化12参考链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;mocas_wang&#x2F;article&#x2F;details&#x2F;107621010序列化分为两大部分：序列化和反序列化。序列化是这个过程的第一部分，将数据分解成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="墨水彩笔">
+<meta property="og:url" content="http://example.com/2023/02/10/java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="123title: JAVA序列化与反序列化date: 2022-11-25 18:40:09tags:  JAVA序列化与反序列化12参考链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;mocas_wang&#x2F;article&#x2F;details&#x2F;107621010序列化分为两大部分：序列化和反序列化。序列化是这个过程的第一部分，将数据分解成">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-02-10T11:35:35.087Z">
+<meta property="article:modified_time" content="2023-02-10T13:02:55.698Z">
+<meta property="article:author" content="墨水彩笔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/02/10/java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2023-02-10 21:02:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">67</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">JAVA序列化与反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96ID"><span class="toc-number">1.1.</span> <span class="toc-text">**序列化ID*\***</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%8F%8D%E5%B0%84"><span class="toc-number">2.</span> <span class="toc-text">JAVA反射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">反射的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%88%9B%E9%80%A0%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.1.</span> <span class="toc-text">反射创造对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-number">2.1.2.</span> <span class="toc-text">反射获取类的构造器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8Bdemo%EF%BC%9A"><span class="toc-number">2.1.3.</span> <span class="toc-text">看demo：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.3.1.</span> <span class="toc-text">反射获取类的方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">反射的实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.2.1.</span> <span class="toc-text">反射存在的问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">JAVA动态代理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-number">4.</span> <span class="toc-text">JAVA类的动态加载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">4.0.1.</span> <span class="toc-text">类加载过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-number">4.0.2.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E6%89%A7%E8%A1%8C"><span class="toc-number">4.0.3.</span> <span class="toc-text">协议执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">4.0.4.</span> <span class="toc-text">调用函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CC%E9%93%BE-1"><span class="toc-number">4.1.</span> <span class="toc-text">CC链-1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95"><span class="toc-number">4.1.0.1.</span> <span class="toc-text">调试</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">5.</span> <span class="toc-text">快捷键</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">No title</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-02-10T11:35:35.087Z" title="Created 2023-02-10 19:35:35">2023-02-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-02-10T13:02:55.698Z" title="Updated 2023-02-10 21:02:55">2023-02-10</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: JAVA序列化与反序列化</span><br><span class="line">date: 2022-11-25 18:40:09</span><br><span class="line">tags:</span><br></pre></td></tr></table></figure>
+
+<h1 id="JAVA序列化与反序列化"><a href="#JAVA序列化与反序列化" class="headerlink" title="JAVA序列化与反序列化"></a>JAVA序列化与反序列化</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参考链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;mocas_wang&#x2F;article&#x2F;details&#x2F;107621010</span><br><span class="line">序列化分为两大部分：序列化和反序列化。序列化是这个过程的第一部分，将数据分解成字节流，以便存储在文件中或在网络上传输。反序列化就是打开字节流并重构对象。对象序列化不仅要将基本数据类型转换成字节表示，有时还要恢复数据。恢复数据要求有恢复数据的对象实例。</span><br></pre></td></tr></table></figure>
+
+<p>注意点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.只有实现了Serializable或者Externalizable接口的类的对象才能被序列化为字节序列</span><br><span class="line">2.在反序列化过程中，它的父类如果没有实现序列化接口，那么将需要提供无参构造函数来重新创建对象。</span><br><span class="line">3.一个实现 Serializable 接口的子类也是可以被序列化的。</span><br><span class="line">4. 静态成员变量是不能被序列化</span><br><span class="line">序列化是针对对象的，而静态变量属于类</span><br><span class="line">	静态成员是随着类的加载而加载的，与类共存亡；同一台机器有能够进行输出是因为已经加载了类，如果是远程的话无法进行序列化传输</span><br><span class="line">5. transient 标识的对象成员变量不参与序列化</span><br><span class="line">6.Serializable 在序列化和反序列化过程中大量使用了反射，因此其过程会产生的大量的内存碎片</span><br></pre></td></tr></table></figure>
+
+<p>如果我们的color类没有实现implements接口Serializable，那么color无法被序列化，输出结果是显示为null；加上接口后可以正常显示</p>
+<p>实现方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ObjectOutputStream代表对象输出流：</span><br><span class="line"></span><br><span class="line">它的writeObject(Object obj)方法可对参数指定的obj对象进行序列化，把得到的字节序列写到一个目标输出流中。</span><br><span class="line"></span><br><span class="line">ObjectInputStream代表对象输入流：</span><br><span class="line"></span><br><span class="line">它的readObject()方法从一个源输入流中读取字节序列，再把它们反序列化为一个对象，并将其返回。</span><br></pre></td></tr></table></figure>
+
+<h2 id="序列化ID"><a href="#序列化ID" class="headerlink" title="**序列化ID*\***"></a><strong><em>*</em>*序列化ID*\</strong>***</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这个序列化ID起着关键的作用，它决定着是否能够成功反序列化！java的序列化机制是通过判断运行时类的serialVersionUID来验证版本一致性的，在进行反序列化时，JVM会把传进来的字节流中的serialVersionUID与本地实体类中的serialVersionUID进行比较，如果相同则认为是一致的，便可以进行反序列化，否则就会报序列化版本不一致的异常。</span><br><span class="line"></span><br><span class="line">即序列化ID是为了保证成功进行反序列化</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">serialVersionUID 发生改变有三种情况：</span><br><span class="line"></span><br><span class="line">手动去修改导致当前的 serialVersionUID 与序列化前的不一样。</span><br><span class="line">我们根本就没有手动去写这个 serialVersionUID 常量，那么 JVM 内部会根据类结构去计算得到这个 serialVersionUID 值，在类结构发生改变时(属性增加，删除或者类型修改了)这种也是会导致 serialVersionUID 发生变化。</span><br><span class="line">假如类结构没有发生改变，并且没有定义 serialVersionUID ，但是反序列和序列化操作的虚拟机不一样也可能导致计算出来的 serialVersionUID 不一样。</span><br></pre></td></tr></table></figure>
+
+<h1 id="JAVA反射"><a href="#JAVA反射" class="headerlink" title="JAVA反射"></a>JAVA反射</h1><p>反射的作用:让java具有动态性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Java 的反射机制是指在运行状态中，对于任意一个类都能够知道这个类所有的属性和方法； 并且对于任意一个对象，都能够调用它的任意一个方法；这种动态获取信息以及动态调用对象方法的功能成为Java语言的反射机制。</span><br><span class="line"></span><br><span class="line">反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。</span><br></pre></td></tr></table></figure>
+
+<p>前置知识</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RTTI（Run-Time Type Identification）运行时类型识别，其作用是在运行时识别一个对象的类型和类的信息。</span><br><span class="line"> </span><br><span class="line">一种是传统的RRTI，它假定我们在编译期已知道了所有类型。 另一种是反射机制，它允许我们在运行时发现和使用类的信息。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="反射的基本使用"><a href="#反射的基本使用" class="headerlink" title="反射的基本使用"></a>反射的基本使用</h2><p>获取反射中的Class对象有三种方法。</p>
+<p>第一种，使用 Class.forName 静态方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class class1 &#x3D; Class.forName(&quot;reflection.TestReflection&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>第二种，使用类的.class 方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class class2 &#x3D; TestReflection.class;</span><br></pre></td></tr></table></figure>
+
+<p>第三种，使用实例对象的 getClass() 方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TestReflection testReflection &#x3D; new TestReflection();</span><br><span class="line">Class class3 &#x3D; testReflection.getClass();</span><br></pre></td></tr></table></figure>
+
+<p>代码演示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package org.example;</span><br><span class="line">import java.lang.reflect.*;</span><br><span class="line">import com.sun.corba.se.impl.orb.ParserTable;</span><br><span class="line"></span><br><span class="line">public class TestReflection &#123;</span><br><span class="line">    public static void main(String[] args) throws ClassNotFoundException &#123;</span><br><span class="line">        Class class1 &#x3D; Class.forName(&quot;org.example.TestReflection&quot;);</span><br><span class="line">        System.out.println(class1.getName());</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">        Class class2 &#x3D; TestReflection.class;</span><br><span class="line">        System.out.println(class2.getName());</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">        TestReflection reflect_test1 &#x3D; new TestReflection();</span><br><span class="line">        Class class3 &#x3D; reflect_test1.getClass();</span><br><span class="line">        System.out.println(class3.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意一个点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Class class1 &#x3D; Class.forName(&quot;org.example.TestReflection&quot;);</span><br><span class="line">这里我们forName中的参数要写什么是根据所在目录来编辑的</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="反射创造对象"><a href="#反射创造对象" class="headerlink" title="反射创造对象"></a>反射创造对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;        Class class1 &#x3D; Class.forName(&quot;org.example.BlackCat&quot;);</span><br><span class="line">&#x2F;&#x2F;        BlackCat blackCat &#x3D; (BlackCat) class1.newInstance();</span><br><span class="line">&#x2F;&#x2F;        System.out.println(blackCat);</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;&#x2F;        &#x2F;&#x2F;方式二</span><br><span class="line">&#x2F;&#x2F;        Constructor constructor &#x3D; class1.getConstructor();</span><br><span class="line">&#x2F;&#x2F;        BlackCat blackCat1 &#x3D; (BlackCat) constructor.newInstance();</span><br><span class="line">&#x2F;&#x2F;        System.out.println(blackCat1);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="反射获取类的构造器"><a href="#反射获取类的构造器" class="headerlink" title="反射获取类的构造器"></a>反射获取类的构造器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Class class1 &#x3D; Class.forName(&quot;org.example.BlackCat&quot;);</span><br><span class="line">Constructor[] constructors &#x3D; class1.getConstructors();</span><br><span class="line">for(int i&#x3D;0;i&lt; constructors.length;i++)&#123;</span><br><span class="line">    System.out.println(constructors[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="看demo："><a href="#看demo：" class="headerlink" title="看demo："></a><strong>看demo：</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Class class1 &#x3D; Class.forName(&quot;org.example.Student&quot;);</span><br><span class="line">Field email &#x3D; class1.getField(&quot;email&quot;);</span><br><span class="line">System.out.println(email);</span><br><span class="line"></span><br><span class="line">Field age &#x3D; class1.getField((&quot;age&quot;));</span><br><span class="line">System.out.println(age);</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">即getField(String name) 根据参数变量名，返回一个具体的具有public属性的成员变量，如果该变量不是public属性，则报异常。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="反射获取类的方法"><a href="#反射获取类的方法" class="headerlink" title="反射获取类的方法"></a>反射获取类的方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;反射获取类的方法</span><br><span class="line">Class class1 &#x3D; Class.forName(&quot;org.example.Student&quot;);</span><br><span class="line">Method[] methods &#x3D; class1.getMethods();</span><br><span class="line">for(int i&#x3D;0;i&lt; methods.length;i++)&#123;</span><br><span class="line">    System.out.println(methods[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到输出的方法都是public属性的方法</p>
+
+
+
+
+
+
+<h2 id="反射的实现原理"><a href="#反射的实现原理" class="headerlink" title="反射的实现原理"></a>反射的实现原理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    Class clazz &#x3D; Class.forName(&quot;org.example.TestReflection&quot;);</span><br><span class="line">    Method method &#x3D; clazz.getMethod(&quot;target&quot;,String.class);</span><br><span class="line">    method.invoke(null,&quot;321&quot;);</span><br><span class="line">&#125;</span><br><span class="line">public static void target(String str)&#123;</span><br><span class="line">    new Exception(&quot;#&quot;+str).printStackTrace();</span><br><span class="line">    System.out.println(&quot;invoke target method&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="反射存在的问题"><a href="#反射存在的问题" class="headerlink" title="反射存在的问题"></a>反射存在的问题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Class clazz &#x3D; Class.forName(&quot;org.example.Student&quot;);</span><br><span class="line">&#x2F;&#x2F;特别注意，因为需要调用私有变量这里用的是getDeclaredConstructor而不是getConstructor</span><br><span class="line"> Constructor constructor &#x3D; clazz.getDeclaredConstructor而不是getDeclaredConstructor(String.class);</span><br><span class="line"> constructor.setAccessible(true);</span><br><span class="line"> Student student &#x3D; (Student) constructor.newInstance(&quot;MSCB&quot;);</span><br><span class="line"> student.doHomework(&quot;数学&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">constructor.setAccessible(true); 打破了私有属性的限制</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="JAVA动态代理"><a href="#JAVA动态代理" class="headerlink" title="JAVA动态代理"></a>JAVA动态代理</h1><p>可以理解为如果我们创建的接口需要更新时会要大量修改代码，为了更适合开发我们利用动态代理的方式传入参数来简化同种功能的代码</p>
+<p>,以此来减少代码量</p>
+
+
+
+
+<h1 id="JAVA类的动态加载"><a href="#JAVA类的动态加载" class="headerlink" title="JAVA类的动态加载"></a>JAVA类的动态加载</h1><h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">类加载过程</span><br><span class="line">​ 先在方法区找class信息，有的话直接调用，没有的话则使用类加载器加载到方法区（静态成员放在静态区，非静态成功放在非静态区），静态代码块在类加载时自动执行代码，非静态的不执行；先父类后子类，先静态后非静态；静态方法和非静态方法都是被动调用，即不调用就不执行。</span><br><span class="line"></span><br><span class="line">Java对象创建的几种方式</span><br><span class="line">（new、反射、克隆 ）</span><br></pre></td></tr></table></figure>
+
+<p>类加载的时候会执行代码</p>
+<p>初始化：静态代码块</p>
+<p>实例化：构造代码块、无参构造函数</p>
+<p>动态类加载方法</p>
+<p>Class.forname</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">初始化</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;    Class.forName(&quot;org.example.Person&quot;);</span><br><span class="line"></span><br><span class="line">重写方法，不初始化，第二个参数设置为false</span><br><span class="line">        ClassLoader cl &#x3D; ClassLoader.getSystemClassLoader();</span><br><span class="line">        Class&lt;?&gt; c &#x3D; Class.forName(&quot;org.example.Person&quot;, false, cl);</span><br><span class="line">        c.newInstance();</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>当我们编译class文件的时候，去除package包，保证编译的结果出现在class目录下</p>
+<h3 id="协议执行"><a href="#协议执行" class="headerlink" title="协议执行"></a>协议执行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">file:&#x2F;&#x2F;&#x2F;路径</span><br><span class="line"></span><br><span class="line">http:&#x2F;&#x2F;</span><br><span class="line">利用python 的命令 </span><br><span class="line">python -m http.server 9999			注意该命令在.class文件下执行</span><br><span class="line"></span><br><span class="line">jar协议</span><br><span class="line">jar:file:&#x2F;&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loadClass函数</span><br><span class="line"></span><br><span class="line">ClassLoader.definClass字节码加载任意类</span><br><span class="line"></span><br><span class="line">defineClassMethod.incoke函数</span><br><span class="line"></span><br><span class="line">Unsafe.definClass 字节码加载 public 类不能直接生成 Spring里面可以直接生成</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="CC链-1"><a href="#CC链-1" class="headerlink" title="CC链-1"></a>CC链-1</h2><p>环境配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jdk版本-java se 8u65</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.oracle.com&#x2F;cn&#x2F;java&#x2F;technologies&#x2F;javase&#x2F;javase8-archive-downloads.html</span><br></pre></td></tr></table></figure>
+
+
+
+<p>需要加入马文依赖</p>
+<p>jdk源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">http:&#x2F;&#x2F;hg.openjdk.java.net&#x2F;jdk8u&#x2F;jdk8u&#x2F;jdk&#x2F;rev&#x2F;af660750b2f4  然后点左侧的zip，视频中只需要sun部分</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下载完后解压缩src，把sun放入，通过IDEA放入压缩包，然后在项目结构中添加src，并且在IDEA右上角点击下载项目源，就可以了</p>
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected类只能被该类内调用，因此我们可以找找在哪里被调用</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JAVA如果没有写类型就是defined类型只能在同一个包里面使用</span><br><span class="line">通过反射获取绕过</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">静态方法，反射调用时第一个参数为空即null</span><br><span class="line">无参方法，第二个参数为null</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<p>最后发现我们最终完成后显示序列化危险</p>
+
+
+<p>最终发现是pom.xml中加载版本错误</p>
+<p>因为调试其他的内容所以加载了其他版本</p>
+
+
+<p>CC1对应的漏洞为3.2.1</p>
+<h1 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ctrl + o 快速实现方法（重写）</span><br><span class="line">sout  System.out.println</span><br><span class="line">main  public static void main(String[] args) &#123;  &#125;</span><br><span class="line">alt + enter 快速处理</span><br><span class="line"></span><br><span class="line">Ctrl+Alt+H</span><br><span class="line">显示调用指定Java方法向上的完整调用链的功能</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">墨水彩笔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/02/10/java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/">http://example.com/2023/02/10/java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/01/04/%E5%88%9D%E8%AF%86%E5%85%8D%E6%9D%80/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">初识免杀</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 墨水彩笔</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

