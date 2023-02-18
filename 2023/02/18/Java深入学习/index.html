@@ -7,7 +7,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
 <meta property="article:published_time" content="2023-02-18T08:52:12.000Z">
-<meta property="article:modified_time" content="2023-02-18T08:52:53.184Z">
+<meta property="article:modified_time" content="2023-02-18T09:02:59.499Z">
 <meta property="article:author" content="墨水彩笔">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
@@ -79,7 +79,7 @@ var saveToLocal = {
   isHome: false,
   isHighlightShrink: false,
   isSidebar: true,
-  postUpdate: '2023-02-18 16:52:53'
+  postUpdate: '2023-02-18 17:02:59'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -141,7 +141,7 @@ var saveToLocal = {
     if (t === 'dark') activateDarkMode()
     else if (t === 'light') activateLightMode()
   }
-})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">69</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">JAVA序列化与反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96ID"><span class="toc-number">1.1.</span> <span class="toc-text">序列化ID</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%8F%8D%E5%B0%84"><span class="toc-number">2.</span> <span class="toc-text">JAVA反射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">反射的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%88%9B%E9%80%A0%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.1.</span> <span class="toc-text">反射创造对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-number">2.1.2.</span> <span class="toc-text">反射获取类的构造器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8Bdemo%EF%BC%9A"><span class="toc-number">2.1.3.</span> <span class="toc-text">看demo：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.3.1.</span> <span class="toc-text">反射获取类的方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">反射的实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.2.1.</span> <span class="toc-text">反射存在的问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">JAVA动态代理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-number">4.</span> <span class="toc-text">JAVA类的动态加载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">4.0.1.</span> <span class="toc-text">类加载过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-number">4.0.2.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E6%89%A7%E8%A1%8C"><span class="toc-number">4.0.3.</span> <span class="toc-text">协议执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">4.0.4.</span> <span class="toc-text">调用函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CC%E9%93%BE-1"><span class="toc-number">5.</span> <span class="toc-text">CC链-1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95"><span class="toc-number">5.0.0.1.</span> <span class="toc-text">调试</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CC6"><span class="toc-number">6.</span> <span class="toc-text">CC6</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E7%9A%84exp"><span class="toc-number">6.0.0.1.</span> <span class="toc-text">最终的exp</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">7.</span> <span class="toc-text">快捷键</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Java深入学习（持续更新）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-02-18T08:52:12.000Z" title="Created 2023-02-18 16:52:12">2023-02-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-02-18T08:52:53.184Z" title="Updated 2023-02-18 16:52:53">2023-02-18</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="JAVA序列化与反序列化"><a href="#JAVA序列化与反序列化" class="headerlink" title="JAVA序列化与反序列化"></a>JAVA序列化与反序列化</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参考链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;mocas_wang&#x2F;article&#x2F;details&#x2F;107621010</span><br><span class="line">序列化分为两大部分：序列化和反序列化。序列化是这个过程的第一部分，将数据分解成字节流，以便存储在文件中或在网络上传输。反序列化就是打开字节流并重构对象。对象序列化不仅要将基本数据类型转换成字节表示，有时还要恢复数据。恢复数据要求有恢复数据的对象实例。</span><br></pre></td></tr></table></figure>
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">69</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">JAVA序列化与反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96ID"><span class="toc-number">1.1.</span> <span class="toc-text">序列化ID</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%8F%8D%E5%B0%84"><span class="toc-number">2.</span> <span class="toc-text">JAVA反射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">反射的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%88%9B%E9%80%A0%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.1.</span> <span class="toc-text">反射创造对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-number">2.1.2.</span> <span class="toc-text">反射获取类的构造器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8Bdemo%EF%BC%9A"><span class="toc-number">2.1.3.</span> <span class="toc-text">看demo：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E8%8E%B7%E5%8F%96%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.3.1.</span> <span class="toc-text">反射获取类的方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">反射的实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.2.1.</span> <span class="toc-text">反射存在的问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">JAVA动态代理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JAVA%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-number">4.</span> <span class="toc-text">JAVA类的动态加载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">4.0.1.</span> <span class="toc-text">类加载过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-number">4.0.2.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E6%89%A7%E8%A1%8C"><span class="toc-number">4.0.3.</span> <span class="toc-text">协议执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">4.0.4.</span> <span class="toc-text">调用函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CC%E9%93%BE-1"><span class="toc-number">5.</span> <span class="toc-text">CC链-1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95"><span class="toc-number">5.0.0.1.</span> <span class="toc-text">调试</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CC6"><span class="toc-number">6.</span> <span class="toc-text">CC6</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E7%9A%84exp"><span class="toc-number">6.0.0.1.</span> <span class="toc-text">最终的exp</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">7.</span> <span class="toc-text">快捷键</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Java深入学习（持续更新）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-02-18T08:52:12.000Z" title="Created 2023-02-18 16:52:12">2023-02-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-02-18T09:02:59.499Z" title="Updated 2023-02-18 17:02:59">2023-02-18</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="JAVA序列化与反序列化"><a href="#JAVA序列化与反序列化" class="headerlink" title="JAVA序列化与反序列化"></a>JAVA序列化与反序列化</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参考链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;mocas_wang&#x2F;article&#x2F;details&#x2F;107621010</span><br><span class="line">序列化分为两大部分：序列化和反序列化。序列化是这个过程的第一部分，将数据分解成字节流，以便存储在文件中或在网络上传输。反序列化就是打开字节流并重构对象。对象序列化不仅要将基本数据类型转换成字节表示，有时还要恢复数据。恢复数据要求有恢复数据的对象实例。</span><br></pre></td></tr></table></figure>
 
 <p>注意点</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.只有实现了Serializable或者Externalizable接口的类的对象才能被序列化为字节序列</span><br><span class="line">2.在反序列化过程中，它的父类如果没有实现序列化接口，那么将需要提供无参构造函数来重新创建对象。</span><br><span class="line">3.一个实现 Serializable 接口的子类也是可以被序列化的。</span><br><span class="line">4. 静态成员变量是不能被序列化</span><br><span class="line">序列化是针对对象的，而静态变量属于类</span><br><span class="line">	静态成员是随着类的加载而加载的，与类共存亡；同一台机器有能够进行输出是因为已经加载了类，如果是远程的话无法进行序列化传输</span><br><span class="line">5. transient 标识的对象成员变量不参与序列化</span><br><span class="line">6.Serializable 在序列化和反序列化过程中大量使用了反射，因此其过程会产生的大量的内存碎片</span><br></pre></td></tr></table></figure>
@@ -180,8 +180,7 @@ var saveToLocal = {
 <p>这里需要注意一个点</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Class class1 &#x3D; Class.forName(&quot;org.example.TestReflection&quot;);</span><br><span class="line">这里我们forName中的参数要写什么是根据所在目录来编辑的</span><br></pre></td></tr></table></figure>
 
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20221130184733105.png?raw=true" alt="image-20221130184733105.png"></p>
 <h3 id="反射创造对象"><a href="#反射创造对象" class="headerlink" title="反射创造对象"></a>反射创造对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;        Class class1 &#x3D; Class.forName(&quot;org.example.BlackCat&quot;);</span><br><span class="line">&#x2F;&#x2F;        BlackCat blackCat &#x3D; (BlackCat) class1.newInstance();</span><br><span class="line">&#x2F;&#x2F;        System.out.println(blackCat);</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;&#x2F;        &#x2F;&#x2F;方式二</span><br><span class="line">&#x2F;&#x2F;        Constructor constructor &#x3D; class1.getConstructor();</span><br><span class="line">&#x2F;&#x2F;        BlackCat blackCat1 &#x3D; (BlackCat) constructor.newInstance();</span><br><span class="line">&#x2F;&#x2F;        System.out.println(blackCat1);</span><br></pre></td></tr></table></figure>
 
 
@@ -190,16 +189,10 @@ var saveToLocal = {
 
 <h3 id="反射获取类的构造器"><a href="#反射获取类的构造器" class="headerlink" title="反射获取类的构造器"></a>反射获取类的构造器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Class class1 &#x3D; Class.forName(&quot;org.example.BlackCat&quot;);</span><br><span class="line">Constructor[] constructors &#x3D; class1.getConstructors();</span><br><span class="line">for(int i&#x3D;0;i&lt; constructors.length;i++)&#123;</span><br><span class="line">    System.out.println(constructors[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20221130185810128.png?raw=true" alt="image-20221130185810128.png"></p>
 <h3 id="看demo："><a href="#看demo：" class="headerlink" title="看demo："></a><strong>看demo：</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Class class1 &#x3D; Class.forName(&quot;org.example.Student&quot;);</span><br><span class="line">Field email &#x3D; class1.getField(&quot;email&quot;);</span><br><span class="line">System.out.println(email);</span><br><span class="line"></span><br><span class="line">Field age &#x3D; class1.getField((&quot;age&quot;));</span><br><span class="line">System.out.println(age);</span><br></pre></td></tr></table></figure>
 
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20221130190238723.png?raw=true" alt="image-20221130190238723.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">即getField(String name) 根据参数变量名，返回一个具体的具有public属性的成员变量，如果该变量不是public属性，则报异常。</span><br></pre></td></tr></table></figure>
 
 
@@ -209,12 +202,7 @@ var saveToLocal = {
 <h4 id="反射获取类的方法"><a href="#反射获取类的方法" class="headerlink" title="反射获取类的方法"></a>反射获取类的方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;反射获取类的方法</span><br><span class="line">Class class1 &#x3D; Class.forName(&quot;org.example.Student&quot;);</span><br><span class="line">Method[] methods &#x3D; class1.getMethods();</span><br><span class="line">for(int i&#x3D;0;i&lt; methods.length;i++)&#123;</span><br><span class="line">    System.out.println(methods[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以看到输出的方法都是public属性的方法</p>
-
-
-
-
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20221130190622691.png?raw=true" alt="image-20221130190622691.png"></p>
 <h2 id="反射的实现原理"><a href="#反射的实现原理" class="headerlink" title="反射的实现原理"></a>反射的实现原理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    Class clazz &#x3D; Class.forName(&quot;org.example.TestReflection&quot;);</span><br><span class="line">    Method method &#x3D; clazz.getMethod(&quot;target&quot;,String.class);</span><br><span class="line">    method.invoke(null,&quot;321&quot;);</span><br><span class="line">&#125;</span><br><span class="line">public static void target(String str)&#123;</span><br><span class="line">    new Exception(&quot;#&quot;+str).printStackTrace();</span><br><span class="line">    System.out.println(&quot;invoke target method&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
@@ -232,10 +220,7 @@ var saveToLocal = {
 
 <h1 id="JAVA动态代理"><a href="#JAVA动态代理" class="headerlink" title="JAVA动态代理"></a>JAVA动态代理</h1><p>可以理解为如果我们创建的接口需要更新时会要大量修改代码，为了更适合开发我们利用动态代理的方式传入参数来简化同种功能的代码</p>
 <p>,以此来减少代码量</p>
-
-
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20221202214258949.png?raw=true" alt="image-20221202214258949.png"></p>
 <h1 id="JAVA类的动态加载"><a href="#JAVA类的动态加载" class="headerlink" title="JAVA类的动态加载"></a>JAVA类的动态加载</h1><h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">类加载过程</span><br><span class="line">​ 先在方法区找class信息，有的话直接调用，没有的话则使用类加载器加载到方法区（静态成员放在静态区，非静态成功放在非静态区），静态代码块在类加载时自动执行代码，非静态的不执行；先父类后子类，先静态后非静态；静态方法和非静态方法都是被动调用，即不调用就不执行。</span><br><span class="line"></span><br><span class="line">Java对象创建的几种方式</span><br><span class="line">（new、反射、克隆 ）</span><br></pre></td></tr></table></figure>
 
 <p>类加载的时候会执行代码</p>
@@ -261,40 +246,27 @@ var saveToLocal = {
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.oracle.com&#x2F;cn&#x2F;java&#x2F;technologies&#x2F;javase&#x2F;javase8-archive-downloads.html</span><br></pre></td></tr></table></figure>
 
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20221209204531988.png?raw=true" alt="image-20221209204531988.png"></p>
 <p>需要加入马文依赖</p>
 <p>jdk源码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;hg.openjdk.java.net&#x2F;jdk8u&#x2F;jdk8u&#x2F;jdk&#x2F;rev&#x2F;af660750b2f4  然后点左侧的zip，视频中只需要sun部分</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>下载完后解压缩src，把sun放入，通过IDEA放入压缩包，然后在项目结构中添加src，并且在IDEA右上角点击下载项目源，就可以了</p>
-<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4>
-
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230202201903392.png?raw=true" alt="image-20230202201903392.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected类只能被该类内调用，因此我们可以找找在哪里被调用</span><br></pre></td></tr></table></figure>
 
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230202201910604.png?raw=true" alt="image-20230202201910604.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JAVA如果没有写类型就是defined类型只能在同一个包里面使用</span><br><span class="line">通过反射获取绕过</span><br></pre></td></tr></table></figure>
 
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230202204522414.png?raw=true" alt="image-20230202204522414.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">静态方法，反射调用时第一个参数为空即null</span><br><span class="line">无参方法，第二个参数为null</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230202210707165.png?raw=true" alt="image-20230202210707165.png"></p>
 <p>最后发现我们最终完成后显示序列化危险</p>
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230208232919797.png?raw=true" alt="image-20230208232919797.png"></p>
 <p>最终发现是pom.xml中加载版本错误</p>
 <p>因为调试其他的内容所以加载了其他版本</p>
-
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230208232957586.png?raw=true" alt="image-20230208232957586.png"></p>
 <p>CC1对应的漏洞为3.2.1</p>
 <h1 id="CC6"><a href="#CC6" class="headerlink" title="CC6"></a>CC6</h1><p><strong>不限制jdk版本，不限制cc的版本</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hashmap.readObject()-&gt;TideMapEntry.hashCode()-&gt;LazyMap.get()-&gt;ChainedTransformer.transform()-&gt;危险方法</span><br></pre></td></tr></table></figure>
@@ -306,30 +278,23 @@ var saveToLocal = {
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;Object, Object&gt; map2 &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">serialize(map2);</span><br></pre></td></tr></table></figure>
 
 <p>因为要调用hashcode方法，因此利用put方法来完成调用</p>
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218160326152.png" class title="image-20230218160326152">
-
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218160338283.png" class title="image-20230218160338283">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218160326152.png?raw=true" alt="image-20230218160326152.png"></p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218160338283.png?raw=true" alt="image-20230218160338283.png"></p>
 <p>因为调用的时key的hashCode那么在hashmap传入值的时候将key传入为TideMapentry</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;Object, Object&gt; map2 &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">&#x2F;&#x2F;put有两个参数</span><br><span class="line">map2.put(tideMapEntry, &quot;bbb&quot;);</span><br></pre></td></tr></table></figure>
 
 <p>这时候观察TideMapentry的hashcode方法</p>
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218160545758.png" class title="image-20230218160545758">
-
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218160553750.png" class title="image-20230218160553750">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218160545758.png?raw=true" alt="image-20230218160545758.png"></p>
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218160553750.png?raw=true" alt="image-20230218160553750.png"></p>
 <p>存在一个map.get，并且这里map和key都可以控制</p>
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218160616056.png" class title="image-20230218160616056">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218160616056.png?raw=true" alt="image-20230218160616056.png"></p>
 <p>那么我们实例化一个TideMapEntry</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TiedMapEntry tideMapEntry &#x3D; new TiedMapEntry(lazymap, &quot;aaa&quot;);</span><br></pre></td></tr></table></figure>
 
 <p>这里需要最后调用我们的lazymap，那么我们在这之前要精心构造好Lazymap</p>
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218160807414.png" class title="image-20230218160807414">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218160807414.png?raw=true" alt="image-20230218160807414.png"></p>
 <p>Lazymap.get中的factory的transform是我们要控制的目标</p>
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218160904757.png" class title="image-20230218160904757">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218160904757.png?raw=true" alt="image-20230218160904757.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Class c &#x3D; LazyMap.class;</span><br><span class="line">Field factoryField &#x3D; c.getDeclaredField(&quot;factory&quot;);</span><br><span class="line">factoryField.setAccessible(true);</span><br><span class="line">factoryField.set(lazymap,chainedTransformer);</span><br></pre></td></tr></table></figure>
 
 <p>此时写出来的代码如下</p>
@@ -339,13 +304,11 @@ var saveToLocal = {
 <p>为什么lazymap使用下面语句新建</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Object,Object&gt; lazymap  &#x3D; LazyMap.decorate(map, new ConstantTransformer(1));</span><br></pre></td></tr></table></figure>
 
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218161123897.png" class title="image-20230218161123897">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218161123897.png?raw=true" alt="image-20230218161123897.png"></p>
 <p>因为我们这里的LazyMap的构造方法时protected只能自己调用，因此找到调用方法decorate</p>
 <p>那为什么要remove(“aaa”)</p>
 <p>因为如果我们直接传入的话会直接在第一次hashcode执行的时候直接调用即在放序列化前调用</p>
-<img src="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/image-20230218161556056.png" class title="image-20230218161556056">
-
+<p><img src="https://github.com/xuxiaoyu233/xuxiaoyu233.github.io/blob/picture/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0-0/image-20230218161556056.png?raw=true" alt="image-20230218161556056.png"></p>
 <p>这里如果我们当时有一个值的话，就会首先完成调用即我们会在序列化前完成命令就达不到反序列化攻击的效果</p>
 <p>因此加入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lazymap.remove(&quot;aaa&quot;);</span><br></pre></td></tr></table></figure>
